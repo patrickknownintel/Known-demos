@@ -103,13 +103,13 @@ body { font-family: var(--font); background: var(--off-white); color: var(--navy
   border-bottom: 1px solid rgba(255,255,255,.08);
 }
 .account-band-inner { padding: 14px 24px 0; }
-.account-band-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 10px; }
+.account-band-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 0; }
 .account-title-row { display: flex; align-items: center; gap: 10px; }
-.account-title { font-size: 20px; font-weight: 500; color: white; letter-spacing: -.3px; }
+.account-title { font-size: 26px; font-weight: 500; color: white; letter-spacing: -.5px; }
 .atag { font-size: 10px; font-weight: 500; padding: 2px 8px; border-radius: 4px; font-family: var(--mono); letter-spacing: .3px; }
-.atag-renewal { background: rgba(45,110,138,.3); color: #7de8e6; border: 1px solid rgba(45,110,138,.4); }
+.atag-renewal { background: rgba(255,255,255,.1); color: rgba(247,250,252,.7); border: 1px solid rgba(255,255,255,.15); }
 .atag-fragile { background: rgba(197,48,48,.2); color: #fc8181; border: 1px solid rgba(197,48,48,.3); }
-.since-box { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); border-radius: 6px; padding: 8px 12px; min-width: 220px; }
+.since-box { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); border-radius: 6px; padding: 12px 16px; flex: 1; max-width: 48%; }
 .since-label { font-size: 10px; color: rgba(247,250,252,.35); font-family: var(--mono); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 5px; }
 .since-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: rgba(247,250,252,.65); margin-bottom: 3px; }
 .since-item:last-child { margin-bottom: 0; }
@@ -118,6 +118,8 @@ body { font-family: var(--font); background: var(--off-white); color: var(--navy
 .account-summary strong { color: rgba(247,250,252,.85); }
 .source-chip { display: inline-flex; align-items: center; gap: 3px; font-size: 9px; font-family: var(--mono); background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); color: rgba(247,250,252,.5); padding: 1px 6px; border-radius: 3px; cursor: pointer; margin-left: 3px; vertical-align: middle; }
 .source-chip:hover { background: rgba(255,255,255,.12); color: rgba(247,250,252,.8); }
+.card .source-chip { background: rgba(45,110,138,.08); border: 1px solid rgba(45,110,138,.25); color: var(--teal); }
+.card .source-chip:hover { background: rgba(45,110,138,.15); color: var(--teal); }
 
 /* ── Metric strip ── */
 .metric-strip { display: flex; border-top: 1px solid rgba(255,255,255,.06); }
@@ -153,9 +155,6 @@ body { font-family: var(--font); background: var(--off-white); color: var(--navy
 /* ── Cards ── */
 .card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
 .card-head { background: var(--off-white); padding: 9px 14px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border); }
-.card-num { width: 18px; height: 18px; border-radius: 50%; background: var(--navy); color: white; font-size: 9px; font-weight: 500; display: flex; align-items: center; justify-content: center; font-family: var(--mono); flex-shrink: 0; }
-.card-num.flagged { background: var(--red); }
-.card-num.strategic { background: var(--teal); }
 .card-title { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .6px; color: var(--navy); font-family: var(--mono); }
 .card-meta { font-size: 10px; color: #a0aec0; margin-left: auto; font-family: var(--mono); }
 .card-action { font-size: 11px; color: var(--mid-blue); font-weight: 500; margin-left: auto; cursor: pointer; }
@@ -224,8 +223,8 @@ body { font-family: var(--font); background: var(--off-white); color: var(--navy
 .renewal-row { display: flex; align-items: center; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--border-light); font-size: 12px; }
 .renewal-row:first-child { padding-top: 0; }
 .renewal-row:last-child { border-bottom: none; padding-bottom: 0; }
-.r-label { font-size: 10px; font-family: var(--mono); color: #a0aec0; text-transform: uppercase; letter-spacing: .4px; }
-.r-val { font-weight: 500; color: var(--navy); }
+.r-label { font-size: 10px; font-family: var(--mono); color: #a0aec0; text-transform: uppercase; letter-spacing: .4px; flex: 1; }
+.r-val { font-weight: 500; color: var(--navy); text-align: right; white-space: nowrap; }
 .r-val.warn { color: var(--warn); }
 .r-val.red { color: var(--red); }
 .r-val.teal { color: var(--teal); }
@@ -312,9 +311,11 @@ body { font-family: var(--font); background: var(--off-white); color: var(--navy
 <!-- Top bar -->
 <div class="topbar">
   <div class="logo">
-    <div class="logo-k">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-        <path d="M5 4h3v6l5-6h4l-6 8 6 8h-4l-5-6v6H5V4z" fill="#061A33"/>
+    <div class="logo-k" style="background:white;padding:2px;">
+      <svg width="22" height="22" viewBox="240 148 306 316" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" fill="#001530" d="M513.22,160.02L375.08,296.35c-9.9,9.77-9.61,19.25-0.22,29.62l114.13,126h-44.05L330.68,327.86c-5.25-5.7-7.06-7.4-7.06-15.81c0-5.59,0-15.32,0-19.76c0-6.52,3-11.73,7.37-16.06l117.44-116.2H513.22z M265.26,160.02h31.37c5.14,0,9.35,4.21,9.35,9.35v273.26c0,5.14-4.21,9.35-9.35,9.35h-31.37c-5.14,0-9.35-4.21-9.35-9.35V169.37C255.91,164.23,260.11,160.02,265.26,160.02z"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" fill="#0263C2" d="M512.48,451.98C478.23,413.86,405.16,332.5,391.71,317.4c-9.12-10.23-7.36-17.36-7.36-30.2l-9.27,9.15c-9.9,9.77-9.61,19.25-0.22,29.62l114.13,126H512.48z"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" fill="#1D8FFF" d="M391.71,317.4c13.45,15.09,86.52,96.45,120.77,134.58h23.62l-134.9-152.32l-1.13-27.96l-15.71,15.51C384.35,300.04,382.59,307.17,391.71,317.4"/>
       </svg>
     </div>
     <span class="logo-name">Known</span>
@@ -370,6 +371,10 @@ body { font-family: var(--font); background: var(--off-white); color: var(--navy
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
         Accounts
       </div>
+      <div class="nav-item" id="nav-people" onclick="showPeople()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        People
+      </div>
       <div class="nav-item">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         Inbox
@@ -405,45 +410,31 @@ body { font-family: var(--font); background: var(--off-white); color: var(--navy
           <div>
             <div class="account-title-row">
               <div class="account-title">Inline Industries</div>
-              <span class="atag atag-renewal">Renewal</span>
-              <span class="atag atag-fragile">Fragile</span>
+              <span class="atag atag-renewal" id="renewal-tag">Renewal · 47d</span>
             </div>
-            <div class="account-summary" style="margin-top:8px">
-              Renewal in <strong>47 days</strong>, auto-renew off, relationship in a real moment of fragility. Former champion <strong>Brett Collins</strong> left in early April; interim replacement <strong>John Rivera</strong> has not replied to two outbound. Technical contact <strong>Sarah Khan</strong> is engaged but blocked on budget clarity she expected in April. Support stabilised — no new incidents in 17 days — but competitor <strong>Nexion</strong> re-engaged with Inline in April after their outage concerns. <span class="source-chip">5 sources</span>
-            </div>
-          </div>
-          <div class="since-box">
-            <div class="since-label">Since you were last here — Tue 5/19</div>
-            <div class="since-item"><div class="since-dot"></div>QBR + Renewal Check-In scheduled for today 2:00 PM <span class="source-chip">1</span></div>
-            <div class="since-item"><div class="since-dot"></div>Security requirements list received from procurement <span class="source-chip">1</span></div>
           </div>
         </div>
       </div>
       <div class="metric-strip">
         <div class="metric-cell active-metric">
           <div class="mc-label">Renewal</div>
-          <div class="mc-val amber">Jul 15 <span class="source-chip" style="font-size:8px">1</span></div>
-          <div class="mc-sub">47 d · auto-renew off</div>
+          <div class="mc-val">Jul 15 <span class="source-chip" style="font-size:8px">1</span></div>
+          <div class="mc-sub">47 days out</div>
         </div>
         <div class="metric-cell">
           <div class="mc-label">Stakeholders</div>
-          <div class="mc-val">3+1 <span class="source-chip" style="font-size:8px">2</span></div>
-          <div class="mc-sub">1 unresponsive · 1 departed</div>
+          <div class="mc-val">3 <span class="source-chip" style="font-size:8px">2</span></div>
+          <div class="mc-sub">active stakeholders</div>
         </div>
         <div class="metric-cell">
           <div class="mc-label">Last meaningful</div>
           <div class="mc-val">5/20 <span class="source-chip" style="font-size:8px">1</span></div>
-          <div class="mc-sub">Dev SE · security req.</div>
-        </div>
-        <div class="metric-cell">
-          <div class="mc-label">Quiet for</div>
-          <div class="mc-val red">6 d <span class="source-chip" style="font-size:8px">2</span></div>
-          <div class="mc-sub">no customer reply</div>
+          <div class="mc-sub"></div>
         </div>
         <div class="metric-cell">
           <div class="mc-label">ACV</div>
           <div class="mc-val">$240K</div>
-          <div class="mc-sub">+$60K APAC est.</div>
+          <div class="mc-sub"></div>
         </div>
       </div>
     </div>
@@ -453,11 +444,8 @@ body { font-family: var(--font); background: var(--off-white); color: var(--navy
       <div class="tab active" onclick="showTab('account')">Account</div>
       <div class="tab" onclick="showTab('timeline')">Timeline</div>
       <div class="tab" onclick="showTab('history')">History</div>
-      <div class="tab" onclick="showTab('notes')">Notes</div>
       <div class="tab-right">
-        <span class="tab-badge tab-badge-red">3 open loops</span>
-        <span class="tab-badge tab-badge-amber">Renewal 47d</span>
-      </div>
+        </div>
     </div>
 
     <!-- Content -->
@@ -470,283 +458,239 @@ body { font-family: var(--font); background: var(--off-white); color: var(--navy
           <!-- 1. Account Summary -->
           <div class="card">
             <div class="card-head">
-              <div class="card-num">1</div>
               <div class="card-title">Account Summary</div>
+              <button id="summary-edit-btn" onclick="editSummary()" style="margin-left:auto;font-size:10px;font-weight:500;padding:3px 10px;border-radius:4px;cursor:pointer;background:var(--off-white);color:var(--slate);border:1px solid var(--border);font-family:var(--mono);">+ Add context</button>
             </div>
             <div class="card-body">
-              <p class="risk-body" style="margin-bottom:10px">Inline Industries has been a customer since March 2022. The relationship was built primarily through Brett Callahan, who served as the internal champion and drove both the initial close and the 2024 renewal. Brett left the organization in June 2025 <span class="source-chip">1</span>, creating an ownership gap that remains unresolved. John Rivera (VP Operations) stepped into a nominal champion role but has missed the last scheduled call and has not responded to two follow-up emails. <span class="source-chip">2</span></p>
-              <p class="risk-body" style="margin-bottom:10px">The account experienced a significant support escalation in Q1 2026 — an average of two bugs per month through April — which created renewal risk and required active recovery. The escalation appears stable with no new issues in 17 days. <span class="source-chip">3</span> Sarah Chen confirmed the bug stream has slowed but has not formally signed off. A failed implementation in 2023 remains part of the account's institutional memory and makes this team sensitive to deployment risk. <span class="source-chip">4</span></p>
-              <p class="risk-body">The 2027 renewal scope is unresolved. APAC expansion was raised in Q4 2025 but no scoping has occurred. Sarah's budget clarity, expected in April, has not been confirmed. Mike Patel (Procurement) is a new stakeholder with no prior relationship context on file. A competitor resurfaced in April with no further signal since. <span class="source-chip">5</span></p>
-              <div style="font-size:10px;color:#a0aec0;font-family:var(--mono);margin-top:10px;padding-top:10px;border-top:1px solid var(--border-light)">Last synthesised · May 27 2026 · 6:42 AM · Gong (14) · Email (31) · CRM (8) · Support (3)</div>
-            </div>
-          </div>
-
-          <!-- 2. Open Loops -->
-          <div class="card">
-            <div class="card-head">
-              <div class="card-num">2</div>
-              <div class="card-title">Open Loops</div>
-              <div class="card-meta">things waiting to be closed</div>
-            </div>
-            <div class="card-body">
-              <div class="loop-item">
-                <span class="loop-chip chip-dropped">Thread dropped</span>
-                <div class="loop-content">
-                  <div class="loop-text">John Rivera has not replied to 2 outbound emails about renewal ownership.</div>
-                  <div class="loop-meta">17 d open · <span class="source-chip">2 sources</span></div>
-                </div>
+              <div id="summary-read">
+                <p class="risk-body" style="margin-bottom:10px">Inline Industries has been a customer since March 2022. <span class="source-chip">CRM</span> The relationship was built primarily through Brett Callahan, who served as the internal champion and drove both the initial close <span class="source-chip">CRM</span> and the 2024 renewal. <span class="source-chip">Gong</span> Brett left the organization in June 2025 <span class="source-chip">Email</span>, creating an ownership gap that remains unresolved. John Rivera (VP Operations) stepped into a nominal champion role <span class="source-chip">Email</span> but has missed the last scheduled call <span class="source-chip">Cal</span> and has not responded to two follow-up emails. <span class="source-chip">Email</span></p>
+                <p class="risk-body" style="margin-bottom:10px">The account experienced a significant support escalation in Q1 2026 — an average of two bugs per month through April. <span class="source-chip">Support</span> The escalation appears stable with no new issues in 17 days. <span class="source-chip">Support</span> Sarah Chen confirmed the bug stream has slowed but has not formally signed off. <span class="source-chip">Gong</span> A failed implementation in 2023 remains part of the account's institutional memory and makes this team sensitive to deployment risk. <span class="source-chip">Gong</span></p>
+                <p class="risk-body">The 2027 renewal scope is unresolved. APAC expansion was raised in Q4 2025 but no scoping has occurred. <span class="source-chip">Gong</span> Sarah's budget clarity, expected in April, has not been confirmed. <span class="source-chip">Gong</span> Mike Patel (Procurement) is a new stakeholder with no prior relationship context on file. <span class="source-chip">Email</span> A competitor resurfaced in April with no further signal since. <span class="source-chip">Intel</span></p>
+                <div id="summary-human-note" style="display:none;margin-top:10px;padding:10px;background:#f0f7ff;border-left:3px solid var(--mid-blue);border-radius:0 5px 5px 0;font-size:12px;color:var(--navy);line-height:1.6;"></div>
+                <div id="summary-attribution" style="display:none;font-size:10px;color:#a0aec0;font-family:var(--mono);margin-top:8px;padding-top:8px;border-top:1px solid var(--border-light);"></div>
               </div>
-              <div class="loop-item">
-                <span class="loop-chip chip-overdue">Commitment overdue</span>
-                <div class="loop-content">
-                  <div class="loop-text">Known → Inline: Roadmap update for analytics release. Promised 5/09.</div>
-                  <div class="loop-meta">17 d late · <span class="source-chip">1 source</span></div>
-                </div>
-              </div>
-              <div class="loop-item">
-                <span class="loop-chip chip-hanging">Question hanging</span>
-                <div class="loop-content">
-                  <div class="loop-text">Saira Khan: Expected budget clarity by end of April. Late May, still no signal.</div>
-                  <div class="loop-meta">56 d hanging · <span class="source-chip">1 source</span></div>
-                </div>
-              </div>
-              <div class="loop-item">
-                <span class="loop-chip chip-due">Commitment due</span>
-                <div class="loop-content">
-                  <div class="loop-text">Known → Inline: Security documentation for procurement.</div>
-                  <div class="loop-meta">Due 6/06 · <span class="source-chip">1 source</span></div>
+              <div id="summary-edit" style="display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--border-light);">
+                <div style="font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.6px;color:var(--slate);font-family:var(--mono);margin-bottom:6px;">Add context Known couldn't find</div>
+                <textarea id="summary-textarea" style="width:100%;min-height:80px;border:1px solid var(--border);border-radius:5px;padding:10px;font-size:12px;color:var(--navy);font-family:var(--font);line-height:1.7;outline:none;resize:vertical;" placeholder="Phone conversations, informal knowledge, corrections…"></textarea>
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px;">
+                  <div style="font-size:10px;color:#a0aec0;font-family:var(--mono);">Attributed to you · treated as ground truth</div>
+                  <div style="display:flex;gap:6px;">
+                    <button class="btn-xs btn-xs-navy" onclick="saveSummary()">+ Add</button>
+                    <button class="btn-xs btn-xs-ghost" onclick="cancelSummary()">Cancel</button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- 3. Renewal Risk Flags -->
+          <!-- Action / Assess tabs -->
           <div class="card">
-            <div class="card-head">
-              <div class="card-num">3</div>
-              <div class="card-title">Renewal Risk Flags</div>
+            <div class="card-head" style="padding:0;background:var(--white);border-bottom:1px solid var(--border);">
+              <button id="tab-action-btn" onclick="switchMindset('action')" style="flex:1;padding:10px 16px;font-size:12px;font-weight:500;color:var(--navy);background:var(--off-white);border:none;border-bottom:2px solid var(--navy);cursor:pointer;font-family:var(--font);">Action <span id="action-count" style="font-size:10px;font-weight:500;background:var(--navy);color:white;padding:1px 6px;border-radius:10px;margin-left:4px;font-family:var(--mono);">6</span></button>
+              <button id="tab-assess-btn" onclick="switchMindset('assess')" style="flex:1;padding:10px 16px;font-size:12px;font-weight:500;color:var(--slate);background:var(--white);border:none;border-bottom:2px solid transparent;cursor:pointer;font-family:var(--font);">Assess <span id="assess-count" style="font-size:10px;font-weight:500;background:var(--border);color:var(--slate);padding:1px 6px;border-radius:10px;margin-left:4px;font-family:var(--mono);">8</span></button>
             </div>
-            <div class="card-body">
-              <div class="risk-item">
-                <svg class="risk-icon" viewBox="0 0 24 24" fill="none" stroke="#c53030" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                <div>
-                  <div class="risk-label">Renewal ownership unclear after Brett's departure</div>
-                  <div class="risk-body">Brett drove the last two renewals. John Rivera has not confirmed he owns the process. Mike Patel (Procurement) is new and untested. <span class="source-chip">2</span></div>
+
+            <!-- ACTION panel -->
+            <div id="mindset-action" class="card-body" style="padding:0;">
+
+              <div style="padding:10px 14px 4px;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.6px;color:#a0aec0;font-family:var(--mono);border-bottom:1px solid var(--border-light);">Open Commitments</div>
+              <div style="padding:0 14px;">
+                <div class="commit-item" id="com1" style="align-items:center;">
+                  <div class="commit-date">Apr 14</div>
+                  <div class="commit-text" style="flex:1;">Deliver roadmap update for analytics release <span class="source-chip">Gong</span></div>
+                  <div style="display:flex;gap:5px;flex-shrink:0;">
+                    <button class="btn-xs btn-xs-ghost" onclick="doneMove('com1')">✓</button>
+                    <button class="btn-xs btn-xs-ghost" onclick="removeMove('com1')" style="color:#a0aec0;">×</button>
+                  </div>
+                </div>
+                <div class="commit-item" id="com2" style="align-items:center;">
+                  <div class="commit-date">May 1</div>
+                  <div class="commit-text" style="flex:1;">Security documentation — share with Sarah <span class="source-chip">Email</span></div>
+                  <div style="display:flex;gap:5px;flex-shrink:0;">
+                    <button class="btn-xs btn-xs-ghost" onclick="doneMove('com2')">✓</button>
+                    <button class="btn-xs btn-xs-ghost" onclick="removeMove('com2')" style="color:#a0aec0;">×</button>
+                  </div>
+                </div>
+                <div class="commit-item candidate" id="com3" style="align-items:center;border-bottom:none;">
+                  <div class="commit-date">—</div>
+                  <div class="commit-text" style="font-style:italic;color:#a0aec0;flex:1;">Candidate: Confirm APAC scope inclusion before renewal draft.</div>
+                  <div style="display:flex;gap:5px;flex-shrink:0;">
+                    <button class="btn-xs btn-xs-navy" onclick="doneMove('com3')">+ Add</button>
+                    <button class="btn-xs btn-xs-ghost" onclick="removeMove('com3')" style="color:#a0aec0;">Dismiss</button>
+                  </div>
                 </div>
               </div>
-              <div class="risk-item">
-                <svg class="risk-icon" viewBox="0 0 24 24" fill="none" stroke="#b7791f" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                <div>
-                  <div class="risk-label">Budget clarity overdue — affects scope and timing</div>
-                  <div class="risk-body">Sarah expected budget confirmation in April. It is now late May with no signal. <span class="source-chip">1</span></div>
+
+              <div style="padding:10px 14px 4px;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.6px;color:#a0aec0;font-family:var(--mono);border-top:1px solid var(--border-light);border-bottom:1px solid var(--border-light);">Agreed Next Moves <span style="font-weight:400;text-transform:none;letter-spacing:0;color:#c0c8d4;">· May 22</span></div>
+              <div style="padding:0 14px;">
+                <div class="commit-item" id="move1" style="align-items:center;">
+                  <div class="commit-date">May 22</div>
+                  <div class="commit-text" style="flex:1;">Re-engage John Rivera — direct outreach from Marcus.</div>
+                  <div style="display:flex;gap:5px;flex-shrink:0;">
+                    <button class="btn-xs btn-xs-ghost" onclick="doneMove('move1')">✓</button>
+                    <button class="btn-xs btn-xs-ghost" onclick="removeMove('move1')" style="color:#a0aec0;">×</button>
+                  </div>
+                </div>
+                <div class="commit-item" id="move2" style="align-items:center;">
+                  <div class="commit-date">May 22</div>
+                  <div class="commit-text" style="flex:1;">Send security requirements list to Dev for internal review.</div>
+                  <div style="display:flex;gap:5px;flex-shrink:0;">
+                    <button class="btn-xs btn-xs-ghost" onclick="doneMove('move2')">✓</button>
+                    <button class="btn-xs btn-xs-ghost" onclick="removeMove('move2')" style="color:#a0aec0;">×</button>
+                  </div>
+                </div>
+                <div class="commit-item" id="move3" style="align-items:center;">
+                  <div class="commit-date">May 22</div>
+                  <div class="commit-text" style="flex:1;">Prepare APAC scope summary before QBR.</div>
+                  <div style="display:flex;gap:5px;flex-shrink:0;">
+                    <button class="btn-xs btn-xs-ghost" onclick="doneMove('move3')">✓</button>
+                    <button class="btn-xs btn-xs-ghost" onclick="removeMove('move3')" style="color:#a0aec0;">×</button>
+                  </div>
+                </div>
+                <div style="display:flex;gap:6px;padding:10px 0 2px;border-top:1px solid var(--border-light);margin-top:4px;">
+                  <input style="flex:1;border:1px solid var(--border);border-radius:5px;padding:5px 8px;font-size:11px;color:var(--navy);font-family:var(--font);outline:none;" placeholder="Add a move from this session…" id="new-move-input">
+                  <button class="btn-xs btn-xs-navy" onclick="addMove()">+ Add</button>
                 </div>
               </div>
-              <div class="risk-item">
-                <svg class="risk-icon" viewBox="0 0 24 24" fill="none" stroke="#b7791f" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                <div>
-                  <div class="risk-label">Competitor Nexion re-engaged after April outage</div>
-                  <div class="risk-body">No follow-up signal since. Brett's departure may have created an opening. <span class="source-chip">1</span></div>
+
+            </div>
+
+            <!-- ASSESS panel -->
+            <div id="mindset-assess" class="card-body" style="padding:0;display:none;">
+
+              <div style="padding:10px 14px 4px;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.6px;color:#a0aec0;font-family:var(--mono);border-bottom:1px solid var(--border-light);">Agent Alerts <span style="font-weight:400;text-transform:none;letter-spacing:0;color:#c0c8d4;">· configured rules</span></div>
+              <div style="padding:0 14px;">
+                <div class="risk-item" id="sig1">
+                  <div style="flex:1;">
+                    <div class="risk-label">No contact 41 days — champion unresponsive <span class="source-chip">Email</span></div>
+                    <div class="risk-body">Rule: champion silent 30+ days. John Rivera — 2 outbound unanswered. Renewal in 47 days.</div>
+                  </div>
+                  <div style="display:flex;gap:6px;flex-shrink:0;margin-left:12px;align-items:center;">
+                    <button class="btn-xs btn-xs-navy" onclick="confirmSig(1)">Noted</button>
+                    <button class="btn-xs btn-xs-ghost" onclick="dismissSig(1)">Dismiss</button>
+                  </div>
+                </div>
+                <div class="risk-item" id="sig2">
+                  <div style="flex:1;">
+                    <div class="risk-label">Renewal in 47 days — no signed renewal <span class="source-chip">CRM</span></div>
+                    <div class="risk-body">Rule: renewal within 60 days, no contract executed. No renewal draft in progress.</div>
+                  </div>
+                  <div style="display:flex;gap:6px;flex-shrink:0;margin-left:12px;align-items:center;">
+                    <button class="btn-xs btn-xs-navy" onclick="confirmSig(2)">Noted</button>
+                    <button class="btn-xs btn-xs-ghost" onclick="dismissSig(2)">Dismiss</button>
+                  </div>
+                </div>
+                <div class="risk-item" id="sig3">
+                  <div style="flex:1;">
+                    <div class="risk-label">Competitor signal — Nexion, April <span class="source-chip">Intel</span></div>
+                    <div class="risk-body">Rule: competitor activity within 90 days of renewal. Nexion re-engaged following outage concerns.</div>
+                  </div>
+                  <div style="display:flex;gap:6px;flex-shrink:0;margin-left:12px;align-items:center;">
+                    <button class="btn-xs btn-xs-navy" onclick="confirmSig(3)">Noted</button>
+                    <button class="btn-xs btn-xs-ghost" onclick="dismissSig(3)">Dismiss</button>
+                  </div>
+                </div>
+                <div class="risk-item" id="sig4" style="border-bottom:none;padding-bottom:0;">
+                  <div style="flex:1;">
+                    <div class="risk-label">Economic buyer not engaged — 2024 pattern <span class="source-chip">Gong</span></div>
+                    <div class="risk-body">Rule: no economic buyer contact 60+ days before renewal. CFO caused 2-week hold in 2024.</div>
+                  </div>
+                  <div style="display:flex;gap:6px;flex-shrink:0;margin-left:12px;align-items:center;">
+                    <button class="btn-xs btn-xs-navy" onclick="confirmSig(4)">Noted</button>
+                    <button class="btn-xs btn-xs-ghost" onclick="dismissSig(4)">Dismiss</button>
+                  </div>
                 </div>
               </div>
-              <div class="risk-item">
-                <svg class="risk-icon" viewBox="0 0 24 24" fill="none" stroke="#b7791f" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                <div>
-                  <div class="risk-label">CFO pricing pushback last renewal cycle</div>
-                  <div class="risk-body">CFO pushed back on surprise pricing in 2024. No CFO engagement on record for 2027. <span class="source-chip">1</span></div>
+
+              <div style="padding:10px 14px 4px;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.6px;color:#a0aec0;font-family:var(--mono);border-top:1px solid var(--border-light);border-bottom:1px solid var(--border-light);">Signals <span style="font-weight:400;text-transform:none;letter-spacing:0;color:#c0c8d4;">· Known detected</span></div>
+              <div style="padding:0 14px;">
+                <div class="risk-item" id="asig1">
+                  <div style="flex:1;">
+                    <div class="risk-label">Renewal ownership — no confirmed internal owner <span class="source-chip">Email</span></div>
+                    <div class="risk-body">Brett Collins drove the last two renewals. John Rivera named interim — 2 outbound unanswered, 41 days.</div>
+                  </div>
+                  <div style="display:flex;gap:6px;flex-shrink:0;margin-left:12px;align-items:center;">
+                    <button class="btn-xs btn-xs-navy" onclick="confirmSigA(1)">Noted</button>
+                    <button class="btn-xs btn-xs-ghost" onclick="dismissSigA(1)">Dismiss</button>
+                  </div>
+                </div>
+                <div class="risk-item" id="asig2">
+                  <div style="flex:1;">
+                    <div class="risk-label">Budget — expected April, no signal received <span class="source-chip">Gong</span></div>
+                    <div class="risk-body">Sarah Khan committed to budget clarity by end of April. 55 days since last signal.</div>
+                  </div>
+                  <div style="display:flex;gap:6px;flex-shrink:0;margin-left:12px;align-items:center;">
+                    <button class="btn-xs btn-xs-navy" onclick="confirmSigA(2)">Noted</button>
+                    <button class="btn-xs btn-xs-ghost" onclick="dismissSigA(2)">Dismiss</button>
+                  </div>
+                </div>
+                <div class="risk-item" id="asig3">
+                  <div style="flex:1;">
+                    <div class="risk-label">CFO — no engagement on record for 2027 <span class="source-chip">Gong</span></div>
+                    <div class="risk-body">CFO required a 2-week hold in 2024. No CFO contact detected for current cycle.</div>
+                  </div>
+                  <div style="display:flex;gap:6px;flex-shrink:0;margin-left:12px;align-items:center;">
+                    <button class="btn-xs btn-xs-navy" onclick="confirmSigA(3)">Noted</button>
+                    <button class="btn-xs btn-xs-ghost" onclick="dismissSigA(3)">Dismiss</button>
+                  </div>
+                </div>
+                <div class="risk-item" id="asig4" style="border-bottom:none;padding-bottom:0;">
+                  <div style="flex:1;">
+                    <div class="risk-label">Nexion re-engaged — April, outage concerns <span class="source-chip">Intel</span></div>
+                    <div class="risk-body">Renewed activity detected between Nexion and Inline in April. No follow-up signal since.</div>
+                  </div>
+                  <div style="display:flex;gap:6px;flex-shrink:0;margin-left:12px;align-items:center;">
+                    <button class="btn-xs btn-xs-navy" onclick="confirmSigA(4)">Noted</button>
+                    <button class="btn-xs btn-xs-ghost" onclick="dismissSigA(4)">Dismiss</button>
+                  </div>
                 </div>
               </div>
+
             </div>
           </div>
 
-          <!-- 4. Threads -->
+          <!-- Quiet Questions (stays separate — distinct interaction) -->
           <div class="card">
             <div class="card-head">
-              <div class="card-num">4</div>
-              <div class="card-title">Threads</div>
-              <div class="card-action">+ New thread</div>
-            </div>
-            <div class="card-body">
-              <div class="thread-item">
-                <div class="thread-top">
-                  <div class="thread-name">John Rivera — Operations &amp; Renewal</div>
-                  <div class="thread-recency crit">41 days silent</div>
-                </div>
-                <div class="thread-chips"><span class="chip">Champion</span><span class="chip">VP Operations</span></div>
-                <div class="thread-snippet">Inherited renewal ownership after Brett's departure. Missed last call. Two unanswered follow-ups. Renewal process ownership unconfirmed.</div>
-              </div>
-              <div class="thread-item">
-                <div class="thread-top">
-                  <div class="thread-name">Sarah Chen — IT, Support &amp; Product</div>
-                  <div class="thread-recency">12 days</div>
-                </div>
-                <div class="thread-chips"><span class="chip">Technical Evaluator</span><span class="chip">Director IT</span></div>
-                <div class="thread-snippet">Primary contact through support escalation. Validated bug stabilisation informally. Budget clarity still outstanding.</div>
-              </div>
-              <div class="thread-item">
-                <div class="thread-top">
-                  <div class="thread-name">Mike Patel — Procurement</div>
-                  <div class="thread-recency">New</div>
-                </div>
-                <div class="thread-chips"><span class="chip">Procurement</span><span class="chip">New stakeholder</span></div>
-                <div class="thread-snippet">No prior relationship context on file. First meeting scheduled for today's QBR. Security review likely to be driven from this thread.</div>
-              </div>
-              <div class="thread-item">
-                <div class="thread-top">
-                  <div class="thread-name">APAC Expansion Scope</div>
-                  <div class="thread-recency warn">189 days</div>
-                </div>
-                <div class="thread-chips"><span class="chip">Cross-functional</span><span class="chip">Exec Sponsor</span></div>
-                <div class="thread-snippet">Raised Q4 2025. No scoping call. No internal owner on Inline's side. Inclusion in 2027 renewal scope unresolved.</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 5. Open Commitments -->
-          <div class="card">
-            <div class="card-head">
-              <div class="card-num">5</div>
-              <div class="card-title">Open Commitments</div>
-              <div class="card-meta">2 confirmed · 1 candidate</div>
-            </div>
-            <div class="card-body">
-              <div class="commit-item">
-                <div class="commit-date">Apr 14</div>
-                <div class="commit-text">Deliver roadmap update for analytics release <span class="source-chip">3</span></div>
-                <div class="commit-due overdue">overdue</div>
-              </div>
-              <div class="commit-item">
-                <div class="commit-date">May 1</div>
-                <div class="commit-text">Security documentation — complete internal review and share with Sarah <span class="source-chip">2</span></div>
-                <div class="commit-due upcoming">due Jun 1</div>
-              </div>
-              <div class="commit-item candidate">
-                <div class="commit-date">—</div>
-                <div class="commit-text" style="font-style:italic;color:#a0aec0">Candidate: Confirm APAC scope inclusion before renewal draft — detected from May 9 email thread. Confirm?</div>
-                <div class="commit-due upcoming">candidate</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 6. Known Flagged -->
-          <div class="card">
-            <div class="card-head">
-              <div class="card-num flagged">6</div>
-              <div class="card-title">Known Flagged</div>
-              <div class="card-meta">patterns · not prescriptions</div>
-            </div>
-            <div class="card-body">
-              <div class="flagged-item">
-                <svg style="width:14px;height:14px;flex-shrink:0;margin-top:2px" viewBox="0 0 24 24" fill="none" stroke="#c53030" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                <div>
-                  <div class="flag-label">2 unanswered outbounds + 47 days to renewal</div>
-                  <div class="flag-body">Champion silence + closing renewal window + no QBR was on calendar until today.</div>
-                  <div class="flag-pattern">Pattern: champion silent · renewal proximity · no scheduled touchpoint</div>
-                </div>
-              </div>
-              <div class="flagged-item">
-                <svg style="width:14px;height:14px;flex-shrink:0;margin-top:2px" viewBox="0 0 24 24" fill="none" stroke="#b7791f" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                <div>
-                  <div class="flag-label">CFO not engaged — same gap as 2024 renewal cycle</div>
-                  <div class="flag-body">Late CFO involvement caused a 2-week hold in 2024. No CFO contact on record for 2027.</div>
-                  <div class="flag-pattern">Pattern: prior cycle friction · same gap detected · history surfaced</div>
-                </div>
-              </div>
-              <div class="flagged-item">
-                <svg style="width:14px;height:14px;flex-shrink:0;margin-top:2px" viewBox="0 0 24 24" fill="none" stroke="#b7791f" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                <div>
-                  <div class="flag-label">Budget signal overdue by 55 days</div>
-                  <div class="flag-body">Sarah committed to budget clarity by end of April. APAC scope and renewal timing both depend on this answer.</div>
-                  <div class="flag-pattern">Pattern: committed date passed · no signal · downstream dependencies unresolved</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 7. Quiet Questions -->
-          <div class="card">
-            <div class="card-head">
-              <div class="card-num strategic">7</div>
               <div class="card-title">Quiet Questions</div>
               <div class="card-meta">what we don't know that matters</div>
             </div>
             <div class="card-body">
               <div class="qq-item" id="qq1">
-                <div class="qq-head">
-                  <div class="qq-icon" id="qq1-icon">?</div>
-                  <div class="qq-text">Who owns renewal internally after Brett's departure?</div>
-                </div>
+                <div class="qq-head"><div class="qq-icon" id="qq1-icon">?</div><div class="qq-text">Who owns renewal internally after Brett's departure?</div></div>
                 <div class="qq-evidence">Last 2 outbound to John unanswered · 41 days open</div>
                 <div class="qq-input-row">
                   <input class="qq-input" id="qq1-input" placeholder="Answer or note from session…">
-                  <button class="btn-xs btn-xs-navy" id="qq1-btn" onclick="answerQQ(1)">Confirm</button>
-                  <button class="btn-xs btn-xs-ghost" onclick="deferQQ(1,'qq1')">Defer</button>
+                  <button class="btn-xs btn-xs-navy" id="qq1-btn" onclick="answerQQ(1)">+ Add</button>
+                  <button class="btn-xs btn-xs-ghost" onclick="deferQQ(1,'qq1')">Dismiss</button>
                 </div>
               </div>
               <div class="qq-item" id="qq2">
-                <div class="qq-head">
-                  <div class="qq-icon" id="qq2-icon">?</div>
-                  <div class="qq-text">Does Sarah have the budget clarity she expected in April?</div>
-                </div>
-                <div class="qq-evidence">4/04 was the last signal — 55 days ago · no follow-up received</div>
+                <div class="qq-head"><div class="qq-icon" id="qq2-icon">?</div><div class="qq-text">Does Sarah have the budget clarity she expected in April?</div></div>
+                <div class="qq-evidence">4/04 was the last signal — 55 days ago</div>
                 <div class="qq-input-row">
                   <input class="qq-input" id="qq2-input" placeholder="Answer or note from session…">
-                  <button class="btn-xs btn-xs-navy" id="qq2-btn" onclick="answerQQ(2)">Confirm</button>
-                  <button class="btn-xs btn-xs-ghost" onclick="deferQQ(2,'qq2')">Defer</button>
+                  <button class="btn-xs btn-xs-navy" id="qq2-btn" onclick="answerQQ(2)">+ Add</button>
+                  <button class="btn-xs btn-xs-ghost" onclick="deferQQ(2,'qq2')">Dismiss</button>
                 </div>
               </div>
               <div class="qq-item" id="qq3">
-                <div class="qq-head">
-                  <div class="qq-icon" id="qq3-icon">?</div>
-                  <div class="qq-text">Will APAC be in scope for the 2027 renewal?</div>
-                </div>
-                <div class="qq-evidence">Never confirmed in writing · depends on budget · Brett was internal sponsor</div>
+                <div class="qq-head"><div class="qq-icon" id="qq3-icon">?</div><div class="qq-text">Will APAC be in scope for the 2027 renewal?</div></div>
+                <div class="qq-evidence">Never confirmed in writing · depends on budget</div>
                 <div class="qq-input-row">
                   <input class="qq-input" id="qq3-input" placeholder="Answer or note from session…">
-                  <button class="btn-xs btn-xs-navy" id="qq3-btn" onclick="answerQQ(3)">Confirm</button>
-                  <button class="btn-xs btn-xs-ghost" onclick="deferQQ(3,'qq3')">Defer</button>
+                  <button class="btn-xs btn-xs-navy" id="qq3-btn" onclick="answerQQ(3)">+ Add</button>
+                  <button class="btn-xs btn-xs-ghost" onclick="deferQQ(3,'qq3')">Dismiss</button>
                 </div>
               </div>
               <div class="qq-item" id="qq4" style="border-bottom:none;padding-bottom:0">
-                <div class="qq-head">
-                  <div class="qq-icon" id="qq4-icon">?</div>
-                  <div class="qq-text">How thorough is the security review — and who runs it?</div>
-                </div>
+                <div class="qq-head"><div class="qq-icon" id="qq4-icon">?</div><div class="qq-text">How thorough is the security review — and who runs it?</div></div>
                 <div class="qq-evidence">5/20 requirements list is the only artifact · Mike Patel likely driver</div>
                 <div class="qq-input-row">
                   <input class="qq-input" id="qq4-input" placeholder="Answer or note from session…">
-                  <button class="btn-xs btn-xs-navy" id="qq4-btn" onclick="answerQQ(4)">Confirm</button>
-                  <button class="btn-xs btn-xs-ghost" onclick="deferQQ(4,'qq4')">Defer</button>
+                  <button class="btn-xs btn-xs-navy" id="qq4-btn" onclick="answerQQ(4)">+ Add</button>
+                  <button class="btn-xs btn-xs-ghost" onclick="deferQQ(4,'qq4')">Dismiss</button>
                 </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 8. Agreed Next Moves -->
-          <div class="card">
-            <div class="card-head">
-              <div class="card-num strategic">8</div>
-              <div class="card-title">Agreed Next Moves</div>
-              <div class="card-meta">from last session · May 22</div>
-            </div>
-            <div class="card-body">
-              <div class="commit-item">
-                <div class="commit-date">May 22</div>
-                <div class="commit-text">Re-engage John Rivera before the QBR — direct outreach from Marcus.</div>
-                <div class="commit-due overdue">overdue</div>
-              </div>
-              <div class="commit-item">
-                <div class="commit-date">May 22</div>
-                <div class="commit-text">Send security requirements list to Dev for internal review.</div>
-                <div class="commit-due done">done</div>
-              </div>
-              <div class="commit-item" style="border-bottom:none">
-                <div class="commit-date">May 22</div>
-                <div class="commit-text">Prepare APAC scope summary before QBR in case John raises it.</div>
-                <div class="commit-due upcoming">pending</div>
-              </div>
-              <div style="display:flex;gap:6px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border-light)">
-                <input style="flex:1;border:1px solid var(--border);border-radius:5px;padding:5px 8px;font-size:11px;color:var(--navy);font-family:var(--font);outline:none;" placeholder="Add a move from this session…" id="new-move-input">
-                <button class="btn-xs btn-xs-navy" onclick="addMove()">+ Add</button>
               </div>
             </div>
           </div>
@@ -758,7 +702,7 @@ body { font-family: var(--font); background: var(--off-white); color: var(--navy
 
           <!-- Scheduled Meetings -->
           <div class="card">
-            <div class="card-head"><div class="card-num">8</div><div class="card-title">Scheduled Meetings</div></div>
+            <div class="card-head"><div class="card-title">Scheduled Meetings</div></div>
             <div class="card-body">
               <div class="stk-item">
                 <div style="width:32px;height:32px;border-radius:6px;background:var(--navy);display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;">
@@ -784,91 +728,108 @@ body { font-family: var(--font); background: var(--off-white); color: var(--navy
             </div>
           </div>
 
-          <!-- Coverage gap -->
-          <div class="coverage-gap">
-            <div class="cg-head">
-              <span class="cg-icon">⚠️</span>
-              <span class="cg-label">Coverage Gap</span>
-            </div>
-            <div class="cg-text">Sole-threaded through John — and John is silent. Sarah's relationship is severed. Mike (Procurement) hasn't been engaged since the last pricing cycle. There is no parallel thread to the renewal conversation.</div>
-            <div class="cg-suggest">Suggest: Multi-thread back via Mike before the call, or escalate to John's leadership.</div>
-          </div>
-
-          <!-- Renewal -->
+          <!-- Open Threads -->
           <div class="card">
-            <div class="card-head"><div class="card-num">9</div><div class="card-title">Contract &amp; Terms</div></div>
-
+            <div class="card-head">
+              <div class="card-title">Open Threads</div>
+              <div class="card-action" onclick="showNewThreadForm()" style="cursor:pointer;">+ New thread</div>
+            </div>
             <div class="card-body">
-              <div class="renewal-row"><div class="r-label">Current ACV</div><div class="r-val">$240K ARR <span class="source-chip">1</span></div></div>
-              <div class="renewal-row"><div class="r-label">Renewal date</div><div class="r-val warn">Jul 15 · 47d <span class="source-chip">1</span></div></div>
-              <div class="renewal-row"><div class="r-label">Auto-renew</div><div class="r-val red">Off <span class="source-chip">1</span></div></div>
-              <div class="renewal-row"><div class="r-label">Expansion</div><div class="r-val teal">APAC est. +$60K <span class="source-chip">1</span></div></div>
-              <div class="renewal-row"><div class="r-label">Contract term</div><div class="r-val">Annual</div></div>
-              <div class="renewal-row"><div class="r-label">QBR status</div><div class="r-val">Scheduled today</div></div>
+              <div id="new-thread-form" style="display:none;margin-bottom:12px;padding:10px;background:var(--off-white);border-radius:6px;border:1px solid var(--border);">
+                <div style="font-size:11px;color:var(--slate);margin-bottom:6px;font-family:var(--mono);">Name this thread and point Known to where it started.</div>
+                <input id="thread-name-input" style="width:100%;border:1px solid var(--border);border-radius:5px;padding:6px 8px;font-size:12px;font-family:var(--font);outline:none;margin-bottom:6px;" placeholder="Thread name e.g. APAC Expansion">
+                <input id="thread-source-input" style="width:100%;border:1px solid var(--border);border-radius:5px;padding:6px 8px;font-size:12px;font-family:var(--font);outline:none;margin-bottom:8px;" placeholder="Source — paste email subject or call date">
+                <div style="display:flex;gap:6px;">
+                  <button class="btn-xs btn-xs-navy" onclick="createThread()">Create thread</button>
+                  <button class="btn-xs btn-xs-ghost" onclick="hideNewThreadForm()">Cancel</button>
+                </div>
+              </div>
+              <div class="thread-item" onclick="showThread('apac')" style="cursor:pointer;">
+                <div class="thread-top">
+                  <div class="thread-name" style="color:var(--mid-blue);">APAC Expansion</div>
+                  <div class="thread-recency">Started Q4 2025</div>
+                </div>
+                <div style="font-size:11px;color:var(--slate);line-height:1.5;margin:4px 0;">Proposal sent Feb 2026, no response. Stalled pending budget clarity. No internal owner.</div>
+                <div style="font-size:10px;color:#a0aec0;font-family:var(--mono);">Source: Dec 8 QBR call <span style="margin-left:6px;padding:1px 6px;border-radius:3px;background:var(--off-white);border:1px solid var(--border);color:var(--slate);">Open</span></div>
+              </div>
+              <div class="thread-item" style="cursor:pointer;border-bottom:none;padding-bottom:0;">
+                <div class="thread-top">
+                  <div class="thread-name" style="color:var(--mid-blue);">Security Review</div>
+                  <div class="thread-recency">6d since last activity</div>
+                </div>
+                <div style="font-size:10px;color:#a0aec0;font-family:var(--mono);margin-top:4px;">Source: procurement email May 20 <span style="margin-left:6px;padding:1px 6px;border-radius:3px;background:var(--off-white);border:1px solid var(--border);color:var(--slate);">Open</span></div>
+              </div>
             </div>
           </div>
 
           <!-- People -->
           <div class="card">
-            <div class="card-head"><div class="card-num">10</div><div class="card-title">People in this relationship</div><div class="card-meta">1 departed</div></div>
+            <div class="card-head"><div class="card-title">People in this relationship</div></div>
             <div class="card-body">
-              <div class="stk-item">
+              <div class="stk-item" onclick="showThread('john')" style="cursor:pointer;" onmouseover="this.style.background='#f7fafc'" onmouseout="this.style.background=''">
                 <div class="stk-av" style="background:#3A6F92">JR</div>
-                <div class="stk-info"><div class="stk-name">John Rivera</div><div class="stk-title">VP Operations · Champion · New · Untested</div></div>
-                <div class="stk-right"><span class="chip" style="font-size:9px">Champion</span><div class="stk-recency crit">41d silent</div></div>
+                <div class="stk-info"><div class="stk-name" style="color:var(--mid-blue);">John Rivera</div><div class="stk-title">VP Operations</div></div>
+                <div class="stk-right" style="flex-direction:row;align-items:center;gap:6px;">
+                  <span title="Not in CRM" style="font-size:9px;color:#a0aec0;border:1px solid #e2e8f0;border-radius:3px;padding:1px 5px;font-family:var(--mono);cursor:default;width:32px;text-align:center;display:inline-block;">CRM</span>
+                  <span class="chip" style="font-size:9px;width:90px;text-align:center;">Champion ▾</span>
+                  <div class="stk-recency crit" style="width:28px;text-align:right;">41d</div>
+                </div>
               </div>
-              <div class="stk-item">
+              <div class="stk-item" onclick="showThread('sarah')" style="cursor:pointer;" onmouseover="this.style.background='#f7fafc'" onmouseout="this.style.background=''">
                 <div class="stk-av" style="background:#2D6E8A">SK</div>
-                <div class="stk-info"><div class="stk-name">Saira Khan</div><div class="stk-title">Director IT · Technical</div></div>
-                <div class="stk-right"><span class="chip" style="font-size:9px">Technical</span><div class="stk-recency">12d ago</div></div>
+                <div class="stk-info"><div class="stk-name" style="color:var(--mid-blue);">Saira Khan</div><div class="stk-title">Director IT</div></div>
+                <div class="stk-right" style="flex-direction:row;align-items:center;gap:6px;">
+                  <span style="width:32px;display:inline-block;"></span>
+                  <span class="chip" style="font-size:9px;width:90px;text-align:center;">Technical ▾</span>
+                  <div class="stk-recency" style="width:28px;text-align:right;">12d</div>
+                </div>
               </div>
-              <div class="stk-item">
+              <div class="stk-item" onclick="showThread('mike')" style="cursor:pointer;" onmouseover="this.style.background='#f7fafc'" onmouseout="this.style.background=''">
                 <div class="stk-av" style="background:#276749">MP</div>
-                <div class="stk-info"><div class="stk-name">Mike Patel</div><div class="stk-title">Procurement</div></div>
-                <div class="stk-right"><span class="chip" style="font-size:9px">Procurement</span><div class="stk-recency">Last touch: 5/26</div></div>
+                <div class="stk-info"><div class="stk-name" style="color:var(--mid-blue);">Mike Patel</div><div class="stk-title">Procurement</div></div>
+                <div class="stk-right" style="flex-direction:row;align-items:center;gap:6px;">
+                  <span title="Not in CRM" style="font-size:9px;color:#a0aec0;border:1px solid #e2e8f0;border-radius:3px;padding:1px 5px;font-family:var(--mono);cursor:default;width:32px;text-align:center;display:inline-block;">CRM</span>
+                  <span class="chip" style="font-size:9px;width:90px;text-align:center;">Procurement ▾</span>
+                  <div class="stk-recency" style="width:28px;text-align:right;">1d</div>
+                </div>
               </div>
-              <div class="stk-item" style="opacity:.45">
+              <div class="stk-item" style="opacity:.5;">
+                <div class="stk-av" style="background:#a0aec0;font-size:8px;">CFO</div>
+                <div class="stk-info"><div class="stk-name" style="color:var(--slate);">CFO — name unknown</div><div class="stk-title">Finance · Economic Buyer</div></div>
+                <div class="stk-right" style="flex-direction:row;align-items:center;gap:6px;">
+                  <span title="Not in CRM" style="font-size:9px;color:#a0aec0;border:1px solid #e2e8f0;border-radius:3px;padding:1px 5px;font-family:var(--mono);cursor:default;width:32px;text-align:center;display:inline-block;">CRM</span>
+                  <span class="chip" style="font-size:9px;width:90px;text-align:center;">Econ. Buyer ▾</span>
+                  <div class="stk-recency" style="width:28px;text-align:right;font-size:9px;">2024</div>
+                </div>
+              </div>
+              <div class="stk-item" style="opacity:.4;">
                 <div class="stk-av" style="background:#718096">BC</div>
-                <div class="stk-info"><div class="stk-name">Brett Collins</div><div class="stk-title">Departed early April · Former Champion</div></div>
-                <div class="stk-right"><span class="chip" style="font-size:9px">Departed</span></div>
+                <div class="stk-info"><div class="stk-name">Brett Collins</div><div class="stk-title">Departed Apr 2026</div></div>
+                <div class="stk-right" style="flex-direction:row;align-items:center;gap:6px;">
+                  <span style="width:32px;display:inline-block;"></span>
+                  <span class="chip" style="font-size:9px;width:90px;text-align:center;">Former champion</span>
+                  <div style="width:28px;"></div>
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- Rep History -->
+
+          <!-- Contract & Terms -->
           <div class="card">
-            <div class="card-head"><div class="card-num">11</div><div class="card-title">Rep History</div></div>
+            <div class="card-head"><div class="card-title">Contract &amp; Terms</div></div>
             <div class="card-body">
-              <div class="rep-item">
-                <div class="rep-dot current"></div>
-                <div>
-                  <div class="rep-name">Marcus Webb</div>
-                  <div class="rep-period">Feb 2026 — present</div>
-                  <div class="rep-note">Inherited post-escalation. Limited prior context on file.</div>
-                </div>
-              </div>
-              <div class="rep-item">
-                <div class="rep-dot"></div>
-                <div>
-                  <div class="rep-name">Dana Kim</div>
-                  <div class="rep-period">Jul 2025 — Feb 2026</div>
-                  <div class="rep-note">Managed through support escalation. No formal handoff captured.</div>
-                </div>
-              </div>
-              <div class="rep-item">
-                <div class="rep-dot"></div>
-                <div>
-                  <div class="rep-name">Tom Sato</div>
-                  <div class="rep-period">Mar 2022 — Jun 2025</div>
-                  <div class="rep-note">Original AE. Closed initial deal and 2024 renewal. Deep relationship with Brett.</div>
-                </div>
-              </div>
+              <div class="renewal-row"><div class="r-label">Current ACV</div><div class="r-val">$240K <span class="source-chip">CRM</span></div></div>
+              <div class="renewal-row"><div class="r-label">Renewal date</div><div class="r-val">Jul 15 · 47d <span class="source-chip">CRM</span></div></div>
+              <div class="renewal-row"><div class="r-label">Contract term</div><div class="r-val">Annual</div></div>
+              <div class="renewal-row"><div class="r-label">Expansion</div><div class="r-val">APAC est. +$60K <span class="source-chip">Gong</span></div></div>
+              <div class="renewal-row"><div class="r-label">QBR status</div><div class="r-val">Scheduled today</div></div>
             </div>
           </div>
 
           <!-- Pre-call brief card -->
           <div class="card">
-            <div class="card-head"><div class="card-num">12</div><div class="card-title">Pre-Call Brief</div></div>
+            <div class="card-head"><div class="card-title">Pre-Call Brief</div></div>
             <div class="card-body">
               <div class="brief-when">Today · QBR + Renewal · 2:00 PM PST · 45 min</div>
               <div class="brief-context">Re-establish continuity after Brett's departure. Confirm renewal ownership, surface budget clarity, and understand security review scope before the renewal window closes.</div>
@@ -1018,11 +979,9 @@ body { font-family: var(--font); background: var(--off-white); color: var(--navy
     <div class="tab-bar">
       <div class="tab" onclick="showTab('account')">Account</div>
       <div class="tab active">Timeline</div>
-      <div class="tab" onclick="showTab('notes')">Notes</div>
+      <div class="tab" onclick="showTab('history')">History</div>
       <div class="tab-right">
-        <span class="tab-badge tab-badge-red">3 open loops</span>
-        <span class="tab-badge tab-badge-amber">Renewal 47d</span>
-      </div>
+        </div>
     </div>
 
     <!-- toolbar -->
@@ -1136,7 +1095,6 @@ body { font-family: var(--font); background: var(--off-white); color: var(--navy
       <div class="tab" onclick="showTab('account')">Account</div>
       <div class="tab" onclick="showTab('timeline')">Timeline</div>
       <div class="tab active">History</div>
-      <div class="tab" onclick="showTab('notes')">Notes</div>
       <div class="tab-right"><span class="tab-badge tab-badge-amber">Transition brief ready</span></div>
     </div>
     <div style="flex:1;overflow-y:auto;padding:24px;background:var(--off-white);">
@@ -1228,17 +1186,17 @@ body { font-family: var(--font); background: var(--off-white); color: var(--navy
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
             <div style="font-size:13px;font-weight:500;color:var(--navy);font-family:var(--mono);">2026</div>
             <div style="flex:1;height:1px;background:var(--border);"></div>
-            <div style="font-size:10px;color:var(--red);font-family:var(--mono);">Champion departed · renewal at risk · today</div>
+            <div style="font-size:10px;color:var(--slate);font-family:var(--mono);">Champion departed · renewal Jul 15 · today</div>
           </div>
           <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:16px;">
             <div style="font-size:13px;color:var(--slate);line-height:1.75;"><strong style="color:var(--navy)">January 2026 — Q4 QBR.</strong> John Rivera and Brett attend. Renewal discussed; 2027 on track per Brett. APAC floated again as an expansion target.</div>
             <div style="margin-top:10px;font-size:13px;color:var(--slate);line-height:1.75;"><strong style="color:var(--navy)">February 2026 — Support escalation opened.</strong> Analytics module bug. Sarah Chen primary contact. Averaging 2 incidents per month.</div>
             <div style="margin-top:10px;font-size:13px;color:var(--slate);line-height:1.75;"><strong style="color:var(--navy)">March 2026 — Implementation review.</strong> Customer referenced 2023 rollout. Requested roadmap visibility before committing to APAC. Sarah begins raising budget uncertainty.</div>
             <div style="margin-top:10px;font-size:13px;color:var(--slate);line-height:1.75;"><strong style="color:var(--navy)">April 2026 — Brett Collins departs.</strong> Left early April. John Rivera named as interim contact — no warm handoff scheduled. Nexion re-engaged after Inline's outage concerns surfaced. Support escalation closed — bug stable.</div>
-            <div style="margin-top:10px;font-size:13px;color:var(--slate);line-height:1.75;"><strong style="color:var(--navy)">May 2026 — Renewal at risk.</strong> Two unanswered outbounds to John on renewal ownership. Security requirements received from procurement. Budget clarity still outstanding from April. Today: QBR + Renewal Check-In scheduled.</div>
+            <div style="margin-top:10px;font-size:13px;color:var(--slate);line-height:1.75;"><strong style="color:var(--navy)">May 2026.</strong> Two unanswered outbounds to John on renewal ownership. Security requirements received from procurement. Budget clarity still outstanding from April. Today: QBR + Renewal Check-In scheduled.</div>
             <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;">
               <span style="font-size:10px;background:#fff5f5;color:var(--red);border:1px solid rgba(197,48,48,.2);padding:2px 8px;border-radius:3px;font-family:var(--mono);">Champion departed</span>
-              <span style="font-size:10px;background:#fffbeb;color:var(--warn);border:1px solid rgba(183,121,31,.25);padding:2px 8px;border-radius:3px;font-family:var(--mono);">Renewal 47d</span>
+              <span style="font-size:10px;background:var(--off-white);color:var(--slate);border:1px solid var(--border);padding:2px 8px;border-radius:3px;font-family:var(--mono);">Renewal Jul 15 · 47d</span>
               <span style="font-size:10px;background:#fffbeb;color:var(--warn);border:1px solid rgba(183,121,31,.25);padding:2px 8px;border-radius:3px;font-family:var(--mono);">Competitor active</span>
               <span style="font-size:10px;background:#ebf4ff;color:#2b6cb0;border:1px solid rgba(43,108,176,.2);padding:2px 8px;border-radius:3px;font-family:var(--mono);">Rep: Marcus Webb</span>
             </div>
@@ -1449,9 +1407,9 @@ body { font-family: var(--font); background: var(--off-white); color: var(--navy
       .focus-td { padding:10px 12px; font-size:12px; color:var(--navy); vertical-align:middle; }
 
       .f-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
-      .f-dot-red { background:var(--red); }
-      .f-dot-amber { background:#EF9F27; }
-      .f-dot-green { background:var(--green); }
+      .f-dot-red { background:var(--mid-blue); }
+      .f-dot-amber { background:var(--mid-blue); }
+      .f-dot-green { background:var(--mid-blue); }
 
       .f-acct-name { font-size:13px; font-weight:500; color:var(--mid-blue); cursor:pointer; }
       .f-acct-name:hover { text-decoration:underline; }
@@ -1535,7 +1493,7 @@ body { font-family: var(--font); background: var(--off-white); color: var(--navy
             <td class="focus-td" style="padding-right:0;"><div class="f-dot f-dot-red"></div></td>
             <td class="focus-td"><div class="f-acct-name" onclick="showAccount()">Inline Industries</div><div class="f-acct-code">INLINE</div></td>
             <td class="focus-td"><div style="display:flex;align-items:center;"><span class="f-rep-av" style="background:#3A6F92">MW</span><span class="f-rep-name">Marcus Webb</span></div></td>
-            <td class="focus-td"><div class="f-signal">Champion silent 41 days — 2 outbound unanswered. Renewal in 47 days, auto-renew off. <span class="f-source">2 sources ▾</span></div></td>
+            <td class="focus-td"><div class="f-signal">Champion silent 41 days — 2 outbound unanswered. Renewal Jul 15 · 47 days out. <span class="f-source">2 sources ▾</span></div></td>
             <td class="focus-td"><div class="f-stage"><div class="f-stage-dot renewal"></div>Renewal</div></td>
             <td class="focus-td f-arr" style="text-align:right">$240K</td>
             <td class="focus-td f-touch" style="text-align:right">6d ago</td>
@@ -1754,6 +1712,119 @@ body { font-family: var(--font); background: var(--off-white); color: var(--navy
     </div>
   </div>
 
+  <!-- ── People view ── -->
+  <div id="view-people" style="display:none;flex:1;flex-direction:column;overflow:hidden;">
+    <div style="background:var(--white);border-bottom:1px solid var(--border);padding:16px 24px;flex-shrink:0;">
+      <div style="font-size:11px;color:#a0aec0;font-family:var(--mono);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px;">People</div>
+      <input id="people-search" type="text" oninput="filterPeople()" placeholder="Search by name, title, or account…" style="width:100%;max-width:480px;border:1px solid var(--border);border-radius:6px;padding:8px 12px;font-size:13px;font-family:var(--font);outline:none;color:var(--navy);" autofocus>
+    </div>
+    <div style="flex:1;overflow-y:auto;background:var(--white);">
+      <style>
+        .people-row { display:flex;align-items:center;gap:12px;padding:10px 24px;border-bottom:1px solid var(--border-light);cursor:pointer;transition:background .1s; }
+        .people-row:hover { background:#f7fafc; }
+        .people-row.hidden { display:none; }
+        .p-av { width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:white;flex-shrink:0; }
+        .p-name { font-size:13px;font-weight:500;color:var(--mid-blue);flex-shrink:0;width:160px; }
+        .p-title { font-size:12px;color:var(--slate);flex-shrink:0;width:160px; }
+        .p-account { font-size:12px;color:var(--navy);flex:1; }
+        .p-role { font-size:10px;padding:2px 7px;border-radius:3px;background:var(--off-white);border:1px solid var(--border);color:var(--slate);font-family:var(--mono);flex-shrink:0; }
+        .p-touch { font-size:11px;color:#a0aec0;font-family:var(--mono);flex-shrink:0;width:60px;text-align:right; }
+        .p-sf { font-size:9px;color:#a0aec0;border:1px solid #e2e8f0;border-radius:3px;padding:1px 5px;font-family:var(--mono);flex-shrink:0; }
+      </style>
+      <div style="display:flex;gap:12px;padding:7px 24px;background:var(--off-white);border-bottom:1px solid var(--border);font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.6px;color:#a0aec0;font-family:var(--mono);">
+        <div style="width:30px;flex-shrink:0;"></div>
+        <div style="width:160px;flex-shrink:0;">Name</div>
+        <div style="width:160px;flex-shrink:0;">Title</div>
+        <div style="flex:1;">Account</div>
+        <div style="flex-shrink:0;width:100px;">Role</div>
+        <div style="width:60px;flex-shrink:0;text-align:right;">Last touch</div>
+      </div>
+      <div id="people-list">
+        <div class="people-row" data-search="john rivera vp operations inline industries champion" onclick="showAccount()">
+          <div class="p-av" style="background:#3A6F92">JR</div>
+          <div class="p-name">John Rivera</div>
+          <div class="p-title">VP Operations</div>
+          <div class="p-account">Inline Industries <span class="p-sf">SF?</span></div>
+          <div class="p-role">Champion</div>
+          <div class="p-touch">41d</div>
+        </div>
+        <div class="people-row" data-search="saira khan director it inline industries technical evaluator" onclick="showAccount()">
+          <div class="p-av" style="background:#2D6E8A">SK</div>
+          <div class="p-name">Saira Khan</div>
+          <div class="p-title">Director IT</div>
+          <div class="p-account">Inline Industries</div>
+          <div class="p-role">Technical</div>
+          <div class="p-touch">12d</div>
+        </div>
+        <div class="people-row" data-search="mike patel procurement inline industries" onclick="showAccount()">
+          <div class="p-av" style="background:#276749">MP</div>
+          <div class="p-name">Mike Patel</div>
+          <div class="p-title">Procurement</div>
+          <div class="p-account">Inline Industries <span class="p-sf">SF?</span></div>
+          <div class="p-role">Procurement</div>
+          <div class="p-touch">Today</div>
+        </div>
+        <div class="people-row" data-search="brett collins inline industries former champion departed" style="opacity:.45;cursor:default;">
+          <div class="p-av" style="background:#718096">BC</div>
+          <div class="p-name" style="color:var(--slate);">Brett Collins</div>
+          <div class="p-title">Departed Apr 2026</div>
+          <div class="p-account">Inline Industries</div>
+          <div class="p-role">Former champion</div>
+          <div class="p-touch">Apr 4</div>
+        </div>
+        <div class="people-row" data-search="alex meridian health champion" onclick="">
+          <div class="p-av" style="background:#3A6F92">AW</div>
+          <div class="p-name">Alex Winters</div>
+          <div class="p-title">VP Sales Ops</div>
+          <div class="p-account">Meridian Health Systems</div>
+          <div class="p-role">Champion</div>
+          <div class="p-touch">8d</div>
+        </div>
+        <div class="people-row" data-search="priya northstar logistics director procurement" onclick="">
+          <div class="p-av" style="background:#744210">PN</div>
+          <div class="p-name">Priya Nair</div>
+          <div class="p-title">Director Procurement</div>
+          <div class="p-account">Northstar Logistics</div>
+          <div class="p-role">Economic Buyer</div>
+          <div class="p-touch">3d</div>
+        </div>
+        <div class="people-row" data-search="james vantage health cto technical" onclick="">
+          <div class="p-av" style="background:#2D6E8A">JK</div>
+          <div class="p-name">James Kim</div>
+          <div class="p-title">CTO</div>
+          <div class="p-account">Vantage Health Partners <span class="p-sf">SF?</span></div>
+          <div class="p-role">Technical</div>
+          <div class="p-touch">14d</div>
+        </div>
+        <div class="people-row" data-search="sarah brightfield technologies champion vp" onclick="">
+          <div class="p-av" style="background:#276749">SO</div>
+          <div class="p-name">Sara Okonkwo</div>
+          <div class="p-title">VP Engineering</div>
+          <div class="p-account">Brightfield Technologies</div>
+          <div class="p-role">Champion</div>
+          <div class="p-touch">11d</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Thread view ── -->
+  <div id="view-thread" style="display:none;flex:1;flex-direction:column;overflow:hidden;" class="main">
+    <div style="background:var(--navy);padding:12px 24px;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:12px;">
+      <div id="thread-title" style="font-size:16px;font-weight:500;color:white;"></div>
+      <div id="thread-meta" style="font-size:11px;color:rgba(247,250,252,.4);font-family:var(--mono);"></div>
+      <div style="margin-left:auto;display:flex;gap:8px;">
+        <button id="thread-close-btn" style="font-size:11px;font-weight:500;padding:4px 12px;background:rgba(255,255,255,.08);color:rgba(247,250,252,.7);border:1px solid rgba(255,255,255,.12);border-radius:5px;cursor:pointer;">Close thread</button>
+        <button style="font-size:11px;font-weight:500;padding:4px 12px;background:rgba(255,255,255,.08);color:rgba(247,250,252,.7);border:1px solid rgba(255,255,255,.12);border-radius:5px;cursor:pointer;">→ SF Opportunity</button>
+      </div>
+    </div>
+    <div style="background:var(--white);border-bottom:1px solid var(--border);padding:8px 24px;flex-shrink:0;display:flex;align-items:center;gap:8px;">
+      <div id="thread-source-label" style="font-size:11px;color:#a0aec0;font-family:var(--mono);"></div>
+      <div style="margin-left:auto;font-size:11px;color:#a0aec0;font-family:var(--mono);">Known filtered this from all account activity · confirm matches below</div>
+    </div>
+    <div style="flex:1;overflow-y:auto;background:var(--white);" id="thread-content"></div>
+  </div>
+
   <!-- ── 1:1 Prep view ── -->
   <div id="view-oneonone" style="display:none;flex:1;flex-direction:column;overflow:hidden;">
     <div style="background:var(--white);border-bottom:1px solid var(--border);padding:20px 24px 16px;flex-shrink:0;">
@@ -1769,6 +1840,73 @@ body { font-family: var(--font); background: var(--off-white); color: var(--navy
 </div><!-- end app-body -->
 
 <script>
+  function editSummary() {
+    document.getElementById('summary-edit').style.display = 'block';
+    document.getElementById('summary-edit-btn').style.display = 'none';
+    document.getElementById('summary-textarea').focus();
+  }
+  function cancelSummary() {
+    document.getElementById('summary-edit').style.display = 'none';
+    document.getElementById('summary-edit-btn').style.display = 'inline-block';
+    document.getElementById('summary-textarea').value = '';
+  }
+  function saveSummary() {
+    const text = document.getElementById('summary-textarea').value.trim();
+    document.getElementById('summary-edit').style.display = 'none';
+    document.getElementById('summary-edit-btn').style.display = 'inline-block';
+    if (text) {
+      const note = document.getElementById('summary-human-note');
+      note.textContent = text;
+      note.style.display = 'block';
+      const attr = document.getElementById('summary-attribution');
+      attr.innerHTML = '<span class="source-chip" style="background:rgba(0,105,195,.1);border-color:rgba(0,105,195,.3);color:var(--mid-blue);">Mgr</span> Edited by Sarah Chen · May 29, 2026 · Treated as ground truth';
+      attr.style.display = 'block';
+      document.getElementById('summary-textarea').value = '';
+    }
+  }
+
+  function switchMindset(tab) {
+    const isAction = tab === 'action';
+    document.getElementById('mindset-action').style.display = isAction ? 'block' : 'none';
+    document.getElementById('mindset-assess').style.display = isAction ? 'none' : 'block';
+    const ab = document.getElementById('tab-action-btn');
+    const sb = document.getElementById('tab-assess-btn');
+    ab.style.background = isAction ? 'var(--off-white)' : 'var(--white)';
+    ab.style.color = isAction ? 'var(--navy)' : 'var(--slate)';
+    ab.style.borderBottom = isAction ? '2px solid var(--navy)' : '2px solid transparent';
+    sb.style.background = isAction ? 'var(--white)' : 'var(--off-white)';
+    sb.style.color = isAction ? 'var(--slate)' : 'var(--navy)';
+    sb.style.borderBottom = isAction ? '2px solid transparent' : '2px solid var(--navy)';
+    document.getElementById('action-count').style.background = isAction ? 'var(--navy)' : 'var(--border)';
+    document.getElementById('action-count').style.color = isAction ? 'white' : 'var(--slate)';
+    document.getElementById('assess-count').style.background = isAction ? 'var(--border)' : 'var(--navy)';
+    document.getElementById('assess-count').style.color = isAction ? 'var(--slate)' : 'white';
+  }
+
+  function confirmSigA(n) {
+    const row = document.getElementById('asig' + n);
+    if (!row) return;
+    row.style.opacity = '.4';
+    row.style.pointerEvents = 'none';
+  }
+  function dismissSigA(n) {
+    const row = document.getElementById('asig' + n);
+    if (row) row.style.display = 'none';
+  }
+
+  function confirmSig(n) {
+    const row = document.getElementById('sig' + n);
+    if (!row) return;
+    row.style.opacity = '.4';
+    row.style.pointerEvents = 'none';
+    const btn = row.querySelector('.btn-xs-navy');
+    if (btn) { btn.textContent = '✓'; }
+  }
+  function dismissSig(n) {
+    const row = document.getElementById('sig' + n);
+    if (row) { row.style.display = 'none'; }
+  }
+
   function answerQQ(n) {
     const input = document.getElementById('qq' + n + '-input');
     if (!input.value.trim()) return;
@@ -1779,7 +1917,7 @@ body { font-family: var(--font); background: var(--off-white); color: var(--navy
     icon.className = 'qq-icon answered';
     icon.textContent = '✓';
     btn.classList.add('confirmed');
-    btn.textContent = '✓';
+    btn.textContent = '✓ Added';
     btn.disabled = true;
   }
   function deferQQ(n, id) {
@@ -1791,6 +1929,20 @@ body { font-family: var(--font); background: var(--off-white); color: var(--navy
     document.getElementById('qq' + n + '-input').disabled = true;
     document.getElementById('qq' + n + '-btn').disabled = true;
   }
+  function doneMove(id) {
+    const row = document.getElementById(id);
+    if (!row) return;
+    const text = row.querySelector('.commit-text');
+    if (text) { text.style.textDecoration = 'line-through'; text.style.color = '#a0aec0'; }
+    row.style.opacity = '.5';
+    const btns = row.querySelectorAll('button');
+    btns.forEach(b => b.disabled = true);
+  }
+  function removeMove(id) {
+    const row = document.getElementById(id);
+    if (row) row.style.display = 'none';
+  }
+
   function addMove() {
     const input = document.getElementById('new-move-input');
     if (!input.value.trim()) return;
@@ -1802,7 +1954,7 @@ body { font-family: var(--font); background: var(--off-white); color: var(--navy
     input.value = '';
   }
 
-  const allViews = ['view-home','view-focus','view-accounts','view-account-detail','view-timeline','view-history','view-transitions','view-oneonone'];
+  const allViews = ['view-home','view-focus','view-accounts','view-people','view-account-detail','view-timeline','view-history','view-transitions','view-oneonone','view-thread'];
   const oneononeItems = [];
 
   function showOneOnOne() {
@@ -1874,6 +2026,142 @@ body { font-family: var(--font); background: var(--off-white); color: var(--navy
     allViews.forEach(id => {
       const el = document.getElementById(id);
       if (el) el.style.display = 'none';
+    });
+  }
+
+  // Set renewal tag class based on days remaining
+  (function() {
+    const daysOut = 47;
+    const tag = document.getElementById('renewal-tag');
+    if (!tag) return;
+    if (daysOut <= 90) {
+      tag.className = 'atag atag-renewal';
+      tag.textContent = 'Renewal · ' + daysOut + 'd';
+    } else {
+      tag.style.display = 'none';
+    }
+  })();
+
+  const threadData = {
+    apac: {
+      title: 'APAC Expansion',
+      meta: 'Topic thread · Started Q4 2025',
+      source: 'Source: Dec 8 2025 QBR call — Brett Collins and John Rivera raised APAC as expansion target',
+      summary: 'APAC expansion was first raised in the Q4 2025 QBR by Brett Collins and John Rivera as a target for the 2027 renewal. A proposal was sent to Brett in February 2026 — estimated +$60K ACV — but received no formal response before his departure. The thread has been stalled since April 2026, linked to budget clarity Sarah Khan expected by end of April but has not confirmed. No internal owner on Inline\'s side has been identified for APAC.',
+      summaryChips: ['Est. +$60K ACV', 'No internal owner', 'Budget clarity outstanding', '189d since last signal'],
+      rows: [
+        { date: 'Jan 8', year: '2026', type: 'meet', contact: 'Brett Collins', sub: 'Q4 QBR — annual review', snip: 'APAC floated as expansion target for 2027. No formal scope discussed. Brett to follow up.', flag: '' },
+        { date: 'Feb 28', year: '2026', type: 'email', contact: 'You → Brett Collins', sub: 'APAC expansion proposal — for your review', snip: 'Sent v1 APAC SOW to Brett. Est. +$60K ACV. Brett acknowledged receipt, no formal response.', flag: '' },
+        { date: 'Mar 12', year: '2026', type: 'meet', contact: 'Sarah Khan', sub: 'Implementation review — Q1 check-in', snip: 'Customer requested roadmap visibility before committing to APAC. Referenced 2023 deployment.', flag: '' },
+        { date: 'Apr 4', year: '2026', type: 'meet', contact: 'Sarah Khan', sub: 'Renewal check-in', snip: 'Budget uncertainty raised. APAC timing linked to budget clarity expected by end of April.', flag: 'yellow-flag' },
+        { date: 'May 9', year: '2026', type: 'email', contact: 'You', sub: 'Re: APAC scope — pending budget signal', snip: 'No budget confirmation received. APAC thread stalled pending clarity.', flag: 'yellow-flag' },
+      ]
+    },
+    john: {
+      title: 'John Rivera',
+      meta: 'Person thread · VP Operations · Champion',
+      source: 'All account activity involving John Rivera · 41 days since last reply',
+      summary: 'John Rivera first appeared in account activity at the Q4 2025 QBR alongside Brett Collins. His engagement was limited — Brett led the relationship. Following Brett\'s departure in April 2026, John was named interim contact but has not confirmed renewal ownership. He attended the April 4 renewal check-in but was largely passive. Two outbound attempts since have gone unanswered. 41 days since last known engagement.',
+      summaryChips: ['VP Operations', 'Champion — unconfirmed', 'SF? not found', '2 unanswered outbounds'],
+      rows: [
+        { date: 'Jan 8', year: '2026', type: 'meet', contact: 'John Rivera + Brett', sub: 'Q4 QBR — annual review', snip: 'John attended. Renewal discussed, on track per Brett. Minimal direct engagement from John.', flag: '' },
+        { date: 'Mar 22', year: '2026', type: 'email', contact: 'Brett Collins', sub: 'Heads up on my departure', snip: 'Brett recommends John Rivera as interim contact for renewal. No warm handoff scheduled.', flag: 'red-flag' },
+        { date: 'Apr 4', year: '2026', type: 'meet', contact: 'John Rivera', sub: 'Renewal check-in call', snip: 'John attended. Largely silent — Sarah led the conversation. No renewal ownership confirmed.', flag: '' },
+        { date: 'May 2', year: '2026', type: 'email', contact: 'You → John Rivera', sub: 'Re: Renewal — who should we be working with?', snip: 'First outreach after Brett\'s departure. No reply received.', flag: 'yellow-flag' },
+        { date: 'May 9', year: '2026', type: 'email', contact: 'You → John Rivera', sub: 'Following up — renewal ownership', snip: 'Second outreach. No reply received. 41 days since last engagement.', flag: 'yellow-flag' },
+      ]
+    },
+    sarah: {
+      title: 'Saira Khan',
+      meta: 'Person thread · Director IT · Technical Evaluator',
+      source: 'All account activity involving Saira Khan',
+      summary: 'Saira Khan became the primary active contact during the Q1 2026 support escalation — she opened and managed ticket #8841, which ran from February through April. She has been the most consistent responder on the account since Brett\'s departure. Budget clarity she committed to by end of April has not been received. She referenced the 2023 implementation in March, signalling continued deployment sensitivity.',
+      summaryChips: ['Director IT', 'Technical Evaluator', 'Budget signal outstanding', 'Last touch 12d'],
+      rows: [
+        { date: 'Feb 3', year: '2026', type: 'support', contact: 'Saira Khan', sub: 'Escalation opened — analytics module bug', snip: 'Sarah reports recurring errors. Ticket #8841 opened. Averaging 2 bugs/month.', flag: 'yellow-flag' },
+        { date: 'Mar 12', year: '2026', type: 'meet', contact: 'Saira Khan', sub: 'Implementation review', snip: 'Referenced 2023 rollout. Requested roadmap visibility. Budget uncertainty first raised.', flag: '' },
+        { date: 'Apr 4', year: '2026', type: 'meet', contact: 'Saira Khan', sub: 'Renewal check-in', snip: 'Budget clarity expected by end of April. Sarah led most of the conversation.', flag: '' },
+        { date: 'Apr 28', year: '2026', type: 'support', contact: 'Saira Khan', sub: 'Escalation closed — bug resolved', snip: 'Ticket #8841 closed. No new occurrences in 17 days. Sarah confirmed satisfaction informally.', flag: 'green-flag' },
+        { date: 'May 20', year: '2026', type: 'email', contact: 'Dev Ramchandran', sub: 'Security requirements received', snip: 'Procurement sent requirements list. More thorough than typical.', flag: '' },
+      ]
+    },
+    mike: {
+      title: 'Mike Patel',
+      meta: 'Person thread · Procurement · First meeting today',
+      source: 'All account activity involving Mike Patel · SF? not found in Salesforce',
+      summary: 'Mike Patel appears in Known for the first time today. No prior relationship context on file. Not found in Salesforce. His involvement was signalled by the security requirements list received May 20 from procurement. He is likely the driver of the security review process. No history to draw from — this thread starts today.',
+      summaryChips: ['Procurement', 'SF? not found', 'First meeting today', 'Security review driver'],
+      rows: [
+        { date: 'Today', year: 'May 26', type: 'meet', contact: 'Mike Patel', sub: 'QBR + Renewal Check-In', snip: 'First Known interaction. Security review likely to be driven from this relationship.', flag: '' },
+      ]
+    }
+  };
+
+  function showThread(key) {
+    const d = threadData[key];
+    if (!d) return;
+    hideAllViews();
+    document.getElementById('view-thread').style.display = 'flex';
+    document.getElementById('thread-title').textContent = d.title;
+    document.getElementById('thread-meta').textContent = d.meta;
+    document.getElementById('thread-source-label').textContent = d.source;
+    document.getElementById('main-breadcrumb').innerHTML =
+      '<span style="cursor:pointer;text-decoration:underline;text-underline-offset:2px;" onclick="showAccount()">Accounts / Inline Industries</span><span class="sep">/</span><span class="bc-active">' + d.title + '</span>';
+
+    const chipMap = { meet:'meet', email:'email', support:'support', intel:'intel' };
+    const content = document.getElementById('thread-content');
+
+    const chips = (d.summaryChips || []).map(c =>
+      `<span style="font-size:10px;padding:2px 8px;border-radius:3px;background:var(--off-white);border:1px solid var(--border);color:var(--slate);font-family:var(--mono);">${c}</span>`
+    ).join('');
+
+    content.innerHTML = `
+      <div style="padding:18px 24px 20px;border-bottom:1px solid var(--border);background:var(--white);">
+        <div style="font-size:13px;color:var(--slate);line-height:1.75;margin-bottom:12px;max-width:680px;">${d.summary || ''}</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">${chips}</div>
+      </div>
+      <div style="padding:8px 24px;background:var(--off-white);border-bottom:1px solid var(--border);font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.6px;color:#a0aec0;font-family:var(--mono);">Activity · ${d.rows.length} touchpoints</div>
+      ${d.rows.map((r, i) => `
+        <div class="tl-row ${r.date === 'Today' ? 'tl-today' : ''}" style="${i === d.rows.length - 1 ? 'border-bottom:none' : ''}">
+          <div class="tl-date">${r.date}<br><span>${r.year}</span></div>
+          <span class="tl-chip ${chipMap[r.type] || 'email'}">${r.type}</span>
+          <div class="tl-contact">${r.contact}</div>
+          <div class="tl-subject">${r.sub} <span class="tl-snip">— ${r.snip}</span></div>
+          <div class="tl-right">${r.flag ? '<span class="tl-flag ' + r.flag + '">' + (r.flag === 'red-flag' ? 'Note' : r.flag === 'green-flag' ? 'Resolved' : 'No reply') + '</span>' : ''}</div>
+        </div>
+      `).join('')}
+    `;
+  }
+
+  function showNewThreadForm() {
+    document.getElementById('new-thread-form').style.display = 'block';
+  }
+  function hideNewThreadForm() {
+    document.getElementById('new-thread-form').style.display = 'none';
+  }
+  function createThread() {
+    const name = document.getElementById('thread-name-input').value.trim();
+    const source = document.getElementById('thread-source-input').value.trim();
+    if (!name) return;
+    alert('Thread "' + name + '" created. Known will tag matching activity from ' + (source || 'today') + ' forward.');
+    hideNewThreadForm();
+    document.getElementById('thread-name-input').value = '';
+    document.getElementById('thread-source-input').value = '';
+  }
+
+  function showPeople() {
+    hideAllViews();
+    document.getElementById('view-people').style.display = 'flex';
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    document.getElementById('nav-people').classList.add('active');
+    document.getElementById('main-breadcrumb').innerHTML = '<span class="bc-active">People</span>';
+    setTimeout(() => { const s = document.getElementById('people-search'); if(s) s.focus(); }, 50);
+  }
+  function filterPeople() {
+    const q = document.getElementById('people-search').value.toLowerCase();
+    document.querySelectorAll('.people-row').forEach(row => {
+      const match = (row.dataset.search || '').toLowerCase().includes(q);
+      row.classList.toggle('hidden', !match);
     });
   }
 
