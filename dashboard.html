@@ -2,6 +2,22 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+  <script>
+    (function(){
+      var k = 'known_demo_auth';
+      if (sessionStorage.getItem(k) !== '1') {
+        document.documentElement.style.visibility = 'hidden';
+        var pw = prompt('Enter password to continue:');
+        if (pw === 'Ramrod') {
+          sessionStorage.setItem(k, '1');
+          document.documentElement.style.visibility = '';
+        } else {
+          document.documentElement.style.visibility = '';
+          document.body.innerHTML = '<div style="font-family:-apple-system,sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;background:#061A33;color:#94a3b8;font-size:14px;">Access denied.</div>';
+        }
+      }
+    })();
+  </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Known — Inline Industries</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">

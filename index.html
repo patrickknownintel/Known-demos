@@ -3,6 +3,22 @@
 <head>
   <meta charset="utf-8">
   <title>Known · Demo Index</title>
+  <script>
+    (function(){
+      var k = 'known_demo_auth';
+      if (sessionStorage.getItem(k) !== '1') {
+        document.documentElement.style.visibility = 'hidden';
+        var pw = prompt('Enter password to continue:');
+        if (pw === 'Ramrod') {
+          sessionStorage.setItem(k, '1');
+          document.documentElement.style.visibility = '';
+        } else {
+          document.documentElement.style.visibility = '';
+          document.body.innerHTML = '<div style="font-family:-apple-system,sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;background:#061A33;color:#94a3b8;font-size:14px;">Access denied.</div>';
+        }
+      }
+    })();
+  </script>
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #061A33; color: #F7FAFC; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
     .wrap { max-width: 480px; padding: 48px 24px; }

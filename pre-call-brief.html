@@ -2,6 +2,22 @@
 <html>
 <head>
   <meta charset="utf-8">
+  <script>
+    (function(){
+      var k = 'known_demo_auth';
+      if (sessionStorage.getItem(k) !== '1') {
+        document.documentElement.style.visibility = 'hidden';
+        var pw = prompt('Enter password to continue:');
+        if (pw === 'Ramrod') {
+          sessionStorage.setItem(k, '1');
+          document.documentElement.style.visibility = '';
+        } else {
+          document.documentElement.style.visibility = '';
+          document.body.innerHTML = '<div style="font-family:-apple-system,sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;background:#061A33;color:#94a3b8;font-size:14px;">Access denied.</div>';
+        }
+      }
+    })();
+  </script>
   <title>Known · Pre-Call Brief · Inline Industries</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
