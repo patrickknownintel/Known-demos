@@ -1,0 +1,1968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Known — Inline Industries</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #061A33;
+  --navy-2: #0d2d4f;
+  --mid-blue: #0069C3;
+  --slate: #4A5568;
+  --off-white: #F7FAFC;
+  --white: #FFFFFF;
+  --green: #48BB78;
+  --teal: #2D6E8A;
+  --border: #E2E8F0;
+  --border-light: #F1F3F4;
+  --warn: #B7791F;
+  --warn-bg: #FFFBEB;
+  --red: #C53030;
+  --radius: 8px;
+  --sidebar-w: 200px;
+  --font: 'DM Sans', Arial, sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font); background: var(--off-white); color: var(--navy); font-size: 13px; height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+
+/* ── Top bar ── */
+.topbar {
+  height: 48px; background: var(--navy);
+  display: flex; align-items: center; padding: 0 16px; gap: 0;
+  flex-shrink: 0; border-bottom: 1px solid rgba(255,255,255,.08);
+  z-index: 10;
+}
+.logo { display: flex; align-items: center; gap: 7px; width: var(--sidebar-w); flex-shrink: 0; }
+.logo-k { width: 26px; height: 26px; background: white; border-radius: 5px; display: flex; align-items: center; justify-content: center; }
+.logo-k svg { display: block; }
+.logo-name { font-size: 14px; font-weight: 500; color: white; letter-spacing: -.3px; }
+.logo-ver { font-size: 10px; color: rgba(247,250,252,.3); font-family: var(--mono); margin-left: 2px; }
+.breadcrumb { display: flex; align-items: center; gap: 5px; font-size: 11px; color: rgba(247,250,252,.4); font-family: var(--mono); }
+.breadcrumb .bc-active { color: rgba(247,250,252,.85); }
+.breadcrumb .sep { opacity: .3; }
+.topbar-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+.live-label { font-size: 11px; color: rgba(247,250,252,.6); font-family: var(--mono); display: flex; align-items: center; gap: 5px; }
+.jump-input { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); border-radius: 5px; padding: 4px 10px; font-size: 11px; color: rgba(247,250,252,.5); font-family: var(--mono); width: 180px; outline: none; }
+.jump-input::placeholder { color: rgba(247,250,252,.3); }
+.topbar-icon { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 5px; cursor: pointer; color: rgba(247,250,252,.4); transition: background .15s; }
+.topbar-icon:hover { background: rgba(255,255,255,.08); color: rgba(247,250,252,.8); }
+.user-av { width: 26px; height: 26px; border-radius: 50%; background: var(--teal); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 500; color: white; cursor: pointer; }
+
+/* ── App body ── */
+.app-body { display: flex; flex: 1; overflow: hidden; }
+
+/* ── Sidebar ── */
+.sidebar {
+  width: var(--sidebar-w); flex-shrink: 0;
+  background: var(--navy); display: flex; flex-direction: column;
+  border-right: 1px solid rgba(255,255,255,.06);
+  overflow-y: auto;
+}
+.sidebar-section { padding: 16px 0 8px; }
+.sidebar-label { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .7px; color: rgba(247,250,252,.25); padding: 0 14px; margin-bottom: 4px; font-family: var(--mono); }
+.nav-item { display: flex; align-items: center; gap: 8px; padding: 6px 14px; cursor: pointer; font-size: 12px; color: rgba(247,250,252,.5); border-radius: 0; transition: background .12s, color .12s; position: relative; }
+.nav-item:hover { background: rgba(255,255,255,.05); color: rgba(247,250,252,.8); }
+.nav-item.active { background: rgba(255,255,255,.08); color: white; }
+.nav-item.active::before { content: ''; position: absolute; left: 0; top: 4px; bottom: 4px; width: 2px; background: var(--mid-blue); border-radius: 0 2px 2px 0; }
+.nav-item svg { flex-shrink: 0; opacity: .6; }
+.nav-item.active svg { opacity: 1; }
+.nav-badge { margin-left: auto; font-size: 10px; font-weight: 500; background: rgba(255,255,255,.1); color: rgba(247,250,252,.6); padding: 1px 6px; border-radius: 10px; font-family: var(--mono); }
+.nav-badge.red { background: rgba(197,48,48,.3); color: #fc8181; }
+.sidebar-divider { height: 1px; background: rgba(255,255,255,.06); margin: 6px 0; }
+.sidebar-footer { margin-top: auto; padding: 12px 14px; border-top: 1px solid rgba(255,255,255,.06); display: flex; align-items: center; gap: 8px; }
+.footer-av { width: 26px; height: 26px; border-radius: 50%; background: var(--teal); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 500; color: white; flex-shrink: 0; }
+.footer-name { font-size: 11px; color: rgba(247,250,252,.55); }
+.footer-role { font-size: 10px; color: rgba(247,250,252,.3); font-family: var(--mono); }
+
+/* ── Main content ── */
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+/* ── Account header band ── */
+.account-band {
+  background: var(--navy); flex-shrink: 0;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.account-band-inner { padding: 14px 24px 0; }
+.account-band-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 10px; }
+.account-title-row { display: flex; align-items: center; gap: 10px; }
+.account-title { font-size: 20px; font-weight: 500; color: white; letter-spacing: -.3px; }
+.atag { font-size: 10px; font-weight: 500; padding: 2px 8px; border-radius: 4px; font-family: var(--mono); letter-spacing: .3px; }
+.atag-renewal { background: rgba(45,110,138,.3); color: #7de8e6; border: 1px solid rgba(45,110,138,.4); }
+.atag-fragile { background: rgba(197,48,48,.2); color: #fc8181; border: 1px solid rgba(197,48,48,.3); }
+.since-box { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); border-radius: 6px; padding: 8px 12px; min-width: 220px; }
+.since-label { font-size: 10px; color: rgba(247,250,252,.35); font-family: var(--mono); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 5px; }
+.since-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: rgba(247,250,252,.65); margin-bottom: 3px; }
+.since-item:last-child { margin-bottom: 0; }
+.since-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--mid-blue); flex-shrink: 0; }
+.account-summary { font-size: 12px; color: rgba(247,250,252,.6); line-height: 1.6; margin-bottom: 12px; max-width: 680px; }
+.account-summary strong { color: rgba(247,250,252,.85); }
+.source-chip { display: inline-flex; align-items: center; gap: 3px; font-size: 9px; font-family: var(--mono); background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); color: rgba(247,250,252,.5); padding: 1px 6px; border-radius: 3px; cursor: pointer; margin-left: 3px; vertical-align: middle; }
+.source-chip:hover { background: rgba(255,255,255,.12); color: rgba(247,250,252,.8); }
+
+/* ── Metric strip ── */
+.metric-strip { display: flex; border-top: 1px solid rgba(255,255,255,.06); }
+.metric-cell { flex: 1; padding: 10px 16px; border-right: 1px solid rgba(255,255,255,.06); cursor: pointer; transition: background .12s; }
+.metric-cell:last-child { border-right: none; }
+.metric-cell:hover { background: rgba(255,255,255,.04); }
+.metric-cell.active-metric { background: rgba(255,255,255,.06); border-bottom: 2px solid var(--mid-blue); }
+.mc-label { font-size: 10px; text-transform: uppercase; letter-spacing: .5px; color: rgba(247,250,252,.35); font-family: var(--mono); margin-bottom: 3px; }
+.mc-val { font-size: 15px; font-weight: 500; color: white; display: flex; align-items: center; gap: 6px; }
+.mc-val.amber { color: #fcd34d; }
+.mc-val.teal { color: #7de8e6; }
+.mc-val.red { color: #fc8181; }
+.mc-sub { font-size: 10px; color: rgba(247,250,252,.35); font-family: var(--mono); margin-top: 2px; }
+
+/* ── Tab bar ── */
+.tab-bar { background: var(--white); border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 24px; flex-shrink: 0; }
+.tab { font-size: 12px; font-weight: 500; padding: 10px 14px; cursor: pointer; color: var(--slate); border-bottom: 2px solid transparent; margin-bottom: -1px; transition: color .12s, border-color .12s; white-space: nowrap; }
+.tab:hover { color: var(--navy); }
+.tab.active { color: var(--mid-blue); border-bottom-color: var(--mid-blue); }
+.tab-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+.tab-badge { font-size: 10px; font-weight: 500; padding: 1px 7px; border-radius: 10px; font-family: var(--mono); }
+.tab-badge-red { background: #fff5f5; color: var(--red); border: 1px solid rgba(197,48,48,.2); }
+.tab-badge-amber { background: var(--warn-bg); color: var(--warn); border: 1px solid rgba(183,121,31,.25); }
+
+/* ── Scrollable content ── */
+.content-area { flex: 1; overflow-y: auto; padding: 20px 24px 40px; }
+
+/* ── Two-col grid ── */
+.account-grid { display: grid; grid-template-columns: 1fr 300px; gap: 16px; }
+.left-col { display: flex; flex-direction: column; gap: 14px; }
+.right-col { display: flex; flex-direction: column; gap: 14px; }
+
+/* ── Cards ── */
+.card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.card-head { background: var(--off-white); padding: 9px 14px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border); }
+.card-num { width: 18px; height: 18px; border-radius: 50%; background: var(--navy); color: white; font-size: 9px; font-weight: 500; display: flex; align-items: center; justify-content: center; font-family: var(--mono); flex-shrink: 0; }
+.card-num.flagged { background: var(--red); }
+.card-num.strategic { background: var(--teal); }
+.card-title { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .6px; color: var(--navy); font-family: var(--mono); }
+.card-meta { font-size: 10px; color: #a0aec0; margin-left: auto; font-family: var(--mono); }
+.card-action { font-size: 11px; color: var(--mid-blue); font-weight: 500; margin-left: auto; cursor: pointer; }
+.card-body { padding: 14px; }
+
+/* ── Risk items ── */
+.risk-item { display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border-light); }
+.risk-item:first-child { padding-top: 0; }
+.risk-item:last-child { border-bottom: none; padding-bottom: 0; }
+.risk-icon { width: 15px; height: 15px; flex-shrink: 0; margin-top: 1px; }
+.risk-label { font-weight: 500; font-size: 13px; color: var(--navy); margin-bottom: 2px; }
+.risk-body { font-size: 12px; color: var(--slate); line-height: 1.5; margin-bottom: 3px; }
+.risk-rationale { font-size: 11px; font-style: italic; color: #a0aec0; font-family: var(--mono); }
+
+/* ── Open loops ── */
+.loop-item { display: flex; align-items: flex-start; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--border-light); }
+.loop-item:first-child { padding-top: 0; }
+.loop-item:last-child { border-bottom: none; padding-bottom: 0; }
+.loop-chip { font-size: 10px; font-weight: 500; padding: 2px 7px; border-radius: 3px; white-space: nowrap; flex-shrink: 0; font-family: var(--mono); letter-spacing: .3px; margin-top: 1px; }
+.chip-dropped { background: #fff5f5; color: var(--red); border: 1px solid rgba(197,48,48,.2); }
+.chip-overdue { background: var(--warn-bg); color: var(--warn); border: 1px solid rgba(183,121,31,.2); }
+.chip-hanging { background: #ebf4ff; color: #2b6cb0; border: 1px solid rgba(43,108,176,.2); }
+.chip-due { background: var(--off-white); color: var(--slate); border: 1px solid var(--border); }
+.loop-content { flex: 1; }
+.loop-text { font-size: 12px; color: var(--navy); line-height: 1.5; }
+.loop-meta { font-size: 10px; color: #a0aec0; font-family: var(--mono); margin-top: 2px; }
+
+/* ── Threads ── */
+.thread-item { padding: 10px 0; border-bottom: 1px solid var(--border-light); }
+.thread-item:first-child { padding-top: 0; }
+.thread-item:last-child { border-bottom: none; padding-bottom: 0; }
+.thread-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 4px; }
+.thread-name { font-weight: 500; font-size: 12px; color: var(--navy); }
+.thread-recency { font-size: 10px; font-family: var(--mono); color: #a0aec0; white-space: nowrap; margin-top: 1px; }
+.thread-recency.crit { color: var(--red); }
+.thread-recency.warn { color: var(--warn); }
+.thread-chips { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 4px; }
+.chip { font-size: 10px; padding: 2px 7px; border-radius: 3px; background: var(--off-white); color: var(--slate); border: 1px solid var(--border); font-family: var(--mono); }
+.thread-snippet { font-size: 11px; color: #a0aec0; line-height: 1.5; }
+
+/* ── Commitments ── */
+.commit-item { display: flex; align-items: baseline; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--border-light); }
+.commit-item:first-child { padding-top: 0; }
+.commit-item:last-child { border-bottom: none; padding-bottom: 0; }
+.commit-date { font-size: 10px; font-family: var(--mono); color: #a0aec0; flex-shrink: 0; width: 44px; }
+.commit-text { font-size: 12px; color: var(--slate); flex: 1; line-height: 1.5; }
+.commit-due { font-size: 10px; font-family: var(--mono); flex-shrink: 0; }
+.commit-due.overdue { color: var(--red); }
+.commit-due.upcoming { color: #a0aec0; }
+.commit-due.done { color: var(--green); }
+.commit-item.candidate { opacity: .6; }
+
+/* ── Stakeholders ── */
+.stk-item { display: flex; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--border-light); }
+.stk-item:first-child { padding-top: 0; }
+.stk-item:last-child { border-bottom: none; padding-bottom: 0; }
+.stk-av { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 500; color: white; flex-shrink: 0; }
+.stk-info { flex: 1; min-width: 0; }
+.stk-name { font-size: 12px; font-weight: 500; color: var(--navy); }
+.stk-title { font-size: 10px; color: #a0aec0; font-family: var(--mono); }
+.stk-right { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.stk-recency { font-size: 10px; font-family: var(--mono); color: #a0aec0; }
+.stk-recency.crit { color: var(--red); }
+
+/* ── Renewal rows ── */
+.renewal-row { display: flex; align-items: center; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--border-light); font-size: 12px; }
+.renewal-row:first-child { padding-top: 0; }
+.renewal-row:last-child { border-bottom: none; padding-bottom: 0; }
+.r-label { font-size: 10px; font-family: var(--mono); color: #a0aec0; text-transform: uppercase; letter-spacing: .4px; }
+.r-val { font-weight: 500; color: var(--navy); }
+.r-val.warn { color: var(--warn); }
+.r-val.red { color: var(--red); }
+.r-val.teal { color: var(--teal); }
+
+/* ── Rep history ── */
+.rep-item { display: flex; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--border-light); align-items: flex-start; }
+.rep-item:first-child { padding-top: 0; }
+.rep-item:last-child { border-bottom: none; padding-bottom: 0; }
+.rep-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--border); margin-top: 4px; flex-shrink: 0; }
+.rep-dot.current { background: var(--teal); }
+.rep-name { font-weight: 500; font-size: 12px; color: var(--navy); }
+.rep-period { font-size: 10px; font-family: var(--mono); color: #a0aec0; }
+.rep-note { font-size: 11px; color: var(--slate); margin-top: 2px; font-style: italic; }
+
+/* ── Coverage gap callout ── */
+.coverage-gap {
+  background: #fffbeb; border: 1px solid rgba(183,121,31,.3);
+  border-radius: var(--radius); padding: 12px 14px; margin-bottom: 14px;
+}
+.cg-head { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+.cg-icon { font-size: 13px; }
+.cg-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .5px; color: var(--warn); font-family: var(--mono); }
+.cg-text { font-size: 12px; color: #744210; line-height: 1.6; margin-bottom: 6px; }
+.cg-suggest { font-size: 11px; color: var(--warn); font-family: var(--mono); }
+
+/* ── Quiet questions ── */
+.qq-item { padding: 10px 0; border-bottom: 1px solid var(--border-light); }
+.qq-item:first-child { padding-top: 0; }
+.qq-item:last-child { border-bottom: none; padding-bottom: 0; }
+.qq-head { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 4px; }
+.qq-icon { width: 17px; height: 17px; border-radius: 50%; background: var(--off-white); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 500; color: var(--slate); flex-shrink: 0; margin-top: 1px; font-family: var(--mono); }
+.qq-icon.answered { background: var(--green); border-color: var(--green); color: white; }
+.qq-text { font-size: 12px; font-weight: 500; color: var(--navy); line-height: 1.5; flex: 1; }
+.qq-evidence { font-size: 10px; color: #a0aec0; font-family: var(--mono); padding-left: 25px; margin-bottom: 7px; }
+.qq-input-row { display: flex; gap: 6px; padding-left: 25px; }
+.qq-input { flex: 1; border: 1px solid var(--border); border-radius: 5px; padding: 5px 8px; font-size: 11px; color: var(--navy); font-family: var(--font); outline: none; transition: border-color .15s; }
+.qq-input:focus { border-color: var(--mid-blue); }
+.qq-input.answered { background: #f0fff4; border-color: #9ae6b4; color: #276749; }
+.btn-xs { font-size: 10px; font-weight: 500; padding: 4px 9px; border-radius: 4px; cursor: pointer; white-space: nowrap; }
+.btn-xs-navy { background: var(--navy); color: white; border: none; }
+.btn-xs-navy:hover { background: var(--navy-2); }
+.btn-xs-navy.confirmed { background: var(--green); }
+.btn-xs-ghost { background: white; color: var(--slate); border: 1px solid var(--border); }
+.btn-xs-ghost:hover { border-color: var(--slate); }
+
+/* ── Known Flagged ── */
+.flagged-item { display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border-light); }
+.flagged-item:first-child { padding-top: 0; }
+.flagged-item:last-child { border-bottom: none; padding-bottom: 0; }
+.flag-label { font-weight: 500; font-size: 12px; color: var(--navy); margin-bottom: 2px; }
+.flag-body { font-size: 12px; color: var(--slate); line-height: 1.5; margin-bottom: 3px; }
+.flag-pattern { font-size: 10px; color: #a0aec0; font-family: var(--mono); }
+
+/* ── Timeline ── */
+.tl-row { display:flex; align-items:flex-start; gap:14px; padding:12px 24px; border-bottom:1px solid var(--border-light); cursor:pointer; transition:background .1s; font-family:var(--font); }
+.tl-row:hover { background:#f7fafc; }
+.tl-row.tl-today { background:#f0f9ff; border-left:3px solid var(--teal); }
+.tl-date { width:48px; flex-shrink:0; font-size:12px; font-weight:500; color:var(--navy); text-align:right; padding-top:2px; line-height:1.4; font-family:var(--mono); }
+.tl-date span { font-size:10px; font-weight:400; color:#a0aec0; }
+.tl-chip { flex-shrink:0; font-size:10px; font-weight:500; padding:3px 8px; border-radius:4px; margin-top:2px; text-transform:uppercase; letter-spacing:.4px; font-family:var(--mono); white-space:nowrap; }
+.tl-chip.email { background:#ebf4ff; color:#2b6cb0; border:1px solid rgba(43,108,176,.2); }
+.tl-chip.meet { background:#e6f4f4; color:#2c7a7b; border:1px solid rgba(45,140,138,.2); }
+.tl-chip.support { background:#fffbeb; color:#92400e; border:1px solid rgba(214,158,46,.25); }
+.tl-chip.intel { background:#fff1f2; color:#be123c; border:1px solid rgba(190,18,60,.2); }
+.tl-contact { width:140px; flex-shrink:0; font-size:13px; font-weight:500; color:var(--navy); line-height:1.4; padding-top:1px; }
+.tl-co { font-size:11px; font-weight:400; color:#a0aec0; font-family:var(--mono); }
+.tl-subject { flex:1; font-size:13px; font-weight:500; color:var(--navy); line-height:1.5; padding-top:1px; overflow:hidden; }
+.tl-snip { font-size:12px; font-weight:400; color:var(--slate); }
+.tl-right { flex-shrink:0; padding-top:2px; }
+.tl-flag { font-size:10px; font-weight:500; padding:2px 8px; border-radius:20px; white-space:nowrap; font-family:var(--mono); letter-spacing:.3px; }
+.tl-flag.red-flag { background:#fff1f2; color:#be123c; border:1px solid rgba(190,18,60,.2); }
+.tl-flag.yellow-flag { background:#fffbeb; color:#92400e; border:1px solid rgba(214,158,46,.25); }
+.tl-flag.green-flag { background:#f0fff4; color:#276749; border:1px solid rgba(72,187,120,.3); }
+
+/* ── Brief card ── */
+.brief-context { font-size: 12px; color: var(--slate); line-height: 1.6; background: var(--off-white); border-radius: 5px; padding: 10px; border: 1px solid var(--border); margin-bottom: 10px; }
+.brief-when { font-size: 11px; color: #a0aec0; font-family: var(--mono); margin-bottom: 6px; }
+.btn-brief { width: 100%; background: var(--teal); color: white; border: none; border-radius: 5px; padding: 8px; font-size: 12px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-family: var(--font); transition: background .15s; }
+.btn-brief:hover { background: #235a73; }
+</style>
+</head>
+<body>
+
+<!-- Top bar -->
+<div class="topbar">
+  <div class="logo">
+    <div class="logo-k">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+        <path d="M5 4h3v6l5-6h4l-6 8 6 8h-4l-5-6v6H5V4z" fill="#061A33"/>
+      </svg>
+    </div>
+    <span class="logo-name">Known</span>
+    <span class="logo-ver">v6.7</span>
+  </div>
+  <div class="breadcrumb" id="main-breadcrumb">
+    <span class="bc-active">Accounts</span>
+  </div>
+  <div class="topbar-right">
+    <input class="jump-input" placeholder="Jump to account, rep…">
+    <div class="topbar-icon">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    </div>
+    <div class="topbar-icon">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+    </div>
+    <div class="live-label" style="color:rgba(247,250,252,.35)">Synced 6:42 AM</div>
+    <div class="user-av">SC</div>
+  </div>
+</div>
+
+<!-- App body -->
+<div class="app-body">
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-section">
+      <div class="nav-item" id="nav-home" onclick="showHome()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Home
+      </div>
+      <div class="nav-item" id="nav-focus" onclick="showFocus()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+        Focus
+        <span class="nav-badge red" id="focus-badge">10</span>
+      </div>
+      <div class="nav-item" id="nav-transitions" onclick="showTransitions()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+        Transitions
+        <span class="nav-badge" id="transitions-badge">5</span>
+      </div>
+      <div class="nav-item" id="nav-oneonone" onclick="showOneOnOne()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        1:1 Prep
+        <span class="nav-badge" id="oneonone-badge" style="display:none">0</span>
+      </div>
+    </div>
+
+    <div class="sidebar-divider"></div>
+
+    <div class="sidebar-section">
+      <div class="nav-item active" id="nav-accounts" onclick="showAccounts()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Accounts
+      </div>
+      <div class="nav-item">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Inbox
+        <span class="nav-badge">4</span>
+      </div>
+    </div>
+
+    <div class="sidebar-divider"></div>
+
+    <div class="sidebar-section">
+      <div class="nav-item">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+        Settings
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="footer-av">SC</div>
+      <div>
+        <div class="footer-name">Sarah Chen</div>
+        <div class="footer-role">Sales Manager</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div class="main" id="view-account-detail" style="display:none;">
+
+    <!-- Account band -->
+    <div class="account-band">
+      <div class="account-band-inner">
+        <div class="account-band-top">
+          <div>
+            <div class="account-title-row">
+              <div class="account-title">Inline Industries</div>
+              <span class="atag atag-renewal">Renewal</span>
+              <span class="atag atag-fragile">Fragile</span>
+            </div>
+            <div class="account-summary" style="margin-top:8px">
+              Renewal in <strong>47 days</strong>, auto-renew off, relationship in a real moment of fragility. Former champion <strong>Brett Collins</strong> left in early April; interim replacement <strong>John Rivera</strong> has not replied to two outbound. Technical contact <strong>Sarah Khan</strong> is engaged but blocked on budget clarity she expected in April. Support stabilised — no new incidents in 17 days — but competitor <strong>Nexion</strong> re-engaged with Inline in April after their outage concerns. <span class="source-chip">5 sources</span>
+            </div>
+          </div>
+          <div class="since-box">
+            <div class="since-label">Since you were last here — Tue 5/19</div>
+            <div class="since-item"><div class="since-dot"></div>QBR + Renewal Check-In scheduled for today 2:00 PM <span class="source-chip">1</span></div>
+            <div class="since-item"><div class="since-dot"></div>Security requirements list received from procurement <span class="source-chip">1</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="metric-strip">
+        <div class="metric-cell active-metric">
+          <div class="mc-label">Renewal</div>
+          <div class="mc-val amber">Jul 15 <span class="source-chip" style="font-size:8px">1</span></div>
+          <div class="mc-sub">47 d · auto-renew off</div>
+        </div>
+        <div class="metric-cell">
+          <div class="mc-label">Stakeholders</div>
+          <div class="mc-val">3+1 <span class="source-chip" style="font-size:8px">2</span></div>
+          <div class="mc-sub">1 unresponsive · 1 departed</div>
+        </div>
+        <div class="metric-cell">
+          <div class="mc-label">Last meaningful</div>
+          <div class="mc-val">5/20 <span class="source-chip" style="font-size:8px">1</span></div>
+          <div class="mc-sub">Dev SE · security req.</div>
+        </div>
+        <div class="metric-cell">
+          <div class="mc-label">Quiet for</div>
+          <div class="mc-val red">6 d <span class="source-chip" style="font-size:8px">2</span></div>
+          <div class="mc-sub">no customer reply</div>
+        </div>
+        <div class="metric-cell">
+          <div class="mc-label">ACV</div>
+          <div class="mc-val">$240K</div>
+          <div class="mc-sub">+$60K APAC est.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab bar -->
+    <div class="tab-bar">
+      <div class="tab active" onclick="showTab('account')">Account</div>
+      <div class="tab" onclick="showTab('timeline')">Timeline</div>
+      <div class="tab" onclick="showTab('history')">History</div>
+      <div class="tab" onclick="showTab('notes')">Notes</div>
+      <div class="tab-right">
+        <span class="tab-badge tab-badge-red">3 open loops</span>
+        <span class="tab-badge tab-badge-amber">Renewal 47d</span>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="content-area">
+      <div class="account-grid">
+
+        <!-- LEFT COL -->
+        <div class="left-col">
+
+          <!-- 1. Account Summary -->
+          <div class="card">
+            <div class="card-head">
+              <div class="card-num">1</div>
+              <div class="card-title">Account Summary</div>
+            </div>
+            <div class="card-body">
+              <p class="risk-body" style="margin-bottom:10px">Inline Industries has been a customer since March 2022. The relationship was built primarily through Brett Callahan, who served as the internal champion and drove both the initial close and the 2024 renewal. Brett left the organization in June 2025 <span class="source-chip">1</span>, creating an ownership gap that remains unresolved. John Rivera (VP Operations) stepped into a nominal champion role but has missed the last scheduled call and has not responded to two follow-up emails. <span class="source-chip">2</span></p>
+              <p class="risk-body" style="margin-bottom:10px">The account experienced a significant support escalation in Q1 2026 — an average of two bugs per month through April — which created renewal risk and required active recovery. The escalation appears stable with no new issues in 17 days. <span class="source-chip">3</span> Sarah Chen confirmed the bug stream has slowed but has not formally signed off. A failed implementation in 2023 remains part of the account's institutional memory and makes this team sensitive to deployment risk. <span class="source-chip">4</span></p>
+              <p class="risk-body">The 2027 renewal scope is unresolved. APAC expansion was raised in Q4 2025 but no scoping has occurred. Sarah's budget clarity, expected in April, has not been confirmed. Mike Patel (Procurement) is a new stakeholder with no prior relationship context on file. A competitor resurfaced in April with no further signal since. <span class="source-chip">5</span></p>
+              <div style="font-size:10px;color:#a0aec0;font-family:var(--mono);margin-top:10px;padding-top:10px;border-top:1px solid var(--border-light)">Last synthesised · May 27 2026 · 6:42 AM · Gong (14) · Email (31) · CRM (8) · Support (3)</div>
+            </div>
+          </div>
+
+          <!-- 2. Open Loops -->
+          <div class="card">
+            <div class="card-head">
+              <div class="card-num">2</div>
+              <div class="card-title">Open Loops</div>
+              <div class="card-meta">things waiting to be closed</div>
+            </div>
+            <div class="card-body">
+              <div class="loop-item">
+                <span class="loop-chip chip-dropped">Thread dropped</span>
+                <div class="loop-content">
+                  <div class="loop-text">John Rivera has not replied to 2 outbound emails about renewal ownership.</div>
+                  <div class="loop-meta">17 d open · <span class="source-chip">2 sources</span></div>
+                </div>
+              </div>
+              <div class="loop-item">
+                <span class="loop-chip chip-overdue">Commitment overdue</span>
+                <div class="loop-content">
+                  <div class="loop-text">Known → Inline: Roadmap update for analytics release. Promised 5/09.</div>
+                  <div class="loop-meta">17 d late · <span class="source-chip">1 source</span></div>
+                </div>
+              </div>
+              <div class="loop-item">
+                <span class="loop-chip chip-hanging">Question hanging</span>
+                <div class="loop-content">
+                  <div class="loop-text">Saira Khan: Expected budget clarity by end of April. Late May, still no signal.</div>
+                  <div class="loop-meta">56 d hanging · <span class="source-chip">1 source</span></div>
+                </div>
+              </div>
+              <div class="loop-item">
+                <span class="loop-chip chip-due">Commitment due</span>
+                <div class="loop-content">
+                  <div class="loop-text">Known → Inline: Security documentation for procurement.</div>
+                  <div class="loop-meta">Due 6/06 · <span class="source-chip">1 source</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Renewal Risk Flags -->
+          <div class="card">
+            <div class="card-head">
+              <div class="card-num">3</div>
+              <div class="card-title">Renewal Risk Flags</div>
+            </div>
+            <div class="card-body">
+              <div class="risk-item">
+                <svg class="risk-icon" viewBox="0 0 24 24" fill="none" stroke="#c53030" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                <div>
+                  <div class="risk-label">Renewal ownership unclear after Brett's departure</div>
+                  <div class="risk-body">Brett drove the last two renewals. John Rivera has not confirmed he owns the process. Mike Patel (Procurement) is new and untested. <span class="source-chip">2</span></div>
+                </div>
+              </div>
+              <div class="risk-item">
+                <svg class="risk-icon" viewBox="0 0 24 24" fill="none" stroke="#b7791f" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <div>
+                  <div class="risk-label">Budget clarity overdue — affects scope and timing</div>
+                  <div class="risk-body">Sarah expected budget confirmation in April. It is now late May with no signal. <span class="source-chip">1</span></div>
+                </div>
+              </div>
+              <div class="risk-item">
+                <svg class="risk-icon" viewBox="0 0 24 24" fill="none" stroke="#b7791f" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <div>
+                  <div class="risk-label">Competitor Nexion re-engaged after April outage</div>
+                  <div class="risk-body">No follow-up signal since. Brett's departure may have created an opening. <span class="source-chip">1</span></div>
+                </div>
+              </div>
+              <div class="risk-item">
+                <svg class="risk-icon" viewBox="0 0 24 24" fill="none" stroke="#b7791f" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <div>
+                  <div class="risk-label">CFO pricing pushback last renewal cycle</div>
+                  <div class="risk-body">CFO pushed back on surprise pricing in 2024. No CFO engagement on record for 2027. <span class="source-chip">1</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Threads -->
+          <div class="card">
+            <div class="card-head">
+              <div class="card-num">4</div>
+              <div class="card-title">Threads</div>
+              <div class="card-action">+ New thread</div>
+            </div>
+            <div class="card-body">
+              <div class="thread-item">
+                <div class="thread-top">
+                  <div class="thread-name">John Rivera — Operations &amp; Renewal</div>
+                  <div class="thread-recency crit">41 days silent</div>
+                </div>
+                <div class="thread-chips"><span class="chip">Champion</span><span class="chip">VP Operations</span></div>
+                <div class="thread-snippet">Inherited renewal ownership after Brett's departure. Missed last call. Two unanswered follow-ups. Renewal process ownership unconfirmed.</div>
+              </div>
+              <div class="thread-item">
+                <div class="thread-top">
+                  <div class="thread-name">Sarah Chen — IT, Support &amp; Product</div>
+                  <div class="thread-recency">12 days</div>
+                </div>
+                <div class="thread-chips"><span class="chip">Technical Evaluator</span><span class="chip">Director IT</span></div>
+                <div class="thread-snippet">Primary contact through support escalation. Validated bug stabilisation informally. Budget clarity still outstanding.</div>
+              </div>
+              <div class="thread-item">
+                <div class="thread-top">
+                  <div class="thread-name">Mike Patel — Procurement</div>
+                  <div class="thread-recency">New</div>
+                </div>
+                <div class="thread-chips"><span class="chip">Procurement</span><span class="chip">New stakeholder</span></div>
+                <div class="thread-snippet">No prior relationship context on file. First meeting scheduled for today's QBR. Security review likely to be driven from this thread.</div>
+              </div>
+              <div class="thread-item">
+                <div class="thread-top">
+                  <div class="thread-name">APAC Expansion Scope</div>
+                  <div class="thread-recency warn">189 days</div>
+                </div>
+                <div class="thread-chips"><span class="chip">Cross-functional</span><span class="chip">Exec Sponsor</span></div>
+                <div class="thread-snippet">Raised Q4 2025. No scoping call. No internal owner on Inline's side. Inclusion in 2027 renewal scope unresolved.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. Open Commitments -->
+          <div class="card">
+            <div class="card-head">
+              <div class="card-num">5</div>
+              <div class="card-title">Open Commitments</div>
+              <div class="card-meta">2 confirmed · 1 candidate</div>
+            </div>
+            <div class="card-body">
+              <div class="commit-item">
+                <div class="commit-date">Apr 14</div>
+                <div class="commit-text">Deliver roadmap update for analytics release <span class="source-chip">3</span></div>
+                <div class="commit-due overdue">overdue</div>
+              </div>
+              <div class="commit-item">
+                <div class="commit-date">May 1</div>
+                <div class="commit-text">Security documentation — complete internal review and share with Sarah <span class="source-chip">2</span></div>
+                <div class="commit-due upcoming">due Jun 1</div>
+              </div>
+              <div class="commit-item candidate">
+                <div class="commit-date">—</div>
+                <div class="commit-text" style="font-style:italic;color:#a0aec0">Candidate: Confirm APAC scope inclusion before renewal draft — detected from May 9 email thread. Confirm?</div>
+                <div class="commit-due upcoming">candidate</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 6. Known Flagged -->
+          <div class="card">
+            <div class="card-head">
+              <div class="card-num flagged">6</div>
+              <div class="card-title">Known Flagged</div>
+              <div class="card-meta">patterns · not prescriptions</div>
+            </div>
+            <div class="card-body">
+              <div class="flagged-item">
+                <svg style="width:14px;height:14px;flex-shrink:0;margin-top:2px" viewBox="0 0 24 24" fill="none" stroke="#c53030" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                <div>
+                  <div class="flag-label">2 unanswered outbounds + 47 days to renewal</div>
+                  <div class="flag-body">Champion silence + closing renewal window + no QBR was on calendar until today.</div>
+                  <div class="flag-pattern">Pattern: champion silent · renewal proximity · no scheduled touchpoint</div>
+                </div>
+              </div>
+              <div class="flagged-item">
+                <svg style="width:14px;height:14px;flex-shrink:0;margin-top:2px" viewBox="0 0 24 24" fill="none" stroke="#b7791f" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <div>
+                  <div class="flag-label">CFO not engaged — same gap as 2024 renewal cycle</div>
+                  <div class="flag-body">Late CFO involvement caused a 2-week hold in 2024. No CFO contact on record for 2027.</div>
+                  <div class="flag-pattern">Pattern: prior cycle friction · same gap detected · history surfaced</div>
+                </div>
+              </div>
+              <div class="flagged-item">
+                <svg style="width:14px;height:14px;flex-shrink:0;margin-top:2px" viewBox="0 0 24 24" fill="none" stroke="#b7791f" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <div>
+                  <div class="flag-label">Budget signal overdue by 55 days</div>
+                  <div class="flag-body">Sarah committed to budget clarity by end of April. APAC scope and renewal timing both depend on this answer.</div>
+                  <div class="flag-pattern">Pattern: committed date passed · no signal · downstream dependencies unresolved</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 7. Quiet Questions -->
+          <div class="card">
+            <div class="card-head">
+              <div class="card-num strategic">7</div>
+              <div class="card-title">Quiet Questions</div>
+              <div class="card-meta">what we don't know that matters</div>
+            </div>
+            <div class="card-body">
+              <div class="qq-item" id="qq1">
+                <div class="qq-head">
+                  <div class="qq-icon" id="qq1-icon">?</div>
+                  <div class="qq-text">Who owns renewal internally after Brett's departure?</div>
+                </div>
+                <div class="qq-evidence">Last 2 outbound to John unanswered · 41 days open</div>
+                <div class="qq-input-row">
+                  <input class="qq-input" id="qq1-input" placeholder="Answer or note from session…">
+                  <button class="btn-xs btn-xs-navy" id="qq1-btn" onclick="answerQQ(1)">Confirm</button>
+                  <button class="btn-xs btn-xs-ghost" onclick="deferQQ(1,'qq1')">Defer</button>
+                </div>
+              </div>
+              <div class="qq-item" id="qq2">
+                <div class="qq-head">
+                  <div class="qq-icon" id="qq2-icon">?</div>
+                  <div class="qq-text">Does Sarah have the budget clarity she expected in April?</div>
+                </div>
+                <div class="qq-evidence">4/04 was the last signal — 55 days ago · no follow-up received</div>
+                <div class="qq-input-row">
+                  <input class="qq-input" id="qq2-input" placeholder="Answer or note from session…">
+                  <button class="btn-xs btn-xs-navy" id="qq2-btn" onclick="answerQQ(2)">Confirm</button>
+                  <button class="btn-xs btn-xs-ghost" onclick="deferQQ(2,'qq2')">Defer</button>
+                </div>
+              </div>
+              <div class="qq-item" id="qq3">
+                <div class="qq-head">
+                  <div class="qq-icon" id="qq3-icon">?</div>
+                  <div class="qq-text">Will APAC be in scope for the 2027 renewal?</div>
+                </div>
+                <div class="qq-evidence">Never confirmed in writing · depends on budget · Brett was internal sponsor</div>
+                <div class="qq-input-row">
+                  <input class="qq-input" id="qq3-input" placeholder="Answer or note from session…">
+                  <button class="btn-xs btn-xs-navy" id="qq3-btn" onclick="answerQQ(3)">Confirm</button>
+                  <button class="btn-xs btn-xs-ghost" onclick="deferQQ(3,'qq3')">Defer</button>
+                </div>
+              </div>
+              <div class="qq-item" id="qq4" style="border-bottom:none;padding-bottom:0">
+                <div class="qq-head">
+                  <div class="qq-icon" id="qq4-icon">?</div>
+                  <div class="qq-text">How thorough is the security review — and who runs it?</div>
+                </div>
+                <div class="qq-evidence">5/20 requirements list is the only artifact · Mike Patel likely driver</div>
+                <div class="qq-input-row">
+                  <input class="qq-input" id="qq4-input" placeholder="Answer or note from session…">
+                  <button class="btn-xs btn-xs-navy" id="qq4-btn" onclick="answerQQ(4)">Confirm</button>
+                  <button class="btn-xs btn-xs-ghost" onclick="deferQQ(4,'qq4')">Defer</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 8. Agreed Next Moves -->
+          <div class="card">
+            <div class="card-head">
+              <div class="card-num strategic">8</div>
+              <div class="card-title">Agreed Next Moves</div>
+              <div class="card-meta">from last session · May 22</div>
+            </div>
+            <div class="card-body">
+              <div class="commit-item">
+                <div class="commit-date">May 22</div>
+                <div class="commit-text">Re-engage John Rivera before the QBR — direct outreach from Marcus.</div>
+                <div class="commit-due overdue">overdue</div>
+              </div>
+              <div class="commit-item">
+                <div class="commit-date">May 22</div>
+                <div class="commit-text">Send security requirements list to Dev for internal review.</div>
+                <div class="commit-due done">done</div>
+              </div>
+              <div class="commit-item" style="border-bottom:none">
+                <div class="commit-date">May 22</div>
+                <div class="commit-text">Prepare APAC scope summary before QBR in case John raises it.</div>
+                <div class="commit-due upcoming">pending</div>
+              </div>
+              <div style="display:flex;gap:6px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border-light)">
+                <input style="flex:1;border:1px solid var(--border);border-radius:5px;padding:5px 8px;font-size:11px;color:var(--navy);font-family:var(--font);outline:none;" placeholder="Add a move from this session…" id="new-move-input">
+                <button class="btn-xs btn-xs-navy" onclick="addMove()">+ Add</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT COL -->
+        <div class="right-col">
+
+          <!-- Scheduled Meetings -->
+          <div class="card">
+            <div class="card-head"><div class="card-num">8</div><div class="card-title">Scheduled Meetings</div></div>
+            <div class="card-body">
+              <div class="stk-item">
+                <div style="width:32px;height:32px;border-radius:6px;background:var(--navy);display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;">
+                  <div style="font-size:8px;color:rgba(247,250,252,.5);font-family:var(--mono);text-transform:uppercase;letter-spacing:.4px;line-height:1">May</div>
+                  <div style="font-size:14px;font-weight:500;color:white;line-height:1.2">26</div>
+                </div>
+                <div class="stk-info">
+                  <div class="stk-name">QBR + Renewal Check-In</div>
+                  <div class="stk-title">2:00 PM PST · 45 min · John, Sarah, Mike</div>
+                </div>
+                <a style="font-size:10px;font-weight:500;color:var(--mid-blue);text-decoration:none;white-space:nowrap;font-family:var(--mono);" href="#">Brief →</a>
+              </div>
+              <div class="stk-item" style="opacity:.6">
+                <div style="width:32px;height:32px;border-radius:6px;background:var(--off-white);border:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;">
+                  <div style="font-size:8px;color:#a0aec0;font-family:var(--mono);text-transform:uppercase;letter-spacing:.4px;line-height:1">Jun</div>
+                  <div style="font-size:14px;font-weight:500;color:var(--slate);line-height:1.2">10</div>
+                </div>
+                <div class="stk-info">
+                  <div class="stk-name">Renewal follow-up</div>
+                  <div class="stk-title">TBD · Proposed</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Coverage gap -->
+          <div class="coverage-gap">
+            <div class="cg-head">
+              <span class="cg-icon">⚠️</span>
+              <span class="cg-label">Coverage Gap</span>
+            </div>
+            <div class="cg-text">Sole-threaded through John — and John is silent. Sarah's relationship is severed. Mike (Procurement) hasn't been engaged since the last pricing cycle. There is no parallel thread to the renewal conversation.</div>
+            <div class="cg-suggest">Suggest: Multi-thread back via Mike before the call, or escalate to John's leadership.</div>
+          </div>
+
+          <!-- Renewal -->
+          <div class="card">
+            <div class="card-head"><div class="card-num">9</div><div class="card-title">Contract &amp; Terms</div></div>
+
+            <div class="card-body">
+              <div class="renewal-row"><div class="r-label">Current ACV</div><div class="r-val">$240K ARR <span class="source-chip">1</span></div></div>
+              <div class="renewal-row"><div class="r-label">Renewal date</div><div class="r-val warn">Jul 15 · 47d <span class="source-chip">1</span></div></div>
+              <div class="renewal-row"><div class="r-label">Auto-renew</div><div class="r-val red">Off <span class="source-chip">1</span></div></div>
+              <div class="renewal-row"><div class="r-label">Expansion</div><div class="r-val teal">APAC est. +$60K <span class="source-chip">1</span></div></div>
+              <div class="renewal-row"><div class="r-label">Contract term</div><div class="r-val">Annual</div></div>
+              <div class="renewal-row"><div class="r-label">QBR status</div><div class="r-val">Scheduled today</div></div>
+            </div>
+          </div>
+
+          <!-- People -->
+          <div class="card">
+            <div class="card-head"><div class="card-num">10</div><div class="card-title">People in this relationship</div><div class="card-meta">1 departed</div></div>
+            <div class="card-body">
+              <div class="stk-item">
+                <div class="stk-av" style="background:#3A6F92">JR</div>
+                <div class="stk-info"><div class="stk-name">John Rivera</div><div class="stk-title">VP Operations · Champion · New · Untested</div></div>
+                <div class="stk-right"><span class="chip" style="font-size:9px">Champion</span><div class="stk-recency crit">41d silent</div></div>
+              </div>
+              <div class="stk-item">
+                <div class="stk-av" style="background:#2D6E8A">SK</div>
+                <div class="stk-info"><div class="stk-name">Saira Khan</div><div class="stk-title">Director IT · Technical</div></div>
+                <div class="stk-right"><span class="chip" style="font-size:9px">Technical</span><div class="stk-recency">12d ago</div></div>
+              </div>
+              <div class="stk-item">
+                <div class="stk-av" style="background:#276749">MP</div>
+                <div class="stk-info"><div class="stk-name">Mike Patel</div><div class="stk-title">Procurement</div></div>
+                <div class="stk-right"><span class="chip" style="font-size:9px">Procurement</span><div class="stk-recency">Last touch: 5/26</div></div>
+              </div>
+              <div class="stk-item" style="opacity:.45">
+                <div class="stk-av" style="background:#718096">BC</div>
+                <div class="stk-info"><div class="stk-name">Brett Collins</div><div class="stk-title">Departed early April · Former Champion</div></div>
+                <div class="stk-right"><span class="chip" style="font-size:9px">Departed</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Rep History -->
+          <div class="card">
+            <div class="card-head"><div class="card-num">11</div><div class="card-title">Rep History</div></div>
+            <div class="card-body">
+              <div class="rep-item">
+                <div class="rep-dot current"></div>
+                <div>
+                  <div class="rep-name">Marcus Webb</div>
+                  <div class="rep-period">Feb 2026 — present</div>
+                  <div class="rep-note">Inherited post-escalation. Limited prior context on file.</div>
+                </div>
+              </div>
+              <div class="rep-item">
+                <div class="rep-dot"></div>
+                <div>
+                  <div class="rep-name">Dana Kim</div>
+                  <div class="rep-period">Jul 2025 — Feb 2026</div>
+                  <div class="rep-note">Managed through support escalation. No formal handoff captured.</div>
+                </div>
+              </div>
+              <div class="rep-item">
+                <div class="rep-dot"></div>
+                <div>
+                  <div class="rep-name">Tom Sato</div>
+                  <div class="rep-period">Mar 2022 — Jun 2025</div>
+                  <div class="rep-note">Original AE. Closed initial deal and 2024 renewal. Deep relationship with Brett.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pre-call brief card -->
+          <div class="card">
+            <div class="card-head"><div class="card-num">12</div><div class="card-title">Pre-Call Brief</div></div>
+            <div class="card-body">
+              <div class="brief-when">Today · QBR + Renewal · 2:00 PM PST · 45 min</div>
+              <div class="brief-context">Re-establish continuity after Brett's departure. Confirm renewal ownership, surface budget clarity, and understand security review scope before the renewal window closes.</div>
+              <button class="btn-brief">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                Open full brief
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Accounts list view ── -->
+<div id="view-accounts" style="display:flex;flex:1;flex-direction:column;overflow:hidden;">
+  <div style="background:var(--navy);padding:14px 24px 16px;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.08);">
+    <div style="font-size:18px;font-weight:500;color:white;letter-spacing:-.3px;margin-bottom:4px;">Accounts</div>
+    <div style="font-size:11px;color:rgba(247,250,252,.4);font-family:var(--mono);">10 accounts · 4 reps · Manager: Sarah Chen</div>
+  </div>
+  <div style="flex:1;overflow-y:auto;padding:20px 24px;">
+
+    <style>
+      .acct-table { width:100%; border-collapse:collapse; }
+      .acct-table th { font-size:10px; font-weight:500; text-transform:uppercase; letter-spacing:.6px; color:#a0aec0; font-family:var(--mono); padding:0 12px 8px; text-align:left; border-bottom:1px solid var(--border); }
+      .acct-table td { padding:10px 12px; font-size:12px; color:var(--navy); border-bottom:1px solid var(--border-light); vertical-align:middle; }
+      .acct-table tr:last-child td { border-bottom:none; }
+      .acct-table tr:hover td { background:#f7fafc; }
+      .acct-name-link { font-weight:500; color:var(--mid-blue); text-decoration:none; cursor:pointer; }
+      .acct-name-link:hover { text-decoration:underline; }
+      .acct-name-plain { font-weight:500; color:var(--navy); }
+      .rep-group-header { font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:.6px; color:var(--slate); font-family:var(--mono); padding:16px 12px 6px; border-bottom:1px solid var(--border); background:var(--off-white); }
+      .rep-group-header:first-child { padding-top:0; }
+      .acct-av { width:22px; height:22px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:9px; font-weight:500; color:white; margin-right:6px; vertical-align:middle; flex-shrink:0; }
+      .renewal-soon { color:var(--warn); font-weight:500; }
+      .renewal-ok { color:#a0aec0; }
+      .renewal-crit { color:var(--red); font-weight:500; }
+    </style>
+
+    <!-- Rep: Marcus Webb -->
+    <table class="acct-table">
+      <thead>
+        <tr><th style="padding-top:0">Account</th><th>ACV</th><th>Renewal</th><th>Last touch</th><th>Rep</th></tr>
+      </thead>
+      <tbody>
+        <tr><td colspan="5" style="padding:10px 12px 4px;background:var(--off-white);border-bottom:1px solid var(--border);"><span style="font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.6px;color:var(--slate);font-family:var(--mono);">Marcus Webb · 3 accounts</span></td></tr>
+        <tr>
+          <td><a class="acct-name-link" onclick="showAccount()">Inline Industries</a><br><span style="font-size:10px;color:#a0aec0;font-family:var(--mono)">Mid-Market · B2B SaaS</span></td>
+          <td>$240K</td>
+          <td><span class="renewal-crit">Jul 15 · 47d</span></td>
+          <td style="color:#a0aec0;font-family:var(--mono);font-size:10px">May 20</td>
+          <td><span class="acct-av" style="background:#3A6F92">MW</span>Marcus Webb</td>
+        </tr>
+        <tr>
+          <td><span class="acct-name-plain">Meridian Health Systems</span><br><span style="font-size:10px;color:#a0aec0;font-family:var(--mono)">Mid-Market · HealthTech</span></td>
+          <td>$180K</td>
+          <td><span class="renewal-soon">Sep 3 · 99d</span></td>
+          <td style="color:#a0aec0;font-family:var(--mono);font-size:10px">May 18</td>
+          <td><span class="acct-av" style="background:#3A6F92">MW</span>Marcus Webb</td>
+        </tr>
+        <tr>
+          <td><span class="acct-name-plain">Crestview Analytics</span><br><span style="font-size:10px;color:#a0aec0;font-family:var(--mono)">SMB · Data & Analytics</span></td>
+          <td>$95K</td>
+          <td><span class="renewal-ok">Oct 12 · 138d</span></td>
+          <td style="color:#a0aec0;font-family:var(--mono);font-size:10px">May 14</td>
+          <td><span class="acct-av" style="background:#3A6F92">MW</span>Marcus Webb</td>
+        </tr>
+
+        <!-- Rep: Dana Kim -->
+        <tr><td colspan="5" style="padding:10px 12px 4px;background:var(--off-white);border-bottom:1px solid var(--border);border-top:1px solid var(--border);"><span style="font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.6px;color:var(--slate);font-family:var(--mono);">Dana Kim · 3 accounts</span></td></tr>
+        <tr>
+          <td><span class="acct-name-plain">Northstar Logistics</span><br><span style="font-size:10px;color:#a0aec0;font-family:var(--mono)">Enterprise · Logistics SaaS</span></td>
+          <td>$310K</td>
+          <td><span class="renewal-soon">Aug 1 · 66d</span></td>
+          <td style="color:#a0aec0;font-family:var(--mono);font-size:10px">May 22</td>
+          <td><span class="acct-av" style="background:#2D6E8A">DK</span>Dana Kim</td>
+        </tr>
+        <tr>
+          <td><span class="acct-name-plain">Apex Financial Group</span><br><span style="font-size:10px;color:#a0aec0;font-family:var(--mono)">Mid-Market · FinTech</span></td>
+          <td>$145K</td>
+          <td><span class="renewal-ok">Nov 20 · 177d</span></td>
+          <td style="color:#a0aec0;font-family:var(--mono);font-size:10px">May 19</td>
+          <td><span class="acct-av" style="background:#2D6E8A">DK</span>Dana Kim</td>
+        </tr>
+        <tr>
+          <td><span class="acct-name-plain">Brightfield Technologies</span><br><span style="font-size:10px;color:#a0aec0;font-family:var(--mono)">Mid-Market · DevOps</span></td>
+          <td>$220K</td>
+          <td><span class="renewal-ok">Dec 8 · 195d</span></td>
+          <td style="color:#a0aec0;font-family:var(--mono);font-size:10px">May 15</td>
+          <td><span class="acct-av" style="background:#2D6E8A">DK</span>Dana Kim</td>
+        </tr>
+
+        <!-- Rep: Jordan Park -->
+        <tr><td colspan="5" style="padding:10px 12px 4px;background:var(--off-white);border-bottom:1px solid var(--border);border-top:1px solid var(--border);"><span style="font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.6px;color:var(--slate);font-family:var(--mono);">Jordan Park · 2 accounts</span></td></tr>
+        <tr>
+          <td><span class="acct-name-plain">Summit Retail Solutions</span><br><span style="font-size:10px;color:#a0aec0;font-family:var(--mono)">SMB · Retail Tech</span></td>
+          <td>$88K</td>
+          <td><span class="renewal-soon">Jul 28 · 63d</span></td>
+          <td style="color:#a0aec0;font-family:var(--mono);font-size:10px">May 21</td>
+          <td><span class="acct-av" style="background:#276749">JP</span>Jordan Park</td>
+        </tr>
+        <tr>
+          <td><span class="acct-name-plain">Harborview Media</span><br><span style="font-size:10px;color:#a0aec0;font-family:var(--mono)">Mid-Market · Media SaaS</span></td>
+          <td>$165K</td>
+          <td><span class="renewal-ok">Mar 15 · renewed</span></td>
+          <td style="color:#a0aec0;font-family:var(--mono);font-size:10px">May 10</td>
+          <td><span class="acct-av" style="background:#276749">JP</span>Jordan Park</td>
+        </tr>
+
+        <!-- Rep: Riley Torres -->
+        <tr><td colspan="5" style="padding:10px 12px 4px;background:var(--off-white);border-bottom:1px solid var(--border);border-top:1px solid var(--border);"><span style="font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.6px;color:var(--slate);font-family:var(--mono);">Riley Torres · 2 accounts</span></td></tr>
+        <tr>
+          <td><span class="acct-name-plain">Vantage Health Partners</span><br><span style="font-size:10px;color:#a0aec0;font-family:var(--mono)">Enterprise · HealthTech</span></td>
+          <td>$290K</td>
+          <td><span class="renewal-soon">Aug 22 · 87d</span></td>
+          <td style="color:#a0aec0;font-family:var(--mono);font-size:10px">May 23</td>
+          <td><span class="acct-av" style="background:#744210">RT</span>Riley Torres</td>
+        </tr>
+        <tr>
+          <td><span class="acct-name-plain">Clearpath Operations</span><br><span style="font-size:10px;color:#a0aec0;font-family:var(--mono)">Mid-Market · Operations SaaS</span></td>
+          <td>$112K</td>
+          <td><span class="renewal-ok">Feb 10 · renewed</span></td>
+          <td style="color:#a0aec0;font-family:var(--mono);font-size:10px">Apr 29</td>
+          <td><span class="acct-av" style="background:#744210">RT</span>Riley Torres</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+  <!-- ── Timeline view (hidden until tab clicked) ── -->
+  <div id="view-timeline" style="display:none;flex:1;flex-direction:column;overflow:hidden;" class="main">
+
+    <!-- reuse account band -->
+    <div style="background:var(--navy);padding:12px 24px;display:flex;align-items:center;gap:32px;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.08);">
+      <div><div style="font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:rgba(247,250,252,.4);font-family:var(--mono);margin-bottom:3px">Renewal ACV</div><div style="font-size:17px;font-weight:500;color:white;">$240K</div></div>
+      <div style="width:1px;height:28px;background:rgba(255,255,255,.1)"></div>
+      <div><div style="font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:rgba(247,250,252,.4);font-family:var(--mono);margin-bottom:3px">Expansion Upside</div><div style="font-size:17px;font-weight:500;color:#7de8e6;">+$60K</div></div>
+      <div style="width:1px;height:28px;background:rgba(255,255,255,.1)"></div>
+      <div><div style="font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:rgba(247,250,252,.4);font-family:var(--mono);margin-bottom:3px">Total Potential</div><div style="font-size:17px;font-weight:500;color:white;">$300K</div></div>
+      <div style="width:1px;height:28px;background:rgba(255,255,255,.1)"></div>
+      <div><div style="font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:rgba(247,250,252,.4);font-family:var(--mono);margin-bottom:3px">Renewal Date</div><div style="font-size:17px;font-weight:500;color:#fcd34d;">Jul 15</div></div>
+    </div>
+
+    <!-- tab bar -->
+    <div class="tab-bar">
+      <div class="tab" onclick="showTab('account')">Account</div>
+      <div class="tab active">Timeline</div>
+      <div class="tab" onclick="showTab('notes')">Notes</div>
+      <div class="tab-right">
+        <span class="tab-badge tab-badge-red">3 open loops</span>
+        <span class="tab-badge tab-badge-amber">Renewal 47d</span>
+      </div>
+    </div>
+
+    <!-- toolbar -->
+    <div style="display:flex;align-items:center;gap:8px;padding:10px 24px;border-bottom:1px solid var(--border);background:var(--white);flex-shrink:0;">
+      <span style="font-size:12px;color:var(--slate);font-family:var(--mono)">12 touchpoints · Jan 2026 – Today</span>
+      <div style="margin-left:auto;display:flex;gap:6px;">
+        <span style="font-size:11px;background:var(--navy);color:white;border-radius:4px;padding:3px 10px;cursor:pointer;font-family:var(--mono);">All</span>
+        <span style="font-size:11px;background:var(--off-white);border:1px solid var(--border);border-radius:4px;padding:3px 10px;color:var(--slate);cursor:pointer;font-family:var(--mono);">Email</span>
+        <span style="font-size:11px;background:var(--off-white);border:1px solid var(--border);border-radius:4px;padding:3px 10px;color:var(--slate);cursor:pointer;font-family:var(--mono);">Meetings</span>
+        <span style="font-size:11px;background:var(--off-white);border:1px solid var(--border);border-radius:4px;padding:3px 10px;color:var(--slate);cursor:pointer;font-family:var(--mono);">Support</span>
+        <span style="font-size:11px;background:var(--off-white);border:1px solid var(--border);border-radius:4px;padding:3px 10px;color:var(--slate);cursor:pointer;font-family:var(--mono);">Intel</span>
+      </div>
+    </div>
+
+    <!-- rows -->
+    <div style="flex:1;overflow-y:auto;background:var(--white);">
+      <div class="tl-row tl-today">
+        <div class="tl-date">Today<br><span>May 26</span></div>
+        <span class="tl-chip meet">Meeting</span>
+        <div class="tl-contact">John Rivera<div class="tl-co">VP Operations</div></div>
+        <div class="tl-subject">QBR + Renewal Check-In <span class="tl-snip">— 2:00 PM PST · 45 min · You, Natalie Osei attending</span></div>
+        <div class="tl-right"><span class="tl-flag red-flag">Today</span></div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">May 20<br><span>2026</span></div>
+        <span class="tl-chip email">Email</span>
+        <div class="tl-contact">Dev Ramchandran<div class="tl-co">Solutions Eng.</div></div>
+        <div class="tl-subject">Security review docs — here's what they sent <span class="tl-snip">— Inline's procurement came back with the requirements list. Heads up: more thorough than expected.</span></div>
+        <div class="tl-right"></div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">May 9<br><span>2026</span></div>
+        <span class="tl-chip email">Email</span>
+        <div class="tl-contact">You → John Rivera<div class="tl-co">VP Operations</div></div>
+        <div class="tl-subject">Following up — renewal ownership <span class="tl-snip">— Second outreach. No response received. Account relationship gap widening.</span></div>
+        <div class="tl-right"><span class="tl-flag yellow-flag">No reply</span></div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">May 2<br><span>2026</span></div>
+        <span class="tl-chip email">Email</span>
+        <div class="tl-contact">You → John Rivera<div class="tl-co">VP Operations</div></div>
+        <div class="tl-subject">Re: Renewal — who should we be working with? <span class="tl-snip">— Checking in after Brett's departure. Trying to confirm the new renewal owner internally.</span></div>
+        <div class="tl-right"><span class="tl-flag yellow-flag">No reply</span></div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">Apr 28<br><span>2026</span></div>
+        <span class="tl-chip support">Support</span>
+        <div class="tl-contact">Priya Nandan<div class="tl-co">Support Eng.</div></div>
+        <div class="tl-subject">Escalation closed — analytics bug resolved <span class="tl-snip">— Ticket #8841 marked closed. No new occurrences in 17 days. Sarah Chen confirmed satisfaction.</span></div>
+        <div class="tl-right"><span class="tl-flag green-flag">Resolved</span></div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">Apr 11<br><span>2026</span></div>
+        <span class="tl-chip intel">Intel</span>
+        <div class="tl-contact">CompetitorAlert<div class="tl-co">Signal detected</div></div>
+        <div class="tl-subject">Nexion re-engaged Inline Industries <span class="tl-snip">— Renewed activity between Nexion and Inline detected after outage concerns surfaced in March.</span></div>
+        <div class="tl-right"><span class="tl-flag red-flag">Risk</span></div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">Apr 4<br><span>2026</span></div>
+        <span class="tl-chip meet">Meeting</span>
+        <div class="tl-contact">Sarah Chen<div class="tl-co">Director IT</div></div>
+        <div class="tl-subject">Renewal check-in call <span class="tl-snip">— Sarah raised budget uncertainty. Expected clarification by end of April. Brett attended as last Known contact.</span></div>
+        <div class="tl-right"></div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">Mar 22<br><span>2026</span></div>
+        <span class="tl-chip email">Email</span>
+        <div class="tl-contact">Brett Collins<div class="tl-co">Fmr. Champion</div></div>
+        <div class="tl-subject">Re: Renewal — heads up on my departure <span class="tl-snip">— Brett confirms he is leaving at end of April. Recommends John Rivera as interim contact. No warm handoff completed.</span></div>
+        <div class="tl-right"><span class="tl-flag red-flag">Churn risk</span></div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">Mar 12<br><span>2026</span></div>
+        <span class="tl-chip meet">Meeting</span>
+        <div class="tl-contact">Sarah Chen<div class="tl-co">Director IT</div></div>
+        <div class="tl-subject">Implementation review — Q1 check-in <span class="tl-snip">— Customer raised deployment sensitivity. Referenced 2023 failed rollout. Requested roadmap visibility before committing to APAC.</span></div>
+        <div class="tl-right"></div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">Feb 28<br><span>2026</span></div>
+        <span class="tl-chip email">Email</span>
+        <div class="tl-contact">You → Brett Collins<div class="tl-co">Fmr. Champion</div></div>
+        <div class="tl-subject">APAC expansion proposal — for your review <span class="tl-snip">— Sent v1 APAC SOW to Brett. Est. +$60K ACV. Brett acknowledged receipt, no formal response before departure.</span></div>
+        <div class="tl-right"></div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">Feb 3<br><span>2026</span></div>
+        <span class="tl-chip support">Support</span>
+        <div class="tl-contact">Sarah Chen<div class="tl-co">Director IT</div></div>
+        <div class="tl-subject">Escalation opened — analytics module bug <span class="tl-snip">— Sarah reports recurring errors in the analytics dashboard. Ticket #8841 opened. Averaging 2 bugs/month.</span></div>
+        <div class="tl-right"><span class="tl-flag yellow-flag">Escalated</span></div>
+      </div>
+      <div class="tl-row" style="border-bottom:none">
+        <div class="tl-date">Jan 8<br><span>2026</span></div>
+        <span class="tl-chip meet">Meeting</span>
+        <div class="tl-contact">Brett Collins<div class="tl-co">Fmr. Champion</div></div>
+        <div class="tl-subject">Q4 QBR — annual review <span class="tl-snip">— Full review with John Rivera and Brett. Renewal discussed; 2027 renewal on track per Brett. APAC floated as expansion target.</span></div>
+        <div class="tl-right"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── History tab view ── -->
+  <div id="view-history" style="display:none;flex:1;flex-direction:column;overflow:hidden;" class="main">
+    <div style="background:var(--navy);padding:12px 24px;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:12px;">
+      <div style="font-size:16px;font-weight:500;color:white;">Inline Industries — Account History</div>
+      <div style="font-size:11px;color:rgba(247,250,252,.35);font-family:var(--mono);">Customer since Mar 2022 · 4+ years · 3 reps</div>
+    </div>
+    <div class="tab-bar">
+      <div class="tab" onclick="showTab('account')">Account</div>
+      <div class="tab" onclick="showTab('timeline')">Timeline</div>
+      <div class="tab active">History</div>
+      <div class="tab" onclick="showTab('notes')">Notes</div>
+      <div class="tab-right"><span class="tab-badge tab-badge-amber">Transition brief ready</span></div>
+    </div>
+    <div style="flex:1;overflow-y:auto;padding:24px;background:var(--off-white);">
+      <div style="max-width:760px;">
+
+        <div style="font-size:11px;color:#a0aec0;font-family:var(--mono);margin-bottom:20px;">Known has synthesised this history from Gong (14) · Email (31) · CRM (8) · Support (3) · Last updated May 27 2026</div>
+
+        <!-- 2022 -->
+        <div style="margin-bottom:28px;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+            <div style="font-size:13px;font-weight:500;color:var(--navy);font-family:var(--mono);">2022</div>
+            <div style="flex:1;height:1px;background:var(--border);"></div>
+            <div style="font-size:10px;color:#a0aec0;font-family:var(--mono);">Initial close</div>
+          </div>
+          <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:16px;">
+            <div style="font-size:13px;color:var(--slate);line-height:1.75;">
+              <strong style="color:var(--navy)">March 2022 — Deal closed by Tom Sato.</strong> Brett Collins (VP Operations at the time) served as the internal champion and drove the evaluation. Initial ACV $62K. Enterprise + Analytics package. CFO approved after a standard procurement review — no friction at close.
+            </div>
+            <div style="margin-top:10px;font-size:13px;color:var(--slate);line-height:1.75;">The relationship started clean. Brett was highly engaged, responsive, and had a clear mandate to modernise the operations tech stack. Tom built a strong rapport with Brett over the evaluation period — that relationship became the foundation the account relied on for the next three years.</div>
+            <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;">
+              <span style="font-size:10px;background:#f0fff4;color:#276749;border:1px solid rgba(72,187,120,.3);padding:2px 8px;border-radius:3px;font-family:var(--mono);">Clean close</span>
+              <span style="font-size:10px;background:#ebf4ff;color:#2b6cb0;border:1px solid rgba(43,108,176,.2);padding:2px 8px;border-radius:3px;font-family:var(--mono);">Rep: Tom Sato</span>
+              <span style="font-size:10px;background:#ebf4ff;color:#2b6cb0;border:1px solid rgba(43,108,176,.2);padding:2px 8px;border-radius:3px;font-family:var(--mono);">Champion: Brett Collins</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2023 -->
+        <div style="margin-bottom:28px;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+            <div style="font-size:13px;font-weight:500;color:var(--navy);font-family:var(--mono);">2023</div>
+            <div style="flex:1;height:1px;background:var(--border);"></div>
+            <div style="font-size:10px;color:var(--red);font-family:var(--mono);">Implementation failure · sensitivity created</div>
+          </div>
+          <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:16px;">
+            <div style="font-size:13px;color:var(--slate);line-height:1.75;"><strong style="color:var(--navy)">Q3 2023 — Implementation delayed 6 weeks due to environment mismatch.</strong> The rollout stalled when a configuration incompatibility with Inline's existing data infrastructure wasn't caught in pre-launch QA. The issue escalated to VP level on both sides. Tom managed the recovery personally.</div>
+            <div style="margin-top:10px;font-size:13px;color:var(--slate);line-height:1.75;">Resolved October 2023. Brett accepted the resolution but made a point of it: <em>"We can't go through that again."</em> That comment has been referenced in two subsequent meetings. This account is measurably more sensitive to deployment risk than comparable accounts in the book. Any future product changes, integrations, or expansion work must acknowledge this history.</div>
+            <div style="margin-top:10px;background:#fff5f5;border-left:3px solid var(--red);padding:10px 12px;border-radius:0 5px 5px 0;font-size:12px;color:#742a2a;line-height:1.6;"><strong>Institutional memory flag:</strong> Inline team will reference the 2023 rollout when evaluating any new deployment. Do not minimise it. Acknowledge it directly and show what has changed.</div>
+            <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;">
+              <span style="font-size:10px;background:#fff5f5;color:var(--red);border:1px solid rgba(197,48,48,.2);padding:2px 8px;border-radius:3px;font-family:var(--mono);">Deployment sensitivity created</span>
+              <span style="font-size:10px;background:#ebf4ff;color:#2b6cb0;border:1px solid rgba(43,108,176,.2);padding:2px 8px;border-radius:3px;font-family:var(--mono);">Rep: Tom Sato</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2024 -->
+        <div style="margin-bottom:28px;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+            <div style="font-size:13px;font-weight:500;color:var(--navy);font-family:var(--mono);">2024</div>
+            <div style="flex:1;height:1px;background:var(--border);"></div>
+            <div style="font-size:10px;color:var(--warn);font-family:var(--mono);">Renewal · CFO friction · APAC first raised</div>
+          </div>
+          <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:16px;">
+            <div style="font-size:13px;color:var(--slate);line-height:1.75;"><strong style="color:var(--navy)">July 2024 — Renewal closed at $62K.</strong> Tom Sato and Brett Collins drove it together. Flat renewal — no expansion, no price increase agreed at the time. Brett pushed for stability given the 2023 implementation memory.</div>
+            <div style="margin-top:10px;font-size:13px;color:var(--slate);line-height:1.75;"><strong style="color:var(--navy)">Late 2024 — CFO pricing friction.</strong> An 8% price increase was proposed mid-cycle without advance notice to the CFO (Mark Tessaro). The CFO flagged this directly — required a 2-week hold before signature. Brett apologised on Inline's behalf and absorbed the increase. Tom handled the recovery. The CFO's name never appeared in a prior touchpoint — he came in cold and pushed back immediately.</div>
+            <div style="margin-top:10px;font-size:13px;color:var(--slate);line-height:1.75;"><strong style="color:var(--navy)">Q4 2024 — APAC expansion first raised.</strong> Brett and Tom discussed a potential APAC expansion during a Q4 review. Estimated +$60K ACV. No formal scoping occurred. This was a verbal conversation, not a proposal.</div>
+            <div style="margin-top:10px;background:#fffbeb;border-left:3px solid var(--warn);padding:10px 12px;border-radius:0 5px 5px 0;font-size:12px;color:#744210;line-height:1.6;"><strong>Institutional memory flag:</strong> Never introduce commercial terms or pricing changes to Inline before the CFO is in the conversation. Late CFO involvement created a 2-week hold and nearly derailed the renewal.</div>
+            <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;">
+              <span style="font-size:10px;background:#fffbeb;color:var(--warn);border:1px solid rgba(183,121,31,.25);padding:2px 8px;border-radius:3px;font-family:var(--mono);">CFO friction — pricing surprise</span>
+              <span style="font-size:10px;background:#ebf4ff;color:#2b6cb0;border:1px solid rgba(43,108,176,.2);padding:2px 8px;border-radius:3px;font-family:var(--mono);">Rep: Tom Sato</span>
+              <span style="font-size:10px;background:#ebf4ff;color:#2b6cb0;border:1px solid rgba(43,108,176,.2);padding:2px 8px;border-radius:3px;font-family:var(--mono);">Champion: Brett Collins</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2025 -->
+        <div style="margin-bottom:28px;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+            <div style="font-size:13px;font-weight:500;color:var(--navy);font-family:var(--mono);">2025</div>
+            <div style="flex:1;height:1px;background:var(--border);"></div>
+            <div style="font-size:10px;color:var(--red);font-family:var(--mono);">Rep transition × 2 · support escalation begins</div>
+          </div>
+          <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:16px;">
+            <div style="font-size:13px;color:var(--slate);line-height:1.75;"><strong style="color:var(--navy)">June 2025 — Tom Sato leaves.</strong> Dana Kim inherits the account. No formal handoff was captured. Dana was brought up to speed informally — what she knew came from Tom verbally, not from any system. The three-year relationship Tom had built with Brett was not transferred.</div>
+            <div style="margin-top:10px;font-size:13px;color:var(--slate);line-height:1.75;"><strong style="color:var(--navy)">Q3–Q4 2025 — Support escalation opens.</strong> Analytics module bug averaging 2 incidents per month. Sarah Chen (Director IT) becomes the primary day-to-day contact. Dana manages through the escalation.</div>
+            <div style="margin-top:10px;font-size:13px;color:var(--slate);line-height:1.75;"><strong style="color:var(--navy)">Q4 2025 — APAC expansion revisited.</strong> APAC comes up again in Q4 review. No scoping call occurs. Brett is still engaged but beginning to signal his own potential departure.</div>
+            <div style="margin-top:10px;font-size:13px;color:var(--slate);line-height:1.75;"><strong style="color:var(--navy)">December 2025 — Dana Kim transitions.</strong> Marcus Webb inherits. Again, no formal handoff. Marcus starts with limited prior context — the account is mid-escalation, the champion is signalling departure, and the APAC conversation is unresolved.</div>
+            <div style="margin-top:10px;background:#fff5f5;border-left:3px solid var(--red);padding:10px 12px;border-radius:0 5px 5px 0;font-size:12px;color:#742a2a;line-height:1.6;"><strong>Transition note:</strong> This account has had three reps in three years. No warm handoff was completed at either transition. Each incoming rep started without the relationship context of the previous rep. The 2023 implementation sensitivity, the CFO pricing history, and Brett's relationship depth with Tom were all at risk of being lost.</div>
+            <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;">
+              <span style="font-size:10px;background:#fff5f5;color:var(--red);border:1px solid rgba(197,48,48,.2);padding:2px 8px;border-radius:3px;font-family:var(--mono);">Rep transition × 2</span>
+              <span style="font-size:10px;background:#fff5f5;color:var(--red);border:1px solid rgba(197,48,48,.2);padding:2px 8px;border-radius:3px;font-family:var(--mono);">No handoff captured</span>
+              <span style="font-size:10px;background:#fffbeb;color:var(--warn);border:1px solid rgba(183,121,31,.25);padding:2px 8px;border-radius:3px;font-family:var(--mono);">Support escalation active</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2026 -->
+        <div style="margin-bottom:28px;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+            <div style="font-size:13px;font-weight:500;color:var(--navy);font-family:var(--mono);">2026</div>
+            <div style="flex:1;height:1px;background:var(--border);"></div>
+            <div style="font-size:10px;color:var(--red);font-family:var(--mono);">Champion departed · renewal at risk · today</div>
+          </div>
+          <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:16px;">
+            <div style="font-size:13px;color:var(--slate);line-height:1.75;"><strong style="color:var(--navy)">January 2026 — Q4 QBR.</strong> John Rivera and Brett attend. Renewal discussed; 2027 on track per Brett. APAC floated again as an expansion target.</div>
+            <div style="margin-top:10px;font-size:13px;color:var(--slate);line-height:1.75;"><strong style="color:var(--navy)">February 2026 — Support escalation opened.</strong> Analytics module bug. Sarah Chen primary contact. Averaging 2 incidents per month.</div>
+            <div style="margin-top:10px;font-size:13px;color:var(--slate);line-height:1.75;"><strong style="color:var(--navy)">March 2026 — Implementation review.</strong> Customer referenced 2023 rollout. Requested roadmap visibility before committing to APAC. Sarah begins raising budget uncertainty.</div>
+            <div style="margin-top:10px;font-size:13px;color:var(--slate);line-height:1.75;"><strong style="color:var(--navy)">April 2026 — Brett Collins departs.</strong> Left early April. John Rivera named as interim contact — no warm handoff scheduled. Nexion re-engaged after Inline's outage concerns surfaced. Support escalation closed — bug stable.</div>
+            <div style="margin-top:10px;font-size:13px;color:var(--slate);line-height:1.75;"><strong style="color:var(--navy)">May 2026 — Renewal at risk.</strong> Two unanswered outbounds to John on renewal ownership. Security requirements received from procurement. Budget clarity still outstanding from April. Today: QBR + Renewal Check-In scheduled.</div>
+            <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;">
+              <span style="font-size:10px;background:#fff5f5;color:var(--red);border:1px solid rgba(197,48,48,.2);padding:2px 8px;border-radius:3px;font-family:var(--mono);">Champion departed</span>
+              <span style="font-size:10px;background:#fffbeb;color:var(--warn);border:1px solid rgba(183,121,31,.25);padding:2px 8px;border-radius:3px;font-family:var(--mono);">Renewal 47d</span>
+              <span style="font-size:10px;background:#fffbeb;color:var(--warn);border:1px solid rgba(183,121,31,.25);padding:2px 8px;border-radius:3px;font-family:var(--mono);">Competitor active</span>
+              <span style="font-size:10px;background:#ebf4ff;color:#2b6cb0;border:1px solid rgba(43,108,176,.2);padding:2px 8px;border-radius:3px;font-family:var(--mono);">Rep: Marcus Webb</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Home view ── -->
+  <div id="view-home" style="display:none;flex:1;flex-direction:column;overflow:hidden;background:var(--off-white);">
+    <div style="background:var(--white);border-bottom:1px solid var(--border);padding:16px 24px;flex-shrink:0;">
+      <div style="font-size:11px;color:#a0aec0;font-family:var(--mono);text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px;">Tuesday, May 26</div>
+      <div style="font-size:20px;font-weight:500;color:var(--navy);letter-spacing:-.3px;">Good morning, Sarah.</div>
+    </div>
+
+    <div style="flex:1;overflow-y:auto;padding:20px 24px;display:flex;flex-direction:column;gap:18px;">
+
+      <!-- Weekly Calendar -->
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
+        <div style="padding:10px 16px;background:var(--off-white);border-bottom:1px solid var(--border);display:flex;align-items:center;">
+          <div style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.6px;color:var(--navy);font-family:var(--mono);">This week</div>
+          <div style="font-size:10px;color:#a0aec0;font-family:var(--mono);margin-left:auto;">May 26 – May 30</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);border-bottom:1px solid var(--border);">
+          <div style="padding:8px 12px;font-size:10px;font-weight:500;color:#a0aec0;font-family:var(--mono);text-transform:uppercase;border-right:1px solid var(--border-light);">Mon 26</div>
+          <div style="padding:8px 12px;font-size:10px;font-weight:500;color:var(--mid-blue);font-family:var(--mono);text-transform:uppercase;background:#f0f7ff;border-right:1px solid var(--border-light);">Tue 27 ·Today</div>
+          <div style="padding:8px 12px;font-size:10px;font-weight:500;color:#a0aec0;font-family:var(--mono);text-transform:uppercase;border-right:1px solid var(--border-light);">Wed 28</div>
+          <div style="padding:8px 12px;font-size:10px;font-weight:500;color:#a0aec0;font-family:var(--mono);text-transform:uppercase;border-right:1px solid var(--border-light);">Thu 29</div>
+          <div style="padding:8px 12px;font-size:10px;font-weight:500;color:#a0aec0;font-family:var(--mono);text-transform:uppercase;">Fri 30</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);min-height:110px;align-items:start;">
+
+          <!-- Mon -->
+          <div style="padding:8px;border-right:1px solid var(--border-light);">
+            <div style="background:#e6f1fb;border-left:3px solid var(--mid-blue);border-radius:0 4px 4px 0;padding:5px 7px;margin-bottom:5px;cursor:pointer;">
+              <div style="font-size:11px;font-weight:500;color:#0c447c;">Team standup</div>
+              <div style="font-size:10px;color:#185fa5;font-family:var(--mono);">8:30 – 8:45am</div>
+            </div>
+            <div style="background:#e6f1fb;border-left:3px solid var(--mid-blue);border-radius:0 4px 4px 0;padding:5px 7px;cursor:pointer;">
+              <div style="font-size:11px;font-weight:500;color:#0c447c;">Pipeline review</div>
+              <div style="font-size:10px;color:#185fa5;font-family:var(--mono);">3:00 – 3:30pm</div>
+            </div>
+          </div>
+
+          <!-- Tue — today -->
+          <div style="padding:8px;border-right:1px solid var(--border-light);background:#f7fbff;">
+            <div style="background:#061A33;border-radius:4px;padding:5px 7px;margin-bottom:5px;cursor:pointer;">
+              <div style="font-size:11px;font-weight:500;color:white;">Inline Industries QBR</div>
+              <div style="font-size:10px;color:rgba(247,250,252,.6);font-family:var(--mono);">2:00 – 2:45pm</div>
+            </div>
+            <div style="background:#2D6E8A;border-radius:4px;padding:5px 7px;cursor:pointer;" onclick="showAccount()">
+              <div style="font-size:11px;font-weight:500;color:white;">Inline — Pre-call brief</div>
+              <div style="font-size:10px;color:rgba(247,250,252,.7);font-family:var(--mono);">2:00pm · Open →</div>
+            </div>
+          </div>
+
+          <!-- Wed -->
+          <div style="padding:8px;border-right:1px solid var(--border-light);">
+            <div style="background:#e6f1fb;border-left:3px solid var(--mid-blue);border-radius:0 4px 4px 0;padding:5px 7px;margin-bottom:5px;cursor:pointer;">
+              <div style="font-size:11px;font-weight:500;color:#0c447c;">1:1 · Marcus Webb</div>
+              <div style="font-size:10px;color:#185fa5;font-family:var(--mono);">10:00 – 10:30am</div>
+            </div>
+            <div style="background:#e6f1fb;border-left:3px solid var(--mid-blue);border-radius:0 4px 4px 0;padding:5px 7px;cursor:pointer;">
+              <div style="font-size:11px;font-weight:500;color:#0c447c;">1:1 · Jordan Park</div>
+              <div style="font-size:10px;color:#185fa5;font-family:var(--mono);">2:00 – 2:30pm</div>
+            </div>
+          </div>
+
+          <!-- Thu -->
+          <div style="padding:8px;border-right:1px solid var(--border-light);">
+            <div style="background:#e6f1fb;border-left:3px solid var(--mid-blue);border-radius:0 4px 4px 0;padding:5px 7px;margin-bottom:5px;cursor:pointer;">
+              <div style="font-size:11px;font-weight:500;color:#0c447c;">1:1 · Dana Kim</div>
+              <div style="font-size:10px;color:#185fa5;font-family:var(--mono);">11:00 – 11:30am</div>
+            </div>
+            <div style="background:#e1f5ee;border-left:3px solid #1D9E75;border-radius:0 4px 4px 0;padding:5px 7px;cursor:pointer;">
+              <div style="font-size:11px;font-weight:500;color:#085041;">Northstar Logistics</div>
+              <div style="font-size:10px;color:#0f6e56;font-family:var(--mono);">3:00 – 3:30pm</div>
+            </div>
+          </div>
+
+          <!-- Fri -->
+          <div style="padding:8px;">
+            <div style="background:#e6f1fb;border-left:3px solid var(--mid-blue);border-radius:0 4px 4px 0;padding:5px 7px;margin-bottom:5px;cursor:pointer;">
+              <div style="font-size:11px;font-weight:500;color:#0c447c;">1:1 · Riley Torres</div>
+              <div style="font-size:10px;color:#185fa5;font-family:var(--mono);">9:00 – 9:30am</div>
+            </div>
+            <div style="background:#faeeda;border-left:3px solid #EF9F27;border-radius:0 4px 4px 0;padding:5px 7px;cursor:pointer;">
+              <div style="font-size:11px;font-weight:500;color:#854F0B;">Vantage Health — renewal</div>
+              <div style="font-size:10px;color:#854F0B;font-family:var(--mono);">1:00 – 1:30pm</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Transitions in motion -->
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
+        <div style="padding:10px 16px;background:var(--off-white);border-bottom:1px solid var(--border);display:flex;align-items:center;">
+          <div style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.6px;color:var(--navy);font-family:var(--mono);">Transitions</div>
+          <div style="margin-left:auto;font-size:11px;color:var(--mid-blue);cursor:pointer;font-weight:500;" onclick="showTransitions()">View all →</div>
+        </div>
+        <div style="padding:0;">
+          <div style="display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--border-light);">
+            <span style="font-size:10px;font-weight:500;padding:2px 7px;border-radius:3px;background:#fff5f5;color:var(--red);border:1px solid rgba(197,48,48,.2);font-family:var(--mono);white-space:nowrap;">Rep turnover</span>
+            <div style="flex:1;">
+              <span style="font-size:12px;font-weight:500;color:var(--mid-blue);cursor:pointer;">Vantage Health Partners</span>
+              <span style="font-size:11px;color:#a0aec0;margin-left:8px;">Riley Torres departing Jun 15 · no successor assigned</span>
+            </div>
+            <span style="font-size:10px;background:#fff5f5;color:var(--red);border:1px solid rgba(197,48,48,.2);padding:2px 7px;border-radius:3px;font-family:var(--mono);white-space:nowrap;">No brief</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--border-light);">
+            <span style="font-size:10px;font-weight:500;padding:2px 7px;border-radius:3px;background:#f5f0ff;color:#553c9a;border:1px solid rgba(85,60,154,.2);font-family:var(--mono);white-space:nowrap;">Parental leave</span>
+            <div style="flex:1;">
+              <span style="font-size:12px;font-weight:500;color:var(--mid-blue);cursor:pointer;">Summit Retail Solutions</span>
+              <span style="font-size:11px;color:#a0aec0;margin-left:8px;">Jordan Park out Jun 1 · renewal Jul 28 · no coverage</span>
+            </div>
+            <span style="font-size:10px;background:#fff5f5;color:var(--red);border:1px solid rgba(197,48,48,.2);padding:2px 7px;border-radius:3px;font-family:var(--mono);white-space:nowrap;">No brief</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:10px 16px;">
+            <span style="font-size:10px;font-weight:500;padding:2px 7px;border-radius:3px;background:#fffbeb;color:var(--warn);border:1px solid rgba(183,121,31,.25);font-family:var(--mono);white-space:nowrap;">Manager-held</span>
+            <div style="flex:1;">
+              <span style="font-size:12px;font-weight:500;color:var(--mid-blue);cursor:pointer;">Northstar Logistics</span>
+              <span style="font-size:11px;color:#a0aec0;margin-left:8px;">Dana Kim on PTO · you are covering · back Jun 3</span>
+            </div>
+            <span style="font-size:10px;background:#fffbeb;color:var(--warn);border:1px solid rgba(183,121,31,.25);padding:2px 7px;border-radius:3px;font-family:var(--mono);white-space:nowrap;">In progress</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Focus last 72h -->
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
+        <div style="padding:10px 16px;background:var(--off-white);border-bottom:1px solid var(--border);display:flex;align-items:center;">
+          <div style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.6px;color:var(--navy);font-family:var(--mono);">Focus · last 72 hours</div>
+          <div style="margin-left:auto;font-size:11px;color:var(--mid-blue);cursor:pointer;font-weight:500;" onclick="showFocus()">View all →</div>
+        </div>
+        <table style="width:100%;border-collapse:collapse;">
+          <tbody>
+            <tr style="border-bottom:1px solid var(--border-light);">
+              <td style="padding:9px 12px;width:8px;"><div class="f-dot f-dot-red"></div></td>
+              <td style="padding:9px 12px;"><div class="f-acct-name" onclick="showAccount()">Inline Industries</div></td>
+              <td style="padding:9px 12px;font-size:12px;color:var(--slate);">Champion silent 41 days — 2 outbound unanswered. Renewal in 47 days. <span class="f-source">2 sources ▾</span></td>
+              <td style="padding:9px 12px;font-size:10px;color:#a0aec0;font-family:var(--mono);white-space:nowrap;text-align:right;">6d ago</td>
+              <td style="padding:9px 12px;"><div class="f-actions" style="opacity:1;"><button class="f-btn-confirm" onclick="notedFocus(1)">Noted</button><button class="f-btn-1on1" onclick="addToOneOnOne(1)", this)">+ 1:1</button></div></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border-light);">
+              <td style="padding:9px 12px;"><div class="f-dot f-dot-red"></div></td>
+              <td style="padding:9px 12px;"><div class="f-acct-name">Vantage Health Partners</div></td>
+              <td style="padding:9px 12px;font-size:12px;color:var(--slate);">Rep departing Jun 15 — no successor assigned. Renewal 87 days. <span class="f-source">1 source ▾</span></td>
+              <td style="padding:9px 12px;font-size:10px;color:#a0aec0;font-family:var(--mono);white-space:nowrap;text-align:right;">3d ago</td>
+              <td style="padding:9px 12px;"><div class="f-actions" style="opacity:1;"><button class="f-btn-confirm" onclick="notedFocus(2)">Noted</button><button class="f-btn-1on1" onclick="addToOneOnOne(2)", this)">+ 1:1</button></div></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border-light);">
+              <td style="padding:9px 12px;"><div class="f-dot f-dot-red"></div></td>
+              <td style="padding:9px 12px;"><div class="f-acct-name">Summit Retail Solutions</div></td>
+              <td style="padding:9px 12px;font-size:12px;color:var(--slate);">Parental leave starts in 5 days. Renewal Jul 28, no coverage brief. <span class="f-source">1 source ▾</span></td>
+              <td style="padding:9px 12px;font-size:10px;color:#a0aec0;font-family:var(--mono);white-space:nowrap;text-align:right;">5d ago</td>
+              <td style="padding:9px 12px;"><div class="f-actions" style="opacity:1;"><button class="f-btn-confirm" onclick="notedFocus(3)">Noted</button><button class="f-btn-1on1" onclick="addToOneOnOne(3)", this)">+ 1:1</button></div></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border-light);">
+              <td style="padding:9px 12px;"><div class="f-dot f-dot-amber"></div></td>
+              <td style="padding:9px 12px;"><div class="f-acct-name">Brightfield Technologies</div></td>
+              <td style="padding:9px 12px;font-size:12px;color:var(--slate);">Spec doc promised May 10 still outstanding — second customer follow-up received. <span class="f-source">2 sources ▾</span></td>
+              <td style="padding:9px 12px;font-size:10px;color:#a0aec0;font-family:var(--mono);white-space:nowrap;text-align:right;">4d ago</td>
+              <td style="padding:9px 12px;"><div class="f-actions" style="opacity:1;"><button class="f-btn-confirm" onclick="notedFocus(7)">Noted</button><button class="f-btn-1on1" onclick="addToOneOnOne(7)", this)">+ 1:1</button></div></td>
+            </tr>
+            <tr>
+              <td style="padding:9px 12px;"><div class="f-dot f-dot-amber"></div></td>
+              <td style="padding:9px 12px;"><div class="f-acct-name">Crestview Analytics</div></td>
+              <td style="padding:9px 12px;font-size:12px;color:var(--slate);">Two stakeholders went dark after May 6 pricing discussion. 20 days quiet. <span class="f-source">2 sources ▾</span></td>
+              <td style="padding:9px 12px;font-size:10px;color:#a0aec0;font-family:var(--mono);white-space:nowrap;text-align:right;">20d ago</td>
+              <td style="padding:9px 12px;"><div class="f-actions" style="opacity:1;"><button class="f-btn-confirm" onclick="notedFocus(10)">Noted</button><button class="f-btn-1on1" onclick="addToOneOnOne(10)", this)">+ 1:1</button></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── Focus view (full) ── -->
+  <div id="view-focus" style="display:none;flex:1;flex-direction:column;overflow:hidden;">
+
+    <style>
+      .focus-header { padding:20px 24px 0; background:var(--white); border-bottom:1px solid var(--border); flex-shrink:0; }
+      .focus-eyebrow { font-size:11px; font-weight:500; color:#a0aec0; font-family:var(--mono); text-transform:uppercase; letter-spacing:.6px; margin-bottom:6px; }
+      .focus-title { font-size:22px; font-weight:500; color:var(--navy); letter-spacing:-.3px; margin-bottom:4px; }
+      .focus-sub { font-size:12px; color:var(--slate); margin-bottom:14px; }
+      .focus-tabs { display:flex; gap:0; align-items:center; }
+      .focus-tab { font-size:12px; font-weight:500; padding:8px 14px; color:var(--slate); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; transition:color .12s,border-color .12s; white-space:nowrap; }
+      .focus-tab:hover { color:var(--navy); }
+      .focus-tab.active { color:var(--navy); border-bottom-color:var(--navy); }
+      .focus-filters { display:flex; gap:6px; align-items:center; padding:10px 24px; background:var(--white); border-bottom:1px solid var(--border); flex-shrink:0; flex-wrap:wrap; }
+      .f-filter { font-size:11px; font-weight:500; padding:4px 10px; border:1px solid var(--border); border-radius:20px; color:var(--slate); cursor:pointer; background:var(--white); display:flex; align-items:center; gap:4px; transition:border-color .12s; }
+      .f-filter:hover { border-color:var(--navy); color:var(--navy); }
+      .f-filter svg { opacity:.5; }
+      .f-groupby { margin-left:auto; display:flex; align-items:center; gap:6px; font-size:11px; color:#a0aec0; font-family:var(--mono); }
+      .f-groupby-btn { font-size:11px; font-weight:500; padding:4px 10px; border:1px solid var(--border); border-radius:4px; cursor:pointer; color:var(--slate); background:var(--white); }
+      .f-groupby-btn.active { background:var(--navy); color:white; border-color:var(--navy); }
+
+      .focus-table { width:100%; border-collapse:collapse; }
+      .focus-th { font-size:10px; font-weight:500; text-transform:uppercase; letter-spacing:.6px; color:#a0aec0; font-family:var(--mono); padding:8px 12px; text-align:left; border-bottom:1px solid var(--border); background:var(--off-white); white-space:nowrap; }
+      .focus-tr { border-bottom:1px solid var(--border-light); transition:background .1s; }
+      .focus-tr:hover { background:#f7fafc; }
+      .focus-tr.dismissed { opacity:.3; pointer-events:none; }
+      .focus-tr.confirmed { background:#f0fff4; }
+      .focus-td { padding:10px 12px; font-size:12px; color:var(--navy); vertical-align:middle; }
+
+      .f-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+      .f-dot-red { background:var(--red); }
+      .f-dot-amber { background:#EF9F27; }
+      .f-dot-green { background:var(--green); }
+
+      .f-acct-name { font-size:13px; font-weight:500; color:var(--mid-blue); cursor:pointer; }
+      .f-acct-name:hover { text-decoration:underline; }
+      .f-acct-code { font-size:10px; color:#a0aec0; font-family:var(--mono); }
+      .f-acct-inherited { font-size:10px; color:#a0aec0; font-style:italic; }
+
+      .f-rep-av { width:22px; height:22px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:9px; font-weight:500; color:white; margin-right:5px; vertical-align:middle; flex-shrink:0; }
+      .f-rep-name { font-size:12px; color:var(--navy); }
+
+      .f-signal { font-size:12px; color:var(--slate); line-height:1.5; }
+      .f-source { display:inline-flex; align-items:center; gap:3px; font-size:9px; font-family:var(--mono); background:rgba(45,110,138,.08); border:1px solid rgba(45,110,138,.2); color:var(--teal); padding:1px 6px; border-radius:3px; cursor:pointer; margin-left:4px; white-space:nowrap; vertical-align:middle; }
+
+      .f-stage { font-size:11px; color:var(--slate); white-space:nowrap; display:flex; align-items:center; gap:4px; }
+      .f-stage-dot { width:6px; height:6px; border-radius:50%; background:var(--border); flex-shrink:0; }
+      .f-stage-dot.negotiation { background:#0069C3; }
+      .f-stage-dot.renewal { background:#EF9F27; }
+      .f-stage-dot.expansion { background:var(--green); }
+      .f-stage-dot.proposal { background:#9F7AEA; }
+      .f-stage-dot.discovery { background:#a0aec0; }
+      .f-stage-dot.onboarding { background:var(--teal); }
+
+      .f-arr { font-size:12px; font-weight:500; color:var(--navy); white-space:nowrap; font-family:var(--mono); }
+      .f-touch { font-size:11px; color:#a0aec0; font-family:var(--mono); white-space:nowrap; }
+
+      .f-actions { display:flex; gap:5px; align-items:center; }
+      .f-btn-confirm { font-size:10px; font-weight:500; padding:3px 10px; border-radius:4px; cursor:pointer; background:var(--off-white); color:var(--slate); border:1px solid var(--border); white-space:nowrap; }
+      .f-btn-confirm:hover { border-color:var(--slate); color:var(--navy); }
+      .f-btn-confirm.done { background:#f0fff4; color:#276749; border-color:rgba(72,187,120,.3); cursor:default; }
+      .f-btn-1on1 { font-size:10px; font-weight:500; padding:3px 10px; border-radius:4px; cursor:pointer; background:var(--off-white); color:var(--mid-blue); border:1px solid rgba(0,105,195,.25); white-space:nowrap; }
+      .f-btn-1on1:hover { background:#e6f1fb; border-color:var(--mid-blue); }
+      .f-btn-1on1.added { background:#e6f1fb; color:var(--mid-blue); border-color:var(--mid-blue); cursor:default; }
+    </style>
+
+    <!-- Header -->
+    <div class="focus-header">
+      <div class="focus-eyebrow">Focus · Tuesday, May 26</div>
+      <div class="focus-title">What needs your attention</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <div class="focus-sub">10 accounts across 4 reps. Ranked by signal recency, not deal size.</div>
+        <button onclick="clearAllFocus()" style="font-size:11px;font-weight:500;padding:5px 12px;background:var(--off-white);color:var(--slate);border:1px solid var(--border);border-radius:5px;cursor:pointer;white-space:nowrap;margin-bottom:14px;" onmouseover="this.style.borderColor='var(--slate)'" onmouseout="this.style.borderColor='var(--border)'">Clear all</button>
+      </div>
+      <div class="focus-tabs">
+        <div class="focus-tab active">Needs attention</div>
+        <div class="focus-tab">All accounts</div>
+        <div class="focus-tab">My take-overs</div>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="focus-filters">
+      <div class="f-filter">Rep · any <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+      <div class="f-filter">Stage · any <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+      <div class="f-filter">Signal · any <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+      <div class="f-filter">+ filter</div>
+      <div class="f-groupby">
+        Group by
+        <button class="f-groupby-btn active">Signal</button>
+        <button class="f-groupby-btn">Rep</button>
+        <button class="f-groupby-btn">Stage</button>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div style="flex:1;overflow-y:auto;background:var(--white);">
+      <table class="focus-table">
+        <thead>
+          <tr>
+            <th class="focus-th" style="width:8px;padding-right:0;"></th>
+            <th class="focus-th">Account</th>
+            <th class="focus-th">Rep</th>
+            <th class="focus-th">Signal</th>
+            <th class="focus-th">Stage</th>
+            <th class="focus-th" style="text-align:right">ARR</th>
+            <th class="focus-th" style="text-align:right">Last touch</th>
+            <th class="focus-th" style="width:120px;"></th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr class="focus-tr" id="fr1">
+            <td class="focus-td" style="padding-right:0;"><div class="f-dot f-dot-red"></div></td>
+            <td class="focus-td"><div class="f-acct-name" onclick="showAccount()">Inline Industries</div><div class="f-acct-code">INLINE</div></td>
+            <td class="focus-td"><div style="display:flex;align-items:center;"><span class="f-rep-av" style="background:#3A6F92">MW</span><span class="f-rep-name">Marcus Webb</span></div></td>
+            <td class="focus-td"><div class="f-signal">Champion silent 41 days — 2 outbound unanswered. Renewal in 47 days, auto-renew off. <span class="f-source">2 sources ▾</span></div></td>
+            <td class="focus-td"><div class="f-stage"><div class="f-stage-dot renewal"></div>Renewal</div></td>
+            <td class="focus-td f-arr" style="text-align:right">$240K</td>
+            <td class="focus-td f-touch" style="text-align:right">6d ago</td>
+            <td class="focus-td"><div class="f-actions"><button class="f-btn-confirm" onclick="notedFocus(1)">Noted</button><button class="f-btn-1on1" onclick="addToOneOnOne(1)", this)">+ 1:1</button></div></td>
+          </tr>
+
+          <tr class="focus-tr" id="fr2">
+            <td class="focus-td" style="padding-right:0;"><div class="f-dot f-dot-red"></div></td>
+            <td class="focus-td"><div class="f-acct-name">Vantage Health Partners</div><div class="f-acct-code">VANTAGE</div></td>
+            <td class="focus-td"><div style="display:flex;align-items:center;"><span class="f-rep-av" style="background:#744210">RT</span><span class="f-rep-name">Riley Torres</span></div></td>
+            <td class="focus-td"><div class="f-signal">Rep departing Jun 15 — no successor assigned. Renewal in 87 days, no QBR scheduled. <span class="f-source">1 source ▾</span></div></td>
+            <td class="focus-td"><div class="f-stage"><div class="f-stage-dot renewal"></div>Renewal</div></td>
+            <td class="focus-td f-arr" style="text-align:right">$290K</td>
+            <td class="focus-td f-touch" style="text-align:right">3d ago</td>
+            <td class="focus-td"><div class="f-actions"><button class="f-btn-confirm" onclick="notedFocus(2)">Noted</button><button class="f-btn-1on1" onclick="addToOneOnOne(2)", this)">+ 1:1</button></div></td>
+          </tr>
+
+          <tr class="focus-tr" id="fr3">
+            <td class="focus-td" style="padding-right:0;"><div class="f-dot f-dot-red"></div></td>
+            <td class="focus-td"><div class="f-acct-name">Summit Retail Solutions</div><div class="f-acct-code">SUMMIT</div><div class="f-acct-inherited">Jordan Park on parental leave Jun 1</div></td>
+            <td class="focus-td"><div style="display:flex;align-items:center;"><span class="f-rep-av" style="background:#276749">JP</span><span class="f-rep-name">Jordan Park</span></div></td>
+            <td class="focus-td"><div class="f-signal">Parental leave starts in 5 days. Renewal Jul 28 — no coverage brief generated and no successor assigned. <span class="f-source">1 source ▾</span></div></td>
+            <td class="focus-td"><div class="f-stage"><div class="f-stage-dot renewal"></div>Renewal</div></td>
+            <td class="focus-td f-arr" style="text-align:right">$88K</td>
+            <td class="focus-td f-touch" style="text-align:right">5d ago</td>
+            <td class="focus-td"><div class="f-actions"><button class="f-btn-confirm" onclick="notedFocus(3)">Noted</button><button class="f-btn-1on1" onclick="addToOneOnOne(3)", this)">+ 1:1</button></div></td>
+          </tr>
+
+          <tr class="focus-tr" id="fr4">
+            <td class="focus-td" style="padding-right:0;"><div class="f-dot f-dot-amber"></div></td>
+            <td class="focus-td"><div class="f-acct-name">Northstar Logistics</div><div class="f-acct-code">NORTH</div><div class="f-acct-inherited">inherited from Dana Kim (PTO)</div></td>
+            <td class="focus-td"><div style="display:flex;align-items:center;"><span class="f-rep-av" style="background:#2D6E8A">SC</span><span class="f-rep-name">Sarah Chen</span></div></td>
+            <td class="focus-td"><div class="f-signal">Manager-held while Dana on PTO. Renewal in 66 days — only 1 outbound sent since coverage began. <span class="f-source">2 sources ▾</span></div></td>
+            <td class="focus-td"><div class="f-stage"><div class="f-stage-dot renewal"></div>Renewal</div></td>
+            <td class="focus-td f-arr" style="text-align:right">$310K</td>
+            <td class="focus-td f-touch" style="text-align:right">4d ago</td>
+            <td class="focus-td"><div class="f-actions"><button class="f-btn-confirm" onclick="notedFocus(4)">Noted</button><button class="f-btn-1on1" onclick="addToOneOnOne(4)", this)">+ 1:1</button></div></td>
+          </tr>
+
+          <tr class="focus-tr" id="fr5">
+            <td class="focus-td" style="padding-right:0;"><div class="f-dot f-dot-amber"></div></td>
+            <td class="focus-td"><div class="f-acct-name">Meridian Health Systems</div><div class="f-acct-code">MERIDIAN</div></td>
+            <td class="focus-td"><div style="display:flex;align-items:center;"><span class="f-rep-av" style="background:#3A6F92">MW</span><span class="f-rep-name">Marcus Webb</span></div></td>
+            <td class="focus-td"><div class="f-signal">Budget freeze flagged by customer on last call. Renewal in 99 days. No follow-up sent since May 18. <span class="f-source">2 sources ▾</span></div></td>
+            <td class="focus-td"><div class="f-stage"><div class="f-stage-dot renewal"></div>Renewal</div></td>
+            <td class="focus-td f-arr" style="text-align:right">$180K</td>
+            <td class="focus-td f-touch" style="text-align:right">8d ago</td>
+            <td class="focus-td"><div class="f-actions"><button class="f-btn-confirm" onclick="notedFocus(5)">Noted</button><button class="f-btn-1on1" onclick="addToOneOnOne(5)", this)">+ 1:1</button></div></td>
+          </tr>
+
+          <tr class="focus-tr" id="fr6">
+            <td class="focus-td" style="padding-right:0;"><div class="f-dot f-dot-amber"></div></td>
+            <td class="focus-td"><div class="f-acct-name">Apex Financial Group</div><div class="f-acct-code">APEX</div><div class="f-acct-inherited">transferring to Dana Kim Jun 1</div></td>
+            <td class="focus-td"><div style="display:flex;align-items:center;"><span class="f-rep-av" style="background:#744210">RT</span><span class="f-rep-name">Riley Torres</span></div></td>
+            <td class="focus-td"><div class="f-signal">Territory transfer effective Jun 1 — handoff brief in progress. No customer touchpoint in 7 days before transfer. <span class="f-source">1 source ▾</span></div></td>
+            <td class="focus-td"><div class="f-stage"><div class="f-stage-dot proposal"></div>Expansion</div></td>
+            <td class="focus-td f-arr" style="text-align:right">$145K</td>
+            <td class="focus-td f-touch" style="text-align:right">7d ago</td>
+            <td class="focus-td"><div class="f-actions"><button class="f-btn-confirm" onclick="notedFocus(6)">Noted</button><button class="f-btn-1on1" onclick="addToOneOnOne(6)", this)">+ 1:1</button></div></td>
+          </tr>
+
+          <tr class="focus-tr" id="fr7">
+            <td class="focus-td" style="padding-right:0;"><div class="f-dot f-dot-amber"></div></td>
+            <td class="focus-td"><div class="f-acct-name">Brightfield Technologies</div><div class="f-acct-code">BRIGHT</div></td>
+            <td class="focus-td"><div style="display:flex;align-items:center;"><span class="f-rep-av" style="background:#2D6E8A">DK</span><span class="f-rep-name">Dana Kim</span></div></td>
+            <td class="focus-td"><div class="f-signal">Spec doc promised May 10 still outstanding — second customer follow-up received May 22. <span class="f-source">2 sources ▾</span></div></td>
+            <td class="focus-td"><div class="f-stage"><div class="f-stage-dot proposal"></div>Proposal</div></td>
+            <td class="focus-td f-arr" style="text-align:right">$220K</td>
+            <td class="focus-td f-touch" style="text-align:right">4d ago</td>
+            <td class="focus-td"><div class="f-actions"><button class="f-btn-confirm" onclick="notedFocus(7)">Noted</button><button class="f-btn-1on1" onclick="addToOneOnOne(7)", this)">+ 1:1</button></div></td>
+          </tr>
+
+          <tr class="focus-tr" id="fr8">
+            <td class="focus-td" style="padding-right:0;"><div class="f-dot f-dot-green"></div></td>
+            <td class="focus-td"><div class="f-acct-name">Harborview Media</div><div class="f-acct-code">HARBOR</div></td>
+            <td class="focus-td"><div style="display:flex;align-items:center;"><span class="f-rep-av" style="background:#276749">JP</span><span class="f-rep-name">Jordan Park</span></div></td>
+            <td class="focus-td"><div class="f-signal">Expansion conversation active — customer requested pricing for additional seats on May 20. Weekly engagement with primary stakeholder. <span class="f-source">2 sources ▾</span></div></td>
+            <td class="focus-td"><div class="f-stage"><div class="f-stage-dot expansion"></div>Expansion</div></td>
+            <td class="focus-td f-arr" style="text-align:right">$165K</td>
+            <td class="focus-td f-touch" style="text-align:right">2d ago</td>
+            <td class="focus-td"><div class="f-actions"><button class="f-btn-confirm" onclick="notedFocus(8)">Noted</button><button class="f-btn-1on1" onclick="addToOneOnOne(8)", this)">+ 1:1</button></div></td>
+          </tr>
+
+          <tr class="focus-tr" id="fr9">
+            <td class="focus-td" style="padding-right:0;"><div class="f-dot f-dot-green"></div></td>
+            <td class="focus-td"><div class="f-acct-name">Clearpath Operations</div><div class="f-acct-code">CLEAR</div></td>
+            <td class="focus-td"><div style="display:flex;align-items:center;"><span class="f-rep-av" style="background:#744210">RT</span><span class="f-rep-name">Riley Torres</span></div></td>
+            <td class="focus-td"><div class="f-signal">Verbal commit on call May 22 — paper expected next week. No blockers identified. <span class="f-source">1 source ▾</span></div></td>
+            <td class="focus-td"><div class="f-stage"><div class="f-stage-dot negotiation"></div>Negotiation</div></td>
+            <td class="focus-td f-arr" style="text-align:right">$112K</td>
+            <td class="focus-td f-touch" style="text-align:right">4d ago</td>
+            <td class="focus-td"><div class="f-actions"><button class="f-btn-confirm" onclick="notedFocus(9)">Noted</button><button class="f-btn-1on1" onclick="addToOneOnOne(9)", this)">+ 1:1</button></div></td>
+          </tr>
+
+          <tr class="focus-tr" id="fr10">
+            <td class="focus-td" style="padding-right:0;"><div class="f-dot f-dot-amber"></div></td>
+            <td class="focus-td"><div class="f-acct-name">Crestview Analytics</div><div class="f-acct-code">CREST</div></td>
+            <td class="focus-td"><div style="display:flex;align-items:center;"><span class="f-rep-av" style="background:#3A6F92">MW</span><span class="f-rep-name">Marcus Webb</span></div></td>
+            <td class="focus-td"><div class="f-signal">Two stakeholders went dark after May 6 pricing discussion. No substantive activity in 20 days. <span class="f-source">2 sources ▾</span></div></td>
+            <td class="focus-td"><div class="f-stage"><div class="f-stage-dot renewal"></div>Renewal</div></td>
+            <td class="focus-td f-arr" style="text-align:right">$95K</td>
+            <td class="focus-td f-touch" style="text-align:right">20d ago</td>
+            <td class="focus-td"><div class="f-actions"><button class="f-btn-confirm" onclick="notedFocus(10)">Noted</button><button class="f-btn-1on1" onclick="addToOneOnOne(10)", this)">+ 1:1</button></div></td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── Transitions view ── -->
+  <div id="view-transitions" style="display:none;flex:1;flex-direction:column;overflow:hidden;">
+    <div style="background:var(--navy);padding:14px 24px 0;flex-shrink:0;">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:14px;">
+        <div>
+          <div style="font-size:18px;font-weight:500;color:white;letter-spacing:-.3px;margin-bottom:3px;">Transitions</div>
+          <div style="font-size:11px;color:rgba(247,250,252,.4);font-family:var(--mono);">5 accounts in transition · 2 urgent</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:2px;">
+        <div class="t-filter-tab active" id="tf-all" onclick="filterTransitions('all')">All</div>
+        <div class="t-filter-tab" id="tf-turnover" onclick="filterTransitions('turnover')">Rep turnover</div>
+        <div class="t-filter-tab" id="tf-pto" onclick="filterTransitions('pto')">PTO</div>
+        <div class="t-filter-tab" id="tf-leave" onclick="filterTransitions('leave')">Parental leave</div>
+        <div class="t-filter-tab" id="tf-manager" onclick="filterTransitions('manager')">Manager-held</div>
+      </div>
+    </div>
+
+    <style>
+      .t-filter-tab { font-size:12px;font-weight:500;padding:8px 14px;color:rgba(247,250,252,.45);cursor:pointer;border-bottom:2px solid transparent;font-family:var(--mono);margin-bottom:-1px;transition:color .12s,border-color .12s; }
+      .t-filter-tab:hover { color:rgba(247,250,252,.75); }
+      .t-filter-tab.active { color:white;border-bottom-color:var(--mid-blue); }
+      .t-row { display:flex;align-items:flex-start;gap:14px;padding:14px 24px;border-bottom:1px solid var(--border-light);background:var(--white);cursor:pointer;transition:background .1s; }
+      .t-row:hover { background:#f7fafc; }
+      .t-type { font-size:10px;font-weight:500;padding:3px 8px;border-radius:3px;white-space:nowrap;font-family:var(--mono);letter-spacing:.3px;flex-shrink:0;margin-top:2px; }
+      .t-type-turnover { background:var(--off-white);color:var(--slate);border:1px solid var(--border); }
+      .t-type-pto { background:var(--off-white);color:var(--slate);border:1px solid var(--border); }
+      .t-type-leave { background:var(--off-white);color:var(--slate);border:1px solid var(--border); }
+      .t-type-manager { background:var(--off-white);color:var(--slate);border:1px solid var(--border); }
+      .t-row-urgent { border-left:3px solid #EF9F27; }
+      .t-dismiss { font-size:10px;padding:3px 8px;border-radius:4px;cursor:pointer;background:var(--off-white);color:#a0aec0;border:1px solid var(--border);margin-left:auto;flex-shrink:0; }
+      .t-dismiss:hover { color:var(--slate);border-color:var(--slate); }
+      .t-row.cleared { opacity:.35;pointer-events:none; }
+      .t-acct { flex:1;min-width:0; }
+      .t-acct-name { font-size:13px;font-weight:500;color:var(--navy);margin-bottom:2px; }
+      .t-acct-meta { font-size:11px;color:#a0aec0;font-family:var(--mono); }
+      .t-rep { width:160px;flex-shrink:0; }
+      .t-rep-name { font-size:12px;font-weight:500;color:var(--navy); }
+      .t-rep-sub { font-size:11px;color:#a0aec0;font-family:var(--mono); }
+      .t-status { width:140px;flex-shrink:0; }
+      .t-status-label { font-size:12px;color:var(--slate); }
+      .t-status-sub { font-size:11px;color:#a0aec0;font-family:var(--mono); }
+      .t-brief { width:120px;flex-shrink:0;text-align:right; }
+      .t-brief-badge { font-size:10px;font-weight:500;padding:3px 8px;border-radius:3px;font-family:var(--mono); }
+      .brief-ready { background:#f0fff4;color:#276749;border:1px solid rgba(72,187,120,.3); }
+      .brief-missing { background:#fff5f5;color:var(--red);border:1px solid rgba(197,48,48,.2); }
+      .brief-progress { background:#fffbeb;color:var(--warn);border:1px solid rgba(183,121,31,.25); }
+      .t-urgent { border-left:3px solid var(--red); }
+    </style>
+
+    <div style="flex:1;overflow-y:auto;">
+      <!-- Header row -->
+      <div style="display:flex;gap:14px;padding:8px 24px;background:var(--off-white);border-bottom:1px solid var(--border);font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.6px;color:#a0aec0;font-family:var(--mono);">
+        <div style="width:80px;flex-shrink:0;">Type</div>
+        <div style="flex:1;">Account</div>
+        <div style="width:160px;flex-shrink:0;">Rep</div>
+        <div style="width:140px;flex-shrink:0;">Status</div>
+        <div style="width:120px;flex-shrink:0;text-align:right;">Known brief</div>
+      </div>
+
+      <div class="t-row t-row-urgent" id="tr1" data-type="turnover">
+        <span class="t-type t-type-turnover">Rep turnover</span>
+        <div class="t-acct"><div class="t-acct-name">Vantage Health Partners</div><div class="t-acct-meta">Enterprise · HealthTech · $290K · Renewal Aug 22</div></div>
+        <div class="t-rep"><div class="t-rep-name">Riley Torres</div><div class="t-rep-sub">Departing Jun 15 · no successor</div></div>
+        <div class="t-status"><div class="t-status-label" style="color:var(--warn)">No successor assigned</div><div class="t-status-sub">20 days until departure</div></div>
+        <div class="t-brief"><span class="t-brief-badge brief-missing">No brief</span></div>
+        <button class="t-dismiss" onclick="dismissTransition(1)">Noted</button>
+      </div>
+
+      <div class="t-row" id="tr2" data-type="turnover">
+        <span class="t-type t-type-turnover">Rep turnover</span>
+        <div class="t-acct"><div class="t-acct-name">Inline Industries</div><div class="t-acct-meta">Mid-Market · B2B SaaS · $240K · Renewal Jul 15</div></div>
+        <div class="t-rep"><div class="t-rep-name">Marcus Webb ← Dana Kim</div><div class="t-rep-sub">Transitioned Feb 2026</div></div>
+        <div class="t-status"><div class="t-status-label">In progress</div><div class="t-status-sub">Marcus active · 4 months in</div></div>
+        <div class="t-brief"><span class="t-brief-badge brief-ready">Generated</span></div>
+        <button class="t-dismiss" onclick="dismissTransition(2)">Noted</button>
+      </div>
+
+      <div class="t-row t-row-urgent" id="tr3" data-type="leave">
+        <span class="t-type t-type-leave">Parental leave</span>
+        <div class="t-acct"><div class="t-acct-name">Summit Retail Solutions</div><div class="t-acct-meta">SMB · Retail Tech · $88K · Renewal Jul 28</div></div>
+        <div class="t-rep"><div class="t-rep-name">Jordan Park</div><div class="t-rep-sub">Out Jun 1 – Sep 1 · 3 months</div></div>
+        <div class="t-status"><div class="t-status-label" style="color:var(--warn)">Coverage TBD</div><div class="t-status-sub">Starts in 5 days</div></div>
+        <div class="t-brief"><span class="t-brief-badge brief-missing">No brief</span></div>
+        <button class="t-dismiss" onclick="dismissTransition(3)">Noted</button>
+      </div>
+
+      <div class="t-row" id="tr4" data-type="manager">
+        <span class="t-type t-type-manager">Manager-held</span>
+        <div class="t-acct"><div class="t-acct-name">Northstar Logistics</div><div class="t-acct-meta">Enterprise · Logistics SaaS · $310K · Renewal Aug 1</div></div>
+        <div class="t-rep"><div class="t-rep-name">Sarah Chen (Manager)</div><div class="t-rep-sub">Dana Kim on PTO</div></div>
+        <div class="t-status"><div class="t-status-label">Manager covering</div><div class="t-status-sub">May 20 – Jun 3 · 4 days left</div></div>
+        <div class="t-brief"><span class="t-brief-badge brief-progress">In progress</span></div>
+        <button class="t-dismiss" onclick="dismissTransition(4)">Noted</button>
+      </div>
+
+      <div class="t-row" id="tr5" data-type="turnover">
+        <span class="t-type t-type-turnover">Territory transfer</span>
+        <div class="t-acct"><div class="t-acct-name">Apex Financial Group</div><div class="t-acct-meta">Mid-Market · FinTech · $145K · Renewal Nov 20</div></div>
+        <div class="t-rep"><div class="t-rep-name">Dana Kim ← Riley Torres</div><div class="t-rep-sub">Transfer effective Jun 1</div></div>
+        <div class="t-status"><div class="t-status-label">Pending handoff</div><div class="t-status-sub">Effective in 2 days</div></div>
+        <div class="t-brief"><span class="t-brief-badge brief-progress">In progress</span></div>
+        <button class="t-dismiss" onclick="dismissTransition(5)">Noted</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 1:1 Prep view ── -->
+  <div id="view-oneonone" style="display:none;flex:1;flex-direction:column;overflow:hidden;">
+    <div style="background:var(--white);border-bottom:1px solid var(--border);padding:20px 24px 16px;flex-shrink:0;">
+      <div style="font-size:11px;color:#a0aec0;font-family:var(--mono);text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px;">1:1 Prep</div>
+      <div style="font-size:20px;font-weight:500;color:var(--navy);letter-spacing:-.3px;margin-bottom:4px;">Agenda</div>
+      <div style="font-size:12px;color:var(--slate);">Items added from Focus. Use these in your next 1:1 with each rep.</div>
+    </div>
+    <div style="flex:1;overflow-y:auto;padding:20px 24px;background:var(--off-white);" id="oneonone-content">
+      <div id="oneonone-empty" style="padding:40px 0;text-align:center;color:#a0aec0;font-size:13px;font-family:var(--mono);">No items yet. Add signals from Focus using the + 1:1 button.</div>
+    </div>
+  </div>
+
+</div><!-- end app-body -->
+
+<script>
+  function answerQQ(n) {
+    const input = document.getElementById('qq' + n + '-input');
+    if (!input.value.trim()) return;
+    const icon = document.getElementById('qq' + n + '-icon');
+    const btn = document.getElementById('qq' + n + '-btn');
+    input.classList.add('answered');
+    input.readOnly = true;
+    icon.className = 'qq-icon answered';
+    icon.textContent = '✓';
+    btn.classList.add('confirmed');
+    btn.textContent = '✓';
+    btn.disabled = true;
+  }
+  function deferQQ(n, id) {
+    const icon = document.getElementById('qq' + n + '-icon');
+    icon.style.background = '#f1f3f4';
+    icon.style.color = '#a0aec0';
+    icon.textContent = '–';
+    document.getElementById('qq' + n + '-input').placeholder = 'Deferred';
+    document.getElementById('qq' + n + '-input').disabled = true;
+    document.getElementById('qq' + n + '-btn').disabled = true;
+  }
+  function addMove() {
+    const input = document.getElementById('new-move-input');
+    if (!input.value.trim()) return;
+    const row = document.createElement('div');
+    row.className = 'commit-item';
+    row.style.borderBottom = '1px solid var(--border-light)';
+    row.innerHTML = '<div class="commit-date">Today</div><div class="commit-text">' + input.value.trim() + '</div><div class="commit-due upcoming">new</div>';
+    input.parentElement.insertAdjacentElement('beforebegin', row);
+    input.value = '';
+  }
+
+  const allViews = ['view-home','view-focus','view-accounts','view-account-detail','view-timeline','view-history','view-transitions','view-oneonone'];
+  const oneononeItems = [];
+
+  function showOneOnOne() {
+    hideAllViews();
+    document.getElementById('view-oneonone').style.display = 'flex';
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    document.getElementById('nav-oneonone').classList.add('active');
+    document.getElementById('main-breadcrumb').innerHTML = '<span class="bc-active">1:1 Prep</span>';
+  }
+
+  function addToOneOnOne(n, btn) {
+    const row = document.getElementById('fr' + n);
+    if (!row) return;
+    const acctEl = row.querySelector('.f-acct-name');
+    const signalEl = row.querySelector('.f-signal');
+    const repEl = row.querySelector('.f-rep-name');
+    const acct = acctEl ? acctEl.textContent.trim() : 'Account';
+    const signal = signalEl ? signalEl.textContent.replace(/\d+ sources.*/, '').trim() : '';
+    const rep = repEl ? repEl.textContent.trim() : '';
+
+    btn.textContent = '✓ Added';
+    btn.classList.add('added');
+    btn.disabled = true;
+
+    oneononeItems.push({ acct, signal, rep, n });
+    renderOneOnOne();
+
+    const badge = document.getElementById('oneonone-badge');
+    badge.textContent = oneononeItems.length;
+    badge.style.display = '';
+  }
+
+  function renderOneOnOne() {
+    const content = document.getElementById('oneonone-content');
+    const empty = document.getElementById('oneonone-empty');
+    if (oneononeItems.length === 0) { empty.style.display = 'block'; return; }
+    empty.style.display = 'none';
+
+    const byRep = {};
+    oneononeItems.forEach(item => {
+      if (!byRep[item.rep]) byRep[item.rep] = [];
+      byRep[item.rep].push(item);
+    });
+
+    content.innerHTML = '<div id="oneonone-empty" style="display:none"></div>';
+    Object.keys(byRep).forEach(rep => {
+      const section = document.createElement('div');
+      section.style.cssText = 'margin-bottom:20px;';
+      section.innerHTML = `
+        <div style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.6px;color:var(--slate);font-family:var(--mono);margin-bottom:8px;">${rep}</div>
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
+          ${byRep[rep].map((item, i) => `
+            <div style="display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border-bottom:${i < byRep[rep].length - 1 ? '1px solid var(--border-light)' : 'none'};">
+              <div style="width:6px;height:6px;border-radius:50%;background:var(--mid-blue);margin-top:5px;flex-shrink:0;"></div>
+              <div style="flex:1;">
+                <div style="font-size:12px;font-weight:500;color:var(--navy);margin-bottom:2px;">${item.acct}</div>
+                <div style="font-size:12px;color:var(--slate);line-height:1.5;">${item.signal}</div>
+              </div>
+              <div style="font-size:10px;color:#a0aec0;font-family:var(--mono);white-space:nowrap;margin-top:2px;">From Focus</div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+      content.appendChild(section);
+    });
+  }
+
+  function hideAllViews() {
+    allViews.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = 'none';
+    });
+  }
+
+  function showHome() {
+    hideAllViews();
+    document.getElementById('view-home').style.display = 'flex';
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    document.getElementById('nav-home').classList.add('active');
+    document.getElementById('main-breadcrumb').innerHTML = '<span class="bc-active">Home</span>';
+  }
+
+  function showFocus() {
+    hideAllViews();
+    document.getElementById('view-focus').style.display = 'flex';
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    document.getElementById('nav-focus').classList.add('active');
+    document.getElementById('main-breadcrumb').innerHTML = '<span class="bc-active">Focus</span>';
+  }
+
+  function updateFocusBadge() {
+    const total = document.querySelectorAll('.focus-tr:not(.confirmed)').length;
+    const badge = document.getElementById('focus-badge');
+    if (badge) {
+      badge.textContent = total;
+      badge.style.display = total === 0 ? 'none' : '';
+    }
+  }
+
+  function notedFocus(n) {
+    const row = document.getElementById('fr' + n);
+    if (!row) return;
+    row.classList.add('confirmed');
+    const btn = row.querySelector('.f-btn-confirm');
+    if (btn) { btn.textContent = '✓ Noted'; btn.classList.add('done'); btn.disabled = true; }
+    updateFocusBadge();
+  }
+
+  function dismissFocus(n) {}
+
+  function clearAllFocus() {
+    for (let i = 1; i <= 10; i++) {
+      const row = document.getElementById('fr' + i);
+      if (row && !row.classList.contains('confirmed')) {
+        row.classList.add('confirmed');
+        const btn = row.querySelector('.f-btn-confirm');
+        if (btn) { btn.textContent = '✓ Noted'; btn.classList.add('done'); btn.disabled = true; }
+      }
+    }
+    updateFocusBadge();
+  }
+
+  function showTab(name) {
+    hideAllViews();
+    if (name === 'timeline') {
+      document.getElementById('view-timeline').style.display = 'flex';
+    } else if (name === 'history') {
+      document.getElementById('view-history').style.display = 'flex';
+    } else {
+      document.getElementById('view-account-detail').style.display = 'flex';
+    }
+  }
+
+  function showAccounts() {
+    hideAllViews();
+    document.getElementById('view-accounts').style.display = 'flex';
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    document.getElementById('nav-accounts').classList.add('active');
+    document.getElementById('main-breadcrumb').innerHTML = '<span class="bc-active">Accounts</span>';
+  }
+
+  function showAccount() {
+    hideAllViews();
+    document.getElementById('view-account-detail').style.display = 'flex';
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    document.getElementById('nav-accounts').classList.add('active');
+    document.getElementById('main-breadcrumb').innerHTML = '<span style="cursor:pointer;text-decoration:underline;text-underline-offset:2px;" onclick="showAccounts()">Accounts</span><span class="sep">/</span><span class="bc-active">Inline Industries</span>';
+  }
+
+  function showTransitions() {
+    hideAllViews();
+    document.getElementById('view-transitions').style.display = 'flex';
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    document.getElementById('nav-transitions').classList.add('active');
+    document.getElementById('main-breadcrumb').innerHTML = '<span class="bc-active">Transitions</span>';
+  }
+
+  function dismissTransition(n) {
+    const row = document.getElementById('tr' + n);
+    if (row) row.classList.add('cleared');
+    const remaining = document.querySelectorAll('.t-row:not(.cleared)').length;
+    const badge = document.getElementById('transitions-badge');
+    if (badge) {
+      badge.textContent = remaining;
+      badge.style.display = remaining === 0 ? 'none' : '';
+    }
+  }
+
+  function filterTransitions(type) {
+    document.querySelectorAll('.t-filter-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tf-' + type).classList.add('active');
+    document.querySelectorAll('.t-row').forEach(row => {
+      if (type === 'all') { row.style.display = 'flex'; }
+      else { row.style.display = row.dataset.type === type ? 'flex' : 'none'; }
+    });
+  }
+</script>
+</body>
+</html>
